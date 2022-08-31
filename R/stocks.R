@@ -1,12 +1,13 @@
 ##############################
 # Load libraries
 
-library(readxl)
-library(data.table)
-library(here)
-library(magrittr)
-library(dplyr)
-source(here("R", "select_region.R"))
+# library(readxl)
+# library(data.table)
+# library(here)
+# library(magrittr)
+# library(dplyr)
+# library(sf)
+# source(here("R", "select_region.R"))
 
 
 # ------------------ Useful functions --------------------- #
@@ -206,15 +207,20 @@ retrieve_harvested_wood <- function(epci){
 
 }
 
-
-retrieve_stocks <-  function(year, epci){
+#' Retrieve carbon stocks of the chosen region
+#' @param year
+#' @return a sf object with the carbon stored in every polygon
+#' @export
+#' @importFrom data.table as.data.table
+#' @importFrom here here
+#' @importFrom readxl read_excel
+get_carbon_storage <-  function(year){
 
   path_to_aldo_clc <- here("data", "aldo_clc_categories.xlsx")
-
   clc <- retrieve_clc(year)
+  epci <- silvia:::epci
   dt <- retrieve_soil_stocks(clc, path_to_aldo_clc, epci)
   dt <- retrieve_biomass_stocks_everywhere(dt, path_to_aldo_clc, epci)
-
 
   clc_num <- read_excel(path_to_aldo_clc)
   clc_num <- as.data.table(clc_num)

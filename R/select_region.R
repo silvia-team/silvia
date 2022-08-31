@@ -6,6 +6,8 @@ library(sf)
 library(readxl)
 library(data.table)
 library(nngeo)
+library(dplyr)
+library(stringr)
 
 ##############################
 
@@ -35,6 +37,7 @@ communes_fr_PACA3 = c("74008", "74012", "74040", "74094", "74118", "74133", "741
 ##############################
 
 epci <- epcis_Grand_Geneve[1]
+usethis::use_data(epci, internal = TRUE, overwrite = TRUE)
 
 retrieve_epci_name <- function(path_to_aldo, epcis) {
 
@@ -79,10 +82,32 @@ crop_region  <- function(path_to_aldo, epcis= c(),
   return(st_bbox(region))
 }
 
-# crop_region(path_to_aldo, epcis =  epcis_Grand_Geneve,
-#              communes_ch = communes_ch_grand_geneve, communes_fr = NULL)
+crop_region  <- function(box){
 
-# ---- Run the code above to get the perimeter of your EPCI ---- #
+  box <- str_split(box, " ")
+  box <- round(as.numeric(box))
+  box <- paste(box,collapse=" ")
+
+  # ---- Run the code above to get the perimeter of your EPCI ---- #
+  command1 <- '"C:\\Program Files\\QGIS 3.22.7\\bin\\ogr2ogr"'
+  command2 <- paste("-spat", box, "-clipsrc")
+  command3 <- '"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\region.gpkg"'
+
+  for (year in c("1990", "2000", "2006", "2012", "2018")) {
+    command4 <- paste0('"', "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\clc_", year, ".gpkg",'"',  sep = "")
+    command5 <- paste0('"',"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\copernicus\\CLC_PNE_RG_",
+                       year, "\\CLC_Europe_", year, ".gpkg", '"', sep = "")
+    final_command <- noquote(paste(command1, command2, command3, command4, command5))
+    system(final_command)
+
+  }
+
+}
+
+# box <- crop_region(path_to_aldo, epcis =  epcis_Grand_Geneve,
+#                    communes_ch = communes_ch_grand_geneve, communes_fr = NULL)
+
+
 
 # 1990
 # "C:\Program Files\QGIS 3.22.7\bin\ogr2ogr" -spat 3988837 2541888 4054963 2611182 -clipsrc "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\region.gpkg" "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\clc_1990.gpkg" "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\copernicus\\CLC_PNE_RG_1990\CLC_Europe_1990.gpkg"
@@ -100,3 +125,7 @@ crop_region  <- function(path_to_aldo, epcis= c(),
 # "C:\Program Files\QGIS 3.22.7\bin\ogr2ogr" -spat 3988837 2541888 4054963 2611182 -clipsrc "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\region.gpkg" "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\clc_2018.gpkg" "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\copernicus\\CLC_PNE_RG_2018\CLC_Europe_2018.gpkg"
 
 
+command <- noquote(paste('"C:\\Program Files\\QGIS 3.22.7\\bin\\ogr2ogr"', "-spat 3988837 2541888 4054963 2611182  -clipsrc",
+                         '"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\region.gpkg"',
+                         '"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\clc_1990.gpkg"',
+                         '"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\copernicus\\CLC_PNE_RG_1990\\CLC_Europe_1990.gpkg"'))

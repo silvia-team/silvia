@@ -2,8 +2,9 @@
 % Please edit documentation in R/extract_aldo_data.R
 \name{carbon_content}
 \alias{carbon_content}
-\title{Extracts the data for the amount of carbon stored in forests from the Aldo
-Excel tool.}
+\title{Save the data of the amount of carbon stored in soils (1), in the biomass outside
+of forests (2), and in forests (3) from the ALDO Excel tool.
+The data is stored in the "data" directory}
 \usage{
 carbon_content(path_to_aldo)
 }
@@ -11,9 +12,10 @@ carbon_content(path_to_aldo)
 \item{path_to_aldo}{}
 }
 \value{
-A data.table object.
+None
 }
 \description{
-Extracts the data for the amount of carbon stored in forests from the Aldo
-Excel tool.
+Save the data of the amount of carbon stored in soils (1), in the biomass outside
+of forests (2), and in forests (3) from the ALDO Excel tool.
+The data is stored in the "data" directory
 }

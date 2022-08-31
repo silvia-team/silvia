@@ -1,126 +1,126 @@
-##############################
-# Load libraries
-
-library(ggplot2)
-library(here)
-library(networkD3)
-source(here("R", "stocks.R"))
-# source(here("R", "land_use_mapping.R"))
-
-##############################
-
-land_use_changes <- function(dt_from, dt_to, year_from, year_to, epci) {
-
-  dt_land_use_changes <-  st_intersection(dt_from, dt_to)
-  # dt_land_use_changes <- dt_land_use_changes[dt_land_use_changes$code != dt_land_use_changes$code.1 ,]
-  dt_land_use_changes <- dt_land_use_changes %>%
-    select(code_initial = code,
-           soil_category_initial = aldo_soil_category,
-           biomass_category_initial = aldo_biomass_category,
-           code_final = code.1,
-           soil_category_final = aldo_soil_category.1,
-           biomass_category_final = aldo_biomass_category.1,
-           total_carbon_content_initial = total_carbon_content,
-           total_carbon_content_final = total_carbon_content.1
-           )
-  dt_land_use_changes <-  na.omit(dt_land_use_changes)
-
-  return(dt_land_use_changes)
-
-}
-
-
-mapping_land_use_changes <- function(land_use_changes, epci_name, nomenclature_level,year_from, year_to, dt_to) {
-
-  land_use_changes <- land_use_changes[dt_land_use_changes$code_initial != dt_land_use_changes$code_final ,]
-
-  path_to_nomenclature <-  here("data", "clc-nomenclature-c_1.xls")
-  setnames(land_use_changes, "code_final", "code")
-  land_use <- nomenclature_level(land_use_changes, path_to_nomenclature, nomenclature_level, "code")
-
-
-  p <- ggplot(land_use)
-  p <- p + geom_sf(aes(fill = libelle_fr), color = NA)
-  p <- p + scale_fill_manual(values = land_use$color,
-                             breaks = land_use$libelle_fr)
-  p <- p + labs(
-    title = paste("Changement d'occupation des sols entre", year_from, " et ", year_to,  " - ",epci_name, "\n"),
-    caption = "Données Corine Land Cover et ALDO (GIS)\n"
-  )
-  p <- p + theme_void()
-  p <- p + theme(
-    legend.position = "right",
-    legend.justification = "left",
-    panel.border = element_blank(),
-    plot.title = element_text(face = "bold", size = 14),
-    plot.title.position = "plot",
-    plot.subtitle = element_text(face = "italic", size = 12),
-    legend.title = element_blank(),
-    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
-    strip.text = element_text(size = 14),
-    legend.margin = margin(0, 0, 0.5, 0, "cm")
-  )
-  p <- p + geom_sf(data = st_union(dt_to), fill = NA)
-
-
-  return(p)
-
-}
-
-mapping_artif <- function(dt_land_use_changes, epci_name, year_from, year_to, dt_to) {
-
-  artif_code <- c(111, 112, 121, 122, 123, 124, 131, 132, 133, 142, 141)
-
-
-  land_use_changes <- dt_land_use_changes %>%
-    filter(code_final %in%  artif_code |
-             code_initial  %in%  artif_code)
-
-  land_use_changes$changes <- "Surfaces artificialisées avant 1990"
-  land_use_changes$changes[!(land_use_changes$code_final %in%  artif_code) &
-                             land_use_changes$code_initial  %in%  artif_code] <- "Surfaces dé-artificialisées après 1990"
-  land_use_changes$changes[land_use_changes$code_final %in%  artif_code &
-                             !(land_use_changes$code_initial  %in%  artif_code)] <- "Surfaces artificialisées depuis 1990"
-
-  artif_new <- sum(st_area(land_use_changes[land_use_changes$changes =="Surfaces artificialisées depuis 1990",]))*1e-6
-  total_area <- sum(st_area(dt_to))*1e-6
-
-  rate <-  (artif_new/total_area)*100
-
-  speed_artif <- artif_new*1e-04/(year_to-year_from)
-
-
-
-  p <- ggplot(land_use_changes)
-  p <- p + geom_sf(aes(fill = changes), color = NA)
-  # p <- p + geom_sf(fill = NA, color = "gray50", size = 0.5,
-  #                  data = . %>% group_by(changes) %>% summarise())
-  # p <- p + scale_fill_manual(values = land_use$color,
-  #                            breaks = land_use$libelle_fr)
-  p <- p + labs(
-    # title = paste("Artificialisation des sols entre", year_from, "et", year_to,  " - ",epci_name, "\n"),
-    # caption = "Données Corine Land Cover\n"
-  )
-  p <- p + theme_void()
-  p <- p + theme(
-    legend.position = "right",
-    legend.justification = "left",
-    panel.border = element_blank(),
-    plot.title = element_text(face = "bold", size = 14),
-    plot.title.position = "plot",
-    plot.subtitle = element_text(face = "italic", size = 12),
-    legend.title = element_blank(),
-    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
-    strip.text = element_text(size = 14),
-    legend.margin = margin(0, 0, 0.5, 0, "cm")
-  )
-  p <- p + scale_fill_manual(values = c("#ebb0b0", "#f06060","#79d18b"), name= "Cluster Group")
-  p <- p + geom_sf(data = st_union(dt_to), fill = NA)
-
-  return(p)
-
-}
-
+# ##############################
+# # Load libraries
+#
+# library(ggplot2)
+# library(here)
+# library(networkD3)
+# source(here("R", "stocks.R"))
+# # source(here("R", "land_use_mapping.R"))
+#
+# ##############################
+#
+#
+# land_use_changes <- function(dt_from, dt_to, year_from, year_to, epci) {
+#
+#   dt_land_use_changes <-  st_intersection(dt_from, dt_to)
+#   # dt_land_use_changes <- dt_land_use_changes[dt_land_use_changes$code != dt_land_use_changes$code.1 ,]
+#   dt_land_use_changes <- dt_land_use_changes %>%
+#     select(code_initial = code,
+#            soil_category_initial = aldo_soil_category,
+#            biomass_category_initial = aldo_biomass_category,
+#            code_final = code.1,
+#            soil_category_final = aldo_soil_category.1,
+#            biomass_category_final = aldo_biomass_category.1,
+#            total_carbon_content_initial = total_carbon_content,
+#            total_carbon_content_final = total_carbon_content.1
+#            )
+#   dt_land_use_changes <-  na.omit(dt_land_use_changes)
+#
+#   return(dt_land_use_changes)
+# }
+#
+#
+# mapping_land_use_changes <- function(land_use_changes, epci_name, nomenclature_level,year_from, year_to, dt_to) {
+#
+#   land_use_changes <- land_use_changes[dt_land_use_changes$code_initial != dt_land_use_changes$code_final ,]
+#
+#   path_to_nomenclature <-  here("data", "clc-nomenclature-c_1.xls")
+#   setnames(land_use_changes, "code_final", "code")
+#   land_use <- nomenclature_level(land_use_changes, path_to_nomenclature, nomenclature_level, "code")
+#
+#
+#   p <- ggplot(land_use)
+#   p <- p + geom_sf(aes(fill = libelle_fr), color = NA)
+#   p <- p + scale_fill_manual(values = land_use$color,
+#                              breaks = land_use$libelle_fr)
+#   p <- p + labs(
+#     title = paste("Changement d'occupation des sols entre", year_from, " et ", year_to,  " - ",epci_name, "\n"),
+#     caption = "Données Corine Land Cover et ALDO (GIS)\n"
+#   )
+#   p <- p + theme_void()
+#   p <- p + theme(
+#     legend.position = "right",
+#     legend.justification = "left",
+#     panel.border = element_blank(),
+#     plot.title = element_text(face = "bold", size = 14),
+#     plot.title.position = "plot",
+#     plot.subtitle = element_text(face = "italic", size = 12),
+#     legend.title = element_blank(),
+#     plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
+#     strip.text = element_text(size = 14),
+#     legend.margin = margin(0, 0, 0.5, 0, "cm")
+#   )
+#   p <- p + geom_sf(data = st_union(dt_to), fill = NA)
+#
+#
+#   return(p)
+#
+# }
+#
+# mapping_artif <- function(dt_land_use_changes, epci_name, year_from, year_to, dt_to) {
+#
+#   artif_code <- c(111, 112, 121, 122, 123, 124, 131, 132, 133, 142, 141)
+#
+#
+#   land_use_changes <- dt_land_use_changes %>%
+#     filter(code_final %in%  artif_code |
+#              code_initial  %in%  artif_code)
+#
+#   land_use_changes$changes <- "Surfaces artificialisées avant 1990"
+#   land_use_changes$changes[!(land_use_changes$code_final %in%  artif_code) &
+#                              land_use_changes$code_initial  %in%  artif_code] <- "Surfaces dé-artificialisées après 1990"
+#   land_use_changes$changes[land_use_changes$code_final %in%  artif_code &
+#                              !(land_use_changes$code_initial  %in%  artif_code)] <- "Surfaces artificialisées depuis 1990"
+#
+#   artif_new <- sum(st_area(land_use_changes[land_use_changes$changes =="Surfaces artificialisées depuis 1990",]))*1e-6
+#   total_area <- sum(st_area(dt_to))*1e-6
+#
+#   rate <-  (artif_new/total_area)*100
+#
+#   speed_artif <- artif_new*1e-04/(year_to-year_from)
+#
+#
+#
+#   p <- ggplot(land_use_changes)
+#   p <- p + geom_sf(aes(fill = changes), color = NA)
+#   # p <- p + geom_sf(fill = NA, color = "gray50", size = 0.5,
+#   #                  data = . %>% group_by(changes) %>% summarise())
+#   # p <- p + scale_fill_manual(values = land_use$color,
+#   #                            breaks = land_use$libelle_fr)
+#   p <- p + labs(
+#     # title = paste("Artificialisation des sols entre", year_from, "et", year_to,  " - ",epci_name, "\n"),
+#     # caption = "Données Corine Land Cover\n"
+#   )
+#   p <- p + theme_void()
+#   p <- p + theme(
+#     legend.position = "right",
+#     legend.justification = "left",
+#     panel.border = element_blank(),
+#     plot.title = element_text(face = "bold", size = 14),
+#     plot.title.position = "plot",
+#     plot.subtitle = element_text(face = "italic", size = 12),
+#     legend.title = element_blank(),
+#     plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
+#     strip.text = element_text(size = 14),
+#     legend.margin = margin(0, 0, 0.5, 0, "cm")
+#   )
+#   p <- p + scale_fill_manual(values = c("#ebb0b0", "#f06060","#79d18b"), name= "Cluster Group")
+#   p <- p + geom_sf(data = st_union(dt_to), fill = NA)
+#
+#   return(p)
+#
+# }
+#
 retrieve_flows <- function(dt_land_use_changes, epci) {
 
 
@@ -202,15 +202,46 @@ retrieve_forest_flows <- function(dt_to, year_to, epci) {
   return(dt)
 
 }
+#
+# retrieve_total_flows<- function(land_use_changes, dt_to, year_to, epci) {
+#
+#   soil_biomass_flows  <- retrieve_biomass_soil_flows(dt_land_use_changes, epci)
+#   forest_flows <- retrieve_forest_flows(dt_to, year_to, epci)
+#
+#   total_flows <- merge(soil_biomass_flows,
+#                        forest_flows,
+#                        by = "code")
+# }
 
-retrieve_total_flows<- function(land_use_changes, dt_to, year_to, epci) {
 
-  soil_biomass_flows  <- retrieve_biomass_soil_flows(dt_land_use_changes, epci)
-  forest_flows <- retrieve_forest_flows(dt_to, year_to, epci)
+#' Collect land use changes between two years
+#' @param year_from
+#' @param year_to
+#' @return a sf object with the land use changes between year_to and year_from
+#' @export
+#' @importFrom sf st_intersection st_area
+get_land_use_changes <- function(year_from, year_to) {
 
-  total_flows <- merge(soil_biomass_flows,
-                       forest_flows,
-                       by = "code")
+  delta_years = year_to - year_from
+  epci <- silvia:::epci
+
+  ### Retrieve carbon stocks from the chosen years
+  dt_from <- silvia::get_carbon_storage(year_from)
+  dt_to <- silvia::get_carbon_storage(year_to)
+
+  dt_land_use_changes <-  st_intersection(dt_from, dt_to)
+  dt_land_use_changes <- dt_land_use_changes %>%
+    select(code_initial = code,
+           soil_category_initial = aldo_soil_category,
+           biomass_category_initial = aldo_biomass_category,
+           code_final = code.1,
+           soil_category_final = aldo_soil_category.1,
+           biomass_category_final = aldo_biomass_category.1,
+    )
+  dt_land_use_changes <-  na.omit(dt_land_use_changes)
+  dt_land_use_changes$area <- as.numeric(st_area(dt_land_use_changes))*1e-4
+  dt_land_use_changes <- dt_land_use_changes %>% filter(code_initial != code_final)
+
+  return(dt_land_use_changes)
 }
-
 
