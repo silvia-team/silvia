@@ -217,10 +217,11 @@ retrieve_forest_flows <- function(dt_to, year_to, epci) {
 #' Collect land use changes between two years
 #' @param year_from
 #' @param year_to
+#' @param remove_unchanged
 #' @return a sf object with the land use changes between year_to and year_from
 #' @export
 #' @importFrom sf st_intersection st_area
-get_land_use_changes <- function(year_from, year_to) {
+get_land_use_changes <- function(year_from, year_to, remove_unchanged = TRUE) {
 
   delta_years = year_to - year_from
   epci <- silvia:::epci
@@ -240,7 +241,13 @@ get_land_use_changes <- function(year_from, year_to) {
     )
   dt_land_use_changes <-  na.omit(dt_land_use_changes)
   dt_land_use_changes$area <- as.numeric(st_area(dt_land_use_changes))*1e-4
-  dt_land_use_changes <- dt_land_use_changes %>% filter(code_initial != code_final)
+
+  dt_land_use_changes$code_initial_first <- as.numeric(substr(dt_land_use_changes$code_initial, 1, 1))
+  dt_land_use_changes$code_final_first <- as.numeric(substr(dt_land_use_changes$code_final, 1, 1))
+
+  if (remove_unchanged == TRUE){
+    dt_land_use_changes <- dt_land_use_changes %>% filter(code_initial != code_final)
+  }
 
   return(dt_land_use_changes)
 }

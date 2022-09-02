@@ -122,7 +122,7 @@
 #' @return a ggplot with the map
 #' @export
 #' @importFrom sf st_read st_write st_area
-#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient
+#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme
 map_carbon_storage <- function(dt){
 
   total_area_stocks <- sum(st_area(dt) * 1e-04 * 1e-03 * dt$total_carbon_content)
@@ -145,7 +145,6 @@ map_carbon_storage <- function(dt){
     plot.title = element_text(face = "bold", size = 14),
     plot.title.position = "plot",
     plot.subtitle = element_text(face = "italic", size = 12),
-    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
     strip.text = element_text(size = 14),
     legend.margin = margin(0, 0, 0.5, 0, "cm")
   )

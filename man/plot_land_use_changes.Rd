@@ -5,7 +5,7 @@
 \title{Plot land use changes between two year.
 Results are presented in a sankey diagram}
 \usage{
-plot_land_use_changes(year_from, year_to)
+plot_land_use_changes(year_from, year_to, level = "soft")
 }
 \value{
 The sankey diagram

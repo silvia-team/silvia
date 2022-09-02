@@ -31,7 +31,6 @@ carbon_content_soil <- function(path_to_aldo) {
     value.name = "soil_carbon_content"
   )
 
-
   return(dt)
 }
 
@@ -49,6 +48,7 @@ carbon_content_biomass_wo_forests <- function(path_to_aldo) {
   dt <- read_excel(path_to_aldo, sheet = "Ref_Biom_HorsF")
   dt <- as.data.table(dt)
   dt <- dt[, c(1, 4:13)]
+  dt[is.na(dt), ] <- 0
   dt <- unique(dt)
 
   dt <- melt(
@@ -58,7 +58,7 @@ carbon_content_biomass_wo_forests <- function(path_to_aldo) {
     value.name = "biomass_carbon_content"
   )
 
-  dt[is.na(biomass_carbon_content), biomass_carbon_content := 0]
+  # dt[is.na(biomass_carbon_content), biomass_carbon_content := 0]
 
   setnames(dt, "siren", "EPCI_Siren")
 
@@ -80,6 +80,7 @@ carbon_content_biomass_forests <- function(path_to_aldo) {
   dt <- read_excel(path_to_aldo, sheet = "Ref_Biom_foret")
   dt <- as.data.table(dt)
   dt <- dt[, c(1,2, 3, 6)]
+  dt[is.na(dt), ] <- 0
 
   setnames(dt, c("EPCI_Siren","epci_area_surface", "aldo_biomass_category", "biomass_carbon_content"))
 
@@ -103,6 +104,7 @@ carbon_content_harvested_wood <- function(path_to_aldo) {
   dt <- read_excel(path_to_aldo, sheet = "Ref_Prod_Bois")
   dt <- as.data.table(dt)
   dt <- dt[, c(1,3, 7, 8, 9)]
+  dt[is.na(dt), ] <- 0
 
   setnames(dt, c("EPCI_Siren","wood_composition", "BO_harvest", "BI_harvest", "BE_harvest"))
 
@@ -128,16 +130,16 @@ carbon_content <- function(path_to_aldo) {
   biomass_forests <- carbon_content_biomass_forests(path_to_aldo)
   harvested_wood <- carbon_content_harvested_wood(path_to_aldo)
 
-  fwrite(soil, here("data", "carbon_content_soil.csv"))
-  fwrite(biomass_wo_forests, here("data", "biomass_wo_forests.csv"))
-  fwrite(biomass_forests, here("data", "biomass_forests.csv"))
-  fwrite(harvested_wood, here("data", "harvested_wood.csv"))
+  fwrite(soil, here("data", "aldo", "carbon_content_soil.csv"))
+  fwrite(biomass_wo_forests, here("data", "aldo","biomass_wo_forests.csv"))
+  fwrite(biomass_forests, here("data", "aldo", "biomass_forests.csv"))
+  fwrite(harvested_wood, here("data", "aldo", "harvested_wood.csv"))
 
   return(invisible(0))
 
 }
-# path_to_aldo <- "../../ALDO/Outil ALDO_2021_12.xlsx"
-# # dt <- carbon_content(path_to_aldo)
+path_to_aldo <- "../../ALDO/Outil ALDO_2021_12.xlsx"
+carbon_content(path_to_aldo)
 #
 # dt_carbon_flows <- carbon_flows_soil(path_to_aldo)
 # dt_biomass_flows <- carbon_flows_biomass_wo_forest(path_to_aldo)

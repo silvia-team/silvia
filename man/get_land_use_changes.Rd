@@ -4,7 +4,7 @@
 \alias{get_land_use_changes}
 \title{Collect land use changes between two years}
 \usage{
-get_land_use_changes(year_from, year_to)
+get_land_use_changes(year_from, year_to, remove_unchanged = TRUE)
 }
 \value{
 a sf object with the land use changes between year_to and year_from
