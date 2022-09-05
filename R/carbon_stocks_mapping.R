@@ -1,17 +1,4 @@
-# ##############################
-# # Load libraries
-#
-# library(RColorBrewer)
-# library(here)
-# library(ggplot2)
-# library(dplyr)
-# # source(here("R", "stocks.R"))
-#
-#
-# ##############################
-#
-#
-#
+
 # plot_carbon_stocks <- function(dt){
 #
 #   total_soils_area_stocks <- round(sum(st_area(dt) * 1e-04* 1e-03 * dt$soil_carbon_content))
@@ -122,12 +109,13 @@
 #' @return a ggplot with the map
 #' @export
 #' @importFrom sf st_read st_write st_area
+#' @importFrom here here
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme
 map_carbon_storage <- function(dt){
 
   total_area_stocks <- sum(st_area(dt) * 1e-04 * 1e-03 * dt$total_carbon_content)
   total_area_stocks <- as.numeric(total_area_stocks)
-  epci <- silvia:::epci
+  load(here("data", "epci.rda"))
   epci_wood_stocks <- retrieve_harvested_wood(epci)
   total_area_stocks <-  round(total_area_stocks + epci_wood_stocks)
 
@@ -155,11 +143,3 @@ map_carbon_storage <- function(dt){
 
 }
 
-
-epci_name <- "Grand Genève - PACA 3"
-# dt <- silvia::get_carbon_storage(2018)
-# plot_carbon_stocks(dt)
-# dt_2018 <- get_carbon_storage(2018)
-# dt_2018 <- st_transform(dt_2018, 3035)
-#
-# plot_carbon_stocks(dt)

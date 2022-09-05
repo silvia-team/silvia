@@ -1,14 +1,12 @@
-# ##############################
-# # Load libraries
-#
-library("readxl")
-library("data.table")
-library("here")
-library("dplyr")
-#
-# ##############################
-#
-#
+#' Extracts the data for carbon flows in soils that occur because
+#' of land use changes from the Aldo Excel tool.
+#' @param path_to_aldo
+#'
+#' @return A data.table object.
+#' @importFrom data.table as.data.table melt setnames
+#' @importFrom readxl read_excel
+#'
+#'
 carbon_flows_soil <- function(path_to_aldo) {
 
   dt <- read_excel(path_to_aldo, sheet = "Ref_Sols")
@@ -61,6 +59,16 @@ carbon_flows_soil <- function(path_to_aldo) {
 }
 
 
+
+#' Extracts the data for carbon flows in biomass (without forest)
+#' that occur because of land use changes from the Aldo Excel tool.
+#' @param path_to_aldo
+#'
+#' @return A data.table object.
+#' @importFrom data.table as.data.table melt setnames
+#' @importFrom readxl read_excel
+#'
+#'
 carbon_flows_biomass_wo_forest <- function(path_to_aldo) {
 
   dt <- read_excel(path_to_aldo, sheet = "Ref_Biom_HorsF")
@@ -83,8 +91,6 @@ carbon_flows_biomass_wo_forest <- function(path_to_aldo) {
   dt$to <- tolower(dt$to)
   dt[, from := gsub("sosl", "sols", from)]
   dt[, to := gsub("sosl", "sols", to)]
-  # dt$to <- gsub('\\s+', '', dt$to)
-  # dt$from <- gsub('\\s+', '', dt$from)
 
   path_to_aldo_clc <- here("data", "aldo_clc_categories.xlsx")
   clc_num <- read_excel(path_to_aldo_clc)
@@ -107,6 +113,16 @@ carbon_flows_biomass_wo_forest <- function(path_to_aldo) {
   return(dt)
 }
 
+
+#' Extracts the data for carbon flows in forest
+#' that occur because of land use changes from the Aldo Excel tool.
+#' @param path_to_aldo
+#'
+#' @return A data.table object.
+#' @importFrom data.table as.data.table melt setnames
+#' @importFrom readxl read_excel
+#'
+#'
 carbon_flows_forest <- function(path_to_aldo) {
   dt <- read_excel(path_to_aldo, sheet = "Ref_Biom_foret")
   dt <- as.data.table(dt)
@@ -131,6 +147,13 @@ carbon_flows_forest <- function(path_to_aldo) {
 
 }
 
+#' Save the data of carbon flows from the aldo tool
+#' The data is stored in the "data -> aldo" directory
+#' @param path_to_aldo
+#' @return None
+#' @export
+#' @importFrom data.table fwrite
+#' @importFrom here here
 carbon_flows <- function(path_to_aldo) {
 
   soil_flows <- carbon_flows_soil(path_to_aldo)
@@ -146,8 +169,8 @@ carbon_flows <- function(path_to_aldo) {
   return(invisible(0))
 }
 
-path_to_aldo <- "../../ALDO/Outil ALDO_2021_12.xlsx"
+# path_to_aldo <- "../../ALDO/Outil ALDO_2021_12.xlsx"
 
 # forest <- carbon_flows_forest(path_to_aldo)
 # biomass_flows_wo_forests <- carbon_flows_biomass_wo_forest(path_to_aldo)
-carbon_flows(path_to_aldo)
+# carbon_flows(path_to_aldo)

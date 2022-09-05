@@ -166,7 +166,7 @@ retrieve_biomass_stocks_everywhere <- function(dt, path_to_aldo_clc, epci){
 retrieve_harvested_wood <- function(epci){
 
   dt_harvested_wood <- read.csv("data/harvested_wood.csv")
-  dt_harvested_wood <- setDT(dt_harvested_wood)
+  dt_harvested_wood <- as.data.table(dt_harvested_wood)
 
   dt_harvested_wood <- melt(
     dt_harvested_wood,

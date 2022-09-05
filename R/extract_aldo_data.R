@@ -1,16 +1,7 @@
-##############################
-# Load libraries
 
-# library("readxl")
-# library("data.table")
-# library("here")
-# library("dplyr")
-
-##############################
 
 #' Extracts the data for the amount of carbon stored in soils from the Aldo
 #' Excel tool.
-#'
 #' @param path_to_aldo
 #'
 #' @return A data.table object.
@@ -138,9 +129,5 @@ carbon_content <- function(path_to_aldo) {
   return(invisible(0))
 
 }
-path_to_aldo <- "../../ALDO/Outil ALDO_2021_12.xlsx"
-carbon_content(path_to_aldo)
-#
-# dt_carbon_flows <- carbon_flows_soil(path_to_aldo)
-# dt_biomass_flows <- carbon_flows_biomass_wo_forest(path_to_aldo)
+
 

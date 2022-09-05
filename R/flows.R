@@ -10,18 +10,17 @@ get_carbon_flows <- function(year_from, year_to) {
 
   dt <- silvia::get_land_use_changes(year_from, year_to, remove_unchanged = FALSE)
 
-  # dt_all <- copy(dt)
 
   forest_codes <- c(311, 312, 313, 324)
   # dt <- dt[dt$code_initial != dt$code_final | dt$code_final %in% forest_codes,]
 
   delta_years = year_to - year_from
-  epci <- silvia:::epci
+  load(here("data", "epci.rda"))
 
   #biomass
 
   biomass_flows_wo_forests <- as.data.table(read.csv(here("data", "aldo","biomass_flows_wo_forests.csv")))
-  biomass_flows_wo_forests <- biomass_flows_wo_forests[biomass_flows_wo_forests$EPCI_Siren == epci]
+  biomass_flows_wo_forests <- biomass_flows_wo_forests[biomass_flows_wo_forests$EPCI_Siren == epci,]
   biomass_flows_wo_forests[, flow := ifelse(is.na(from_clc), 0, flow)]
   biomass_flows_wo_forests[, flow := ifelse(unit == "tC/ha/an", flow*20, flow)]
   biomass_flows_wo_forests[, unit := ifelse(unit == "tC/ha/an", "tC/ha", unit)]
@@ -155,10 +154,6 @@ library(dplyr)
 library(ggplot2)
 library(classInt)
 
-# dt_to <- get_carbon_storage(2018)
-
-# name_of_the_territory <- "Grand Genève"
-
 
 #' Plot carbon flows of a chosen region.
 #' @param flows st object returned by 'get_carbon_flows' funciton
@@ -168,10 +163,9 @@ library(classInt)
 #' @importFrom sf st_union
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_brewer theme
-
 map_carbon_flows <- function(flows){
 
-  breaks_qt_pos <- classIntervals(flows$total_flows[flows$total_flows>0], n = 6, style = "quantile")
+  breaks_qt_pos <- classIntervals(flows$total_flows[flows$total_flows>0], n = 5, style = "quantile")
   breaks_qt_neg <- classIntervals(flows$total_flows[flows$total_flows<0], n = 6, style = "quantile")
   breaks_qt <- unique(c(breaks_qt_pos$brks, breaks_qt_neg$brks, 0))
   flows <- mutate(flows, total_flows_intervals = cut(trunc(total_flows), breaks_qt, right= F))
@@ -206,7 +200,7 @@ map_carbon_flows <- function(flows){
     legend.margin = margin(0, 0, 0.5, 0, "cm"),
     legend.spacing.y = unit(0.5, 'cm')
   )
-  p3 <- p3 + scale_fill_brewer(palette =  "BrBG", direction = -1)
+  p3 <- p3 + scale_fill_brewer(palette =  "RdYlGn", direction = -1)
   # p3 <- p3 + geom_sf(data = st_union(flows), fill = NA)
 
   return(p3)

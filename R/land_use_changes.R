@@ -1,13 +1,4 @@
-# ##############################
-# # Load libraries
-#
-# library(ggplot2)
-# library(here)
-# library(networkD3)
-# source(here("R", "stocks.R"))
-# # source(here("R", "land_use_mapping.R"))
-#
-# ##############################
+
 #
 #
 # land_use_changes <- function(dt_from, dt_to, year_from, year_to, epci) {
@@ -202,16 +193,7 @@ retrieve_forest_flows <- function(dt_to, year_to, epci) {
   return(dt)
 
 }
-#
-# retrieve_total_flows<- function(land_use_changes, dt_to, year_to, epci) {
-#
-#   soil_biomass_flows  <- retrieve_biomass_soil_flows(dt_land_use_changes, epci)
-#   forest_flows <- retrieve_forest_flows(dt_to, year_to, epci)
-#
-#   total_flows <- merge(soil_biomass_flows,
-#                        forest_flows,
-#                        by = "code")
-# }
+
 
 
 #' Collect land use changes between two years
@@ -224,7 +206,7 @@ retrieve_forest_flows <- function(dt_to, year_to, epci) {
 get_land_use_changes <- function(year_from, year_to, remove_unchanged = TRUE) {
 
   delta_years = year_to - year_from
-  epci <- silvia:::epci
+  load(here("data", "epci.rda"))
 
   ### Retrieve carbon stocks from the chosen years
   dt_from <- silvia::get_carbon_storage(year_from)

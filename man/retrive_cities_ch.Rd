@@ -3,7 +3,7 @@
 \name{retrive_cities_ch}
 \alias{retrive_cities_ch}
 \title{Save the data of the swiss cities classification.
-The data is stored in the "data -> ign" directory}
+The data is stored in the "data -> arep" directory}
 \usage{
 retrive_cities_ch(path_cities_ch)
 }
@@ -12,5 +12,5 @@ None
 }
 \description{
 Save the data of the swiss cities classification.
-The data is stored in the "data -> ign" directory
+The data is stored in the "data -> arep" directory
 }
