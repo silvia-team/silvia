@@ -25,6 +25,7 @@ retrieve_cities_fr <- function(path_cities_fr, path_cities_category_fr) {
   return(invisible(0))
 }
 
+
 #' Save the data of the swiss cities classification.
 #' The data is stored in the "data -> arep" directory
 #' @param path_cities_ch
@@ -34,7 +35,7 @@ retrieve_cities_fr <- function(path_cities_fr, path_cities_category_fr) {
 #' @importFrom here here
 #' @importFrom sf st_read st_write
 #'
-retrive_cities_ch <- function(path_cities_ch){
+retrieve_cities_ch <- function(path_cities_ch){
 
   cities_ch <- st_read(path_cities_ch, quiet = TRUE)
   cities_ch <- cities_ch %>%
@@ -91,7 +92,7 @@ retrieve_regions_fr <- function(path_regions_fr) {
 # retrieve_cities_fr(path_cities_fr, path_cities_category_fr)
 #
 # path_cities_ch <- here("data", "ign", "suisse", "g1g22_20220501.shp")
-# retrive_cities_ch(path_cities_ch)
+# retrieve_cities_ch(path_cities_ch)
 #
 # path_departments_fr <- here("data", "ign", "france","DEPARTEMENT.shp")
 # retrieve_departements_fr(path_departments_fr)

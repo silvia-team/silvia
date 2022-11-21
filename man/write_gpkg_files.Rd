@@ -3,7 +3,7 @@
 \name{write_gpkg_files}
 \alias{write_gpkg_files}
 \title{Merge the territory chosen with the data from Corine Land Cover
-of the chosen years
+of the chosen years, using local files
 The function returns nothing but store the gpkg file
 in the "data->arep" folder}
 \usage{
@@ -14,7 +14,7 @@ None
 }
 \description{
 Merge the territory chosen with the data from Corine Land Cover
-of the chosen years
+of the chosen years, using local files
 The function returns nothing but store the gpkg file
 in the "data->arep" folder
 }

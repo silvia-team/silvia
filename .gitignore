@@ -8,4 +8,13 @@ data/copernicus/
 data/arep/
 data/autre/
 data/ign/
+imgs/
 data/cities.gpkg
+data/biomass_wo_forests.csv
+data/aldo/carbon_content_soil.csv
+data/carbon_content_soil.csv
+data/biomass_flows_wo_forests.csv
+data/soil_flows.csv
+data/aldo/soil_flows.csv
+data/carbon_flows.csv
+data/aldo/biomass_flows_wo_forests.csv

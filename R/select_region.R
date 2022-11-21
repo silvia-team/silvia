@@ -1,91 +1,27 @@
-
-
-epci_annecy <- c(200066793)
-
-
-### GRAND GENEVE ###
-
-epcis_fr <- c(247400724, 247400583, 200000172, 240100891, 200067551, 240100750, 200011773, 247400690)
-
-path_communes_ch <- here('data', 'autre', "communes_suisses.xlsx")
-communes_ch <- read_excel(path_communes_ch, sheet = "GDE")
-cantons_ch_grand_geneve <- c(2228, 2500)
-communes_ch_grand_geneve <- communes_ch %>%
-  filter(GDEBZNR %in% cantons_ch_grand_geneve)
-communes_ch <- communes_ch_grand_geneve$GDENR
-
-
-### PACA 3 ###
-
-epcis_PACA3 <- c(247400724, 247400583, 200000172) # Grand Genève, PACA 3
-communes_ch_PACA3 = c("6635", "6636", "6640", "6613", "6612", "6621")
-communes_fr_PACA3 = c("74008", "74012", "74040", "74094", "74118", "74133", "74145", "74153", "74298", "74305")
+#
+#
+# epci_annecy <- c(200066793)
+#
+#
+#
+#
+# ### GRAND GENEVE ###
+# epcis_fr <- c(247400724, 247400583, 200000172, 240100891, 200067551, 240100750, 200011773, 247400690)
+# path_communes_ch <- here('data', 'autre', "communes_suisses.xlsx")
+# communes_ch <- read_excel(path_communes_ch, sheet = "GDE")
+# cantons_ch_grand_geneve <- c(2228, 2500)
+# communes_ch_grand_geneve <- communes_ch %>%
+#   filter(GDEBZNR %in% cantons_ch_grand_geneve)
+# communes_ch <- communes_ch_grand_geneve$GDENR
+#
+#
+# ### PACA 3 ###
+#
+# epcis_PACA3 <- c(247400724, 247400583, 200000172) # Grand Genève, PACA 3
+# communes_ch_PACA3 = c("6635", "6636", "6640", "6613", "6612", "6621")
+# communes_fr_PACA3 = c("74008", "74012", "74040", "74094", "74118", "74133", "74145", "74153", "74298", "74305")
 
 ##############################
-#
-# epci <- epcis_Grand_Geneve[1]
-# epci <- 200046977
-# usethis::use_data(epci, internal = TRUE, overwrite = TRUE)
-
-crop_region  <- function(epcis= c(),
-                         communes_ch= NULL,
-                         communes_fr = NULL) {
-  cities <- st_read(here("data", "cities.gpkg"))
-  selected_cities <- cities[cities$SIREN_EPCI %in% epcis | cities$INSEE_COM %in% communes_fr, ]
-  region_fr <- st_transform(selected_cities, 3035)
-  region_fr <- region_fr$geom
-  region_fr <- st_combine(region_fr)
-
-  cities_ch <- st_read(here("data", "cities_ch.gpkg"))
-  # cities_ch <- cities_ch %>% mutate(Nom = str_replace_all(Nom, "\\s*\\([^\\)]+\\)", ""))
-  selected_cities_ch <- cities_ch[cities_ch$num_OFS %in% communes_ch, ]
-  region_ch <- st_transform(selected_cities_ch, 3035)
-  st_geometry(region_ch) <- "geom"
-  region_ch <- region_ch$geom
-  region_ch <- st_combine(region_ch)
-
-
-  region <- st_union(region_fr, region_ch, by_feature = FALSE, is_coverage = TRUE)
-  region <- nngeo::st_remove_holes(region)
-
-
-  region <- st_transform(region, 3035) # projected coordinate system for Europe
-  st_write(region, here("data", "arep", "region.gpkg"), delete_dsn = TRUE)
-
-  return(st_bbox(region))
-}
-
-
-#' Merge the territory chosen with the data from Corine Land Cover
-#' of the chosen years
-#' The function returns nothing but store the gpkg file
-#' in the "data->arep" folder
-#'
-#'
-#' @param box
-#' @param yearn
-#' @return None
-#'
-#' @importFrom stringr str_split
-write_gpkg_files  <- function(box, years){
-
-  box <- str_split(box, " ")
-  box <- round(as.numeric(box))
-  box <- paste(box,collapse=" ")
-
-  # ---- Run the code above to get the perimeter of your EPCI ---- #
-  command1 <- '"C:\\Program Files\\QGIS 3.22.7\\bin\\ogr2ogr"'
-  command2 <- paste("-spat", box, "-clipsrc")
-  command3 <- '"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\territory.gpkg"'
-
-  for (year in years) {
-    command4 <- paste0('"', "C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\arep\\clc_", year, ".gpkg",'"',  sep = "")
-    command5 <- paste0('"',"C:\\Users\\bohnenkl\\Documents\\GitHub\\silvia\\data\\copernicus\\CLC_PNE_RG_",
-                       year, "\\CLC_Europe_", year, ".gpkg", '"', sep = "")
-    final_command <- noquote(paste(command1, command2, command3, command4, command5))
-    system(final_command)
-  }
-}
 
 #' Crop the territory perimeter as one multipolygon
 #' The function returns the 'box' of the created perimeter
@@ -99,9 +35,10 @@ write_gpkg_files  <- function(box, years){
 #'
 #' @importFrom data.table fwrite
 #' @importFrom here here
-#' @importFrom sf st_read st_write st_transform st_combine st_geometry st_union
+#' @importFrom sf st_read st_write st_transform st_combine
+#' @importFrom sf st_geometry st_union st_bbox
 #' @importFrom nngeo st_remove_holes
-crop_region_V2  <- function(
+crop_region  <- function(
     regions_fr = NULL,
     departments_fr = NULL,
     epcis_fr= NULL,
@@ -123,7 +60,7 @@ crop_region_V2  <- function(
     cities_ch <- st_read(here("data","arep", "cities_ch.gpkg"))
     selected_cities_ch <- cities_ch[cities_ch$num_OFS %in% communes_ch, ]
     region_ch <- st_transform(selected_cities_ch, 3035)
-    st_geometry(region_ch) <- "geom"
+    sf::st_geometry(region_ch) <- "geom"
     region_ch <- region_ch$geom
     region_ch <- st_combine(region_ch)
     sf_objects <- append(sf_objects, region_ch)
@@ -132,7 +69,7 @@ crop_region_V2  <- function(
     selected_departments_fr <- st_read(here("data","arep", "departments_fr.gpkg"))
     selected_departments_fr <- selected_departments_fr[selected_departments_fr$insee_dep %in% departments_fr, ]
     departments_fr <- st_transform(selected_departments_fr, 3035)
-    st_geometry(departments_fr) <- "geom"
+    sf::st_geometry(departments_fr)  <- "geom"
     departments_fr <- departments_fr$geom
     sf_objects <- append(sf_objects, departments_fr)
   }
@@ -140,7 +77,7 @@ crop_region_V2  <- function(
     epcis <- st_read(here("data", "arep", "cities_fr.gpkg"))
     selected_epcis <- epcis[epcis$SIREN_EPCI %in% epcis_fr, ]
     epcis_fr <- st_transform(selected_epcis, 3035)
-    st_geometry(epcis_fr) <- "geom"
+    sf::st_geometry(epcis_fr)  <- "geom"
     epcis_fr <- epcis_fr$geom
     sf_objects <- append(sf_objects, epcis_fr)
 
@@ -154,7 +91,7 @@ crop_region_V2  <- function(
     regions <- st_read(here("data", "arep", "regions_fr.gpkg"))
     selected_regions_fr <- regions[regions$insee_reg %in% regions_fr, ]
     regions_fr <- st_transform(selected_regions_fr, 3035)
-    st_geometry(regions_fr) <- "geom"
+    sf::st_geometry(regions_fr) <- "geom"
     regions_fr <- regions_fr$geom
     sf_objects <- append(sf_objects, regions_fr)
   }
@@ -197,8 +134,99 @@ crop_region_V2  <- function(
 
   st_write(territory, here("data", "arep", "territory.gpkg"), delete_dsn = TRUE)
 
-  return(st_bbox(territory))
+  return(sf::st_bbox(territory))
 }
 
-# box <- crop_region_V2(epcis_fr = epci_annecy)
-# write_gpkg_files(box, c(1990, 2000, 2006, 2012, 2018))
+#' Merge the territory chosen with the data from Corine Land Cover
+#' of the chosen years, using local files
+#' The function returns nothing but store the gpkg file
+#' in the "data->arep" folder
+#'
+#' @param box
+#' @param years
+#' @return None
+#'
+#' @importFrom stringr str_split
+write_gpkg_files <- function(box, years){
+
+  box <- str_split(box, " ")
+  box <- round(as.numeric(box))
+  box <- paste(box,collapse=" ")
+
+  path <-"D:\\docs\\Impermab"
+
+  here <- noquote(gsub("/", "\\\\", here()))
+  path <- noquote(path)
+
+
+  command1 <- '"C:\\Program Files\\QGIS 3.22.7\\bin\\ogr2ogr"'
+  command2 <- paste("-spat", box, "-clipsrc")
+  command3 <- paste0('"', here, "\\data\\arep\\territory.gpkg",'"',  sep = "")
+
+  for (year in years) {
+    command4 <- paste0('"', here, "\\data\\arep\\zone_", year, ".gpkg",'"',  sep = "")
+    command5 <- paste0('"', path, "\\CLC_Europe_", year, "_count.gpkg", '"', sep = "")
+    final_command <- noquote(paste(command1, command2, command3, command4, command5))
+    system(final_command)
+  }
+}
+
+
+
+
+#' Download the territory chosen with the data from Corine Land Cover
+#' of the chosen years, using 'happign' package
+#' The function returns nothing but store the gpkg file
+#' in the "data->arep" folder
+#'
+#'
+#' @param years
+#' @return None
+#'
+#' @importFrom data.table as.data.table
+#' @importFrom sf st_intersection sf_use_s2 st_read st_transform st_write st_crs
+#' @importFrom stringr str_sub
+#' @importFrom happign  get_wfs get_layers_metadata
+#' @importFrom exactextractr exact_extract
+#' @importFrom raster crop raster mask
+download_gpkg_files <- function(years){
+
+  apikey <- "clc"
+  clc_layers <- as.data.table(happign::get_layers_metadata(apikey = apikey, data_type = "wfs"))
+  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_transform(shape, 4326)
+  cities_fr <- st_read(here("data", "arep", "cities_fr.gpkg"))
+  cities_fr <- cities_fr %>% select(SIREN_EPCI)
+  # cities_fr <- st_transform(cities_fr, 3035)
+
+  for (year in years){
+    print(year)
+    year_abr <- str_sub(year,-2,-1)
+    title <- paste0("LANDCOVER.CLC", year_abr, "_FR:clc", year_abr, "_fr.title")
+    name_parcellaire_layer <- clc_layers[Title == title, Name]
+    clc <- get_wfs(shape = shape, apikey = apikey,
+                   layer_name = name_parcellaire_layer)
+    sf::sf_use_s2(FALSE)
+    clc <- st_intersection(clc, shape)
+
+    {
+      if (year %in% c(2006, 2012, 2018)){
+        path_imper <- paste0("D:\\docs\\impermab\\merged_", as.character(year), ".tif")
+      } else {
+        path_imper <- "D:\\docs\\impermab\\merged_2012.tif"
+      }
+    }
+
+    impermab <- raster(path_imper)
+    clc <- st_transform(clc, sf::st_crs(impermab))
+    site_imper <- raster::crop(impermab, raster::extent(clc))
+    clc$mean <- exact_extract(site_imper, clc, 'mean')
+    clc <- st_transform(clc, sf::st_crs(cities_fr))
+    clc <- st_intersection(clc, cities_fr)
+    clc <- st_transform(clc, 3035)
+    st_write(clc, here("data", "arep", paste0("zone_", as.character(year), ".gpkg")), delete_dsn = TRUE)
+  }
+}
+
+
+
