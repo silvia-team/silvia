@@ -10,7 +10,7 @@ map_carbon_flows(flows)
 \item{flows}{st object returned by 'get_carbon_flows' funciton}
 }
 \value{
-a data.table with the flows in ktCO2/year
+map of carbon flows
 }
 \description{
 Plot carbon flows of a chosen region.

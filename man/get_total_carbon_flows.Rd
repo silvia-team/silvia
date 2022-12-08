@@ -6,10 +6,12 @@
 Four flows categories : biomass from land use changes, soil from land
 use changes, total forest flows (photosynthesis), total area flows}
 \usage{
-get_total_carbon_flows(flows)
+get_total_carbon_flows(flows, bd = T)
 }
 \arguments{
 \item{flows}{st object returned by 'get_carbon_flows' funciton}
+
+\item{bd}{boolean to use bd foret or not}
 }
 \value{
 a data.table with the flows in ktCO2/year

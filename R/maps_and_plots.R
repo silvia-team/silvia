@@ -6,21 +6,23 @@
 #' @param dt
 #' @return a ggplot with the map
 #' @export
-#' @importFrom sf st_read st_write st_area
+#' @importFrom sf st_read st_write st_area st_geometry
 #' @importFrom here here
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
-#' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn
+#' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn scale_color_brewer
 #'
 map_carbon_storage <- function(dt){
 
   total_area_stocks <- sum(st_area(dt) * 1e-04 * 1e-03 * dt$total_carbon_content)
   total_area_stocks <- as.numeric(total_area_stocks)
-  load(here("data", "epci.rda"))
-  epci_wood_stocks <- retrieve_harvested_wood(epci)
+  epci_wood_stocks <- retrieve_harvested_wood(dt)
   total_area_stocks <-  round(total_area_stocks + epci_wood_stocks)
 
+  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_transform(shape, st_crs(dt))
+
   p <- ggplot(dt)
-  p <- p + geom_sf(aes(fill = total_carbon_content, geometry = geometry), color = NA)
+  p <- p + geom_sf(aes(fill = total_carbon_content), color = NA)
   p <- p + labs(
     caption = "Données Corine Land Cover et ALDO (GIS)\n",
     fill = "Intensité du stockage\n de carbone (tCO2/ha)"
@@ -36,7 +38,11 @@ map_carbon_storage <- function(dt){
     strip.text = element_text(size = 14),
     legend.margin = margin(0, 0, 0.5, 0, "cm")
   )
-  p <- p + scale_fill_gradientn(colours = RColorBrewer::brewer.pal(9, "Greys"))
+  # p <- p + scale_color_brewer(palette  = "YlGn")
+  p <- p + scale_fill_gradientn(colours = RColorBrewer::brewer.pal(9, "YlOrRd"))
+  # p <- p +scale_fill_gradient2(high="#88212C", low="#E04E51")
+  p <- p + geom_sf(data = st_union(shape), fill = NA)
+
   # ggsave(plot = p, width = 10, height = 10, filename = here("imgs", "Genève", "Grand Genève - PACA 3", "Carte des stocks de carbone (total) du Grand Genève - PACA 3 en 2018.svg"))
 
   return(p)
@@ -50,24 +56,28 @@ map_carbon_storage <- function(dt){
 
 #' Plot carbon flows of a chosen region.
 #' @param flows st object returned by 'get_carbon_flows' funciton
-#' @return a data.table with the flows in ktCO2/year
+#' @return map of carbon flows
 #' @export
 #' @importFrom data.table data.table
-#' @importFrom sf st_union
+#' @importFrom sf st_union st_crs
 #' @importFrom classInt classIntervals
-#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
+#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 map_carbon_flows <- function(flows){
 
-  breaks_qt_pos <- classIntervals(flows$total_flows[flows$total_flows>0], n = 4, style = "quantile")
-  breaks_qt_neg <- classIntervals(flows$total_flows[flows$total_flows<0], n = 5, style = "quantile")
-  breaks_qt_neg$brks[1] <- min(breaks_qt_neg$brks*1.01)
-  breaks_qt <- unique(c(breaks_qt_pos$brks, breaks_qt_neg$brks, 0))
-  flows <- mutate(flows, total_flows_intervals = cut(trunc(total_flows), breaks_qt, right= T))
-
+  # breaks_qt_pos <- classIntervals(flows$total_flows[flows$total_flows>0], n = 4, style = "quantile")
+  # breaks_qt_neg <- classIntervals(flows$total_flows[flows$total_flows<0], n = 5, style = "quantile")
+  # breaks_qt_neg$brks[1] <- min(breaks_qt_neg$brks*1.01)
+  # breaks_qt <- unique(c(breaks_qt_pos$brks, breaks_qt_neg$brks, 0))
+  # flows <- mutate(flows, total_flows_intervals = cut(trunc(total_flows), breaks_qt, right= T))
+  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_transform(shape, st_crs(flows))
+  flows <- st_as_sf(flows)
+  flows <- as.data.table(flows)
 
   p <- ggplot(flows)
-  p <- p + geom_sf(aes(fill = total_flows_intervals, geometry = geometry), color = NA)
+  p <- p + geom_sf(aes(fill = total_flows, geometry = geometry), color = NA)
+
   p <- p + labs(
     # title = paste("Flux de carbone entre", year_from, "et", year_to,  " - ", name_of_the_territory, "\n"),
     # subtitle = bquote(atop('Flux total : '~  .(f1(round(total_area_flows))) ~ ktCO['2, eq']/an ~ '\n',
@@ -76,7 +86,7 @@ map_carbon_flows <- function(flows){
     #                        ))),
     #
     caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n
-    Données : Corine Land Cover et ALDO (GIS)"
+    Données : Corine Land Cover et ALDO (GIS-Sol)"
     ,
     fill = "Flux de carbone (tCO2eq/ha.an)"
   )
@@ -95,11 +105,100 @@ map_carbon_flows <- function(flows){
     legend.margin = margin(0, 0, 0.5, 0, "cm"),
     legend.spacing.y = unit(0.5, 'cm')
   )
-  p <- p + scale_fill_brewer(palette =  "RdYlGn", direction = -1)
-  # p <- p + geom_sf(data = st_union(flows), fill = NA)
+  # p <- p + scale_fill_brewer(palette =  "RdYlGn", direction = -1)
+  p <- p +scale_fill_gradient2(midpoint = 0, mid="#f2efe6", high="#bd0502", low="#016623")
+  # p <- p + scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(9, "RdYlGn")))
+
+  p <- p + geom_sf(data = st_union(shape), fill = NA)
+
 
   return(p)
 
+}
+
+
+#' Plot carbon flows in forest of a chosen region.
+#' @return map of carbon flows by the forest
+#' @export
+#' @importFrom data.table data.table
+#' @importFrom tibble rowid_to_column
+#' @importFrom sf st_union st_crs
+#' @importFrom classInt classIntervals
+#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
+#' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
+map_forest_flows <- function(){
+
+  forest_geom <- st_read(here("data", "arep", "zone_bd_foret.gpkg"))
+  forest_geom <- tibble::rowid_to_column(forest_geom, "ID_unique")
+  forest_geom <- st_transform(forest_geom, 3035)
+  forest <- st_drop_geometry(forest_geom)
+  forest <- as.data.table(forest)
+
+  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_transform(shape, st_crs(forest_geom))
+  epcis <- unique(shape$SIREN_EPCI)
+
+  forest[, essence := ifelse(like(tfv_g11, "conifères"), "conifere", NA)]
+  forest[, essence := ifelse(like(tfv_g11, "feuillus"), "feuillu", essence)]
+  forest[, essence := ifelse(like(tfv_g11, "mixte"), "mixte", essence)]
+  forest[, essence := ifelse(like(tfv_g11, "Peupleraie"), "peupleraie", essence)]
+  # forest <- forest[!is.na(essence), ]
+
+  #Retrieve forest flows
+  dt1 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_foret"))
+  dt1 <- update_epcis(dt1, "SIREN_EPCI")
+  dt1 <- dt1[SIREN_EPCI %in% epcis, ]
+  dt1 <- dt1[, c(1, 3, 12)]
+  dt1[is.na(dt1), ] <- 0
+
+  dt2 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_Peup"))
+  dt2 <- update_epcis(dt2, "SIREN_EPCI")
+  dt2 <- dt2[SIREN_EPCI %in% epcis, ]
+  dt2 <- dt2[, c(1, 12)]
+  dt2[is.na(dt2), ] <- 0
+  dt2$COMPOSITION <- "Peupleraie"
+
+  dt <- rbind(dt1, dt2)
+  # dt <- update_epcis(dt, "SIREN_EPCI")
+  dt$SIREN_EPCI <- as.character(dt$SIREN_EPCI)
+  setnames(dt, "BILAN_CARB (tC∙ha-1∙an-1)", "flow")
+  dt <- dt %>% dplyr::mutate(COMPOSITION = tolower(COMPOSITION))
+  dt <- dt[dt$COMPOSITION != 'total']
+  dt <- dt[, list(flow= mean(flow)), by= c("SIREN_EPCI", "COMPOSITION")]
+  forest_flows <- merge(forest, dt, by.x = c("SIREN_EPCI", "essence"), by.y = c("SIREN_EPCI", "COMPOSITION"),
+                        all.x= T, allow.cartesian = T)
+  forest_flows[, total_flows := ifelse(is.na(essence), 0, -flow*44/12)]
+
+  forest_geom <- forest_geom %>% select(ID_unique)
+  forest_flows <- merge(forest_flows, forest_geom, by = "ID_unique")
+
+  p <- ggplot(forest_flows)
+  p <- p + geom_sf(aes(fill = total_flows, geometry = geom), color = NA)
+
+  p <- p + labs(
+    caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n
+    Données : Corine Land Cover et BD Forêt V2",
+    fill = "Flux de carbone (tCO2eq/ha.an)"
+  )
+
+  p <- p + theme_void()
+  p <- p + theme(
+    legend.position = "right",
+    legend.justification = "left",
+    plot.caption = element_text(hjust = 0),
+    panel.border = element_blank(),
+    plot.title = element_text(face = "bold", size = 14),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(face = "italic", size = 12),
+    plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), units = "cm"),
+    strip.text = element_text(size = 14),
+    legend.margin = margin(0, 0, 0.5, 0, "cm"),
+    legend.spacing.y = unit(0.5, 'cm')
+  )
+  p <- p + scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(9, "YlGn")))
+  p <- p + geom_sf(data = st_union(shape), fill = NA)
+
+  return(p)
 }
 
 
