@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+
+data/copernicus/
+data/arep/
+data/aldo/downloaded_data
+data/ign/cities_files/
+imgs/
+old_code/
