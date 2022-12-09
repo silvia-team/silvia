@@ -7,6 +7,8 @@
 #' @importFrom sf st_read st_write st_transform
 load_data <- function(){
 
+  dir.create(here("data", "aldo", "downloaded_data"))
+
   # load carbon storage data from Aldo
   extract_aldo_carbon_stocks()
 
