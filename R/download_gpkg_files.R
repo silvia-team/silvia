@@ -5,6 +5,7 @@
 #'
 #' @param years
 #' @param bd_foret
+#' @param download_impermab
 #' @return None
 #'
 #' @importFrom data.table as.data.table
@@ -40,10 +41,10 @@ download_gpkg_files <- function(years, bd_foret = T, download_impermab = T){
     {
       if (download_impermab == T){
         if (year %in% c(1990, 2000, 2006, 2012)){
-          path_imper <- here("data", "copernicus", "impermab_12_30m.tif")
+          path_imper <- here("data", "copernicus", "impermab_12.tif")
         }
         else if (year == 2018){
-          path_imper <- here("data", "copernicus", "impermab_15_30m.tif")
+          path_imper <- here("data", "copernicus", "impermab_15.tif")
         }
       }
       else {
@@ -94,13 +95,14 @@ download_gpkg_files <- function(years, bd_foret = T, download_impermab = T){
 #' @imporrtFrom raster brick aggregate mean writeRaster
 download_impermability_layers <- function(shape, years = c("12", "15")){
 
+  do.call(file.remove, list(list.files(here("data", "copernicus"), full.names = TRUE)))
   for (year in years){
     apikey_impermab <- "clc"
     name_impermab_layer <- paste0("LANDCOVER.HR.IMD.CLC", year)
     impermab <- happign::get_wms_raster(shape= shape, apikey= apikey_impermab,
-                                        layer_name = name_impermab_layer, overwrite = T, resolution= 30,
-                                        filename = here("data", "copernicus", paste0("impermab_", year)))
-    file_path <- here("data", "copernicus", paste0("impermab_", year, "_30m.tif"))
+                                        layer_name = name_impermab_layer, resolution= 30,
+                                        filename = here("data", "copernicus", paste0("impermab_", year, ".tif")))
+    file_path <- here("data", "copernicus", paste0("impermab_", year, ".tif"))
     impermab <- raster::brick(file_path, package= "raster")
     impermab <- raster::aggregate(impermab, fact=6)
     impermab <- raster::calc(impermab, fun = mean, na.rm = T)

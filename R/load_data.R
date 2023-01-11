@@ -1,11 +1,19 @@
-
-#' download the files needed to run the tool
+#' Donwload data
+#'
+#' Donwload data from IGN and ALDO needed to run the tool.
+#'
+#'
+#' @usage
+#' download_data()
+#'
+#' @export
+#'
 #' @return None
 #' @importFrom data.table fwrite
 #' @importFrom happign get_layers_metadata get_wfs
 #' @importFrom here here
 #' @importFrom sf st_read st_write st_transform
-load_data <- function(){
+download_data <- function(){
 
   dir.create(here("data", "aldo", "downloaded_data"))
 

@@ -1,4 +1,3 @@
-
 #' Extracts the data for the amount of carbon stored in soils from the Aldo
 #' Excel tool.
 #' @param path_to_aldo

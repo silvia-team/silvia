@@ -145,6 +145,7 @@ map_forest_flows <- function(){
   # forest <- forest[!is.na(essence), ]
 
   #Retrieve forest flows
+  path_to_aldo <- here("data", "aldo", "base_data",  "Outil ALDO_2021_12.xlsx")
   dt1 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_foret"))
   dt1 <- update_epcis(dt1, "SIREN_EPCI")
   dt1 <- dt1[SIREN_EPCI %in% epcis, ]

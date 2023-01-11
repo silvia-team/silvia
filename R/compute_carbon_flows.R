@@ -229,6 +229,8 @@ get_forest_flows <- function(){
 
   forest <- rbind(coniferes, feuillus, mixtes, peupleraies)
 
+  path_to_aldo <- here("data", "aldo", "base_data",  "Outil ALDO_2021_12.xlsx")
+
   #Retrieve forest flows
   dt1 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_foret"))
   dt1 <- update_epcis(dt1, "SIREN_EPCI")

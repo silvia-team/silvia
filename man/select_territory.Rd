@@ -2,23 +2,49 @@
 % Please edit documentation in R/select_territory.R
 \name{select_territory}
 \alias{select_territory}
-\title{Crop the territory perimeter as one multipolygon
-The function returns the 'box' of the created perimeter
-and store the gpkg file in 'data->arep' folder}
+\title{Select territory}
 \usage{
 select_territory(
-  regions_fr = NULL,
-  departments_fr = NULL,
-  epcis_fr = NULL,
-  communes_ch = NULL,
-  communes_fr = NULL
-)
+    regions_fr = NULL,
+    departments_fr = NULL,
+    epcis_fr= NULL,
+    communes_fr = NULL,
+    communes_ch= NULL)
+}
+\arguments{
+\item{regions_fr}{A \code{character} or a list of \code{character} of french
+region codes to be included in the perimeter}
+
+\item{departments_fr}{A \code{character} or a list of \code{character} of french
+departements codes to be included in the perimeter}
+
+\item{epcis_fr}{A \code{character} or a list of \code{character} of french
+EPCIs codes to be included in the perimeter}
+
+\item{communes_fr}{A \code{character} or a list of \code{character} of french
+municipalities codes to be included in the perimeter}
 }
 \value{
-the coordinates of the box that delineates the territory
+Map of the selected territory
 }
 \description{
-Crop the territory perimeter as one multipolygon
-The function returns the 'box' of the created perimeter
-and store the gpkg file in 'data->arep' folder
+Spatial boundaries to be studied.
+The codes of the different french territories
+(communes, EPCI, départements, régions) are  referenced here
+\href{https://www.insee.fr/fr/information/6051727}{INSEE's codes}
+}
+\details{
+The function returns the map of the created perimeter
+and store the gpkg file in 'data->arep' folder as "territory.gpkg".
+}
+\examples{
+# Shape of the "Grand Annecy" EPCI
+
+select_territory(epcis_fr = "200066793")
+
+
+# Shape of the union of a region (PACA 93), a departement (Occitanie 31),
+two epcis (in the Rhône department), and one city (Albi 81004)
+
+select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
 }

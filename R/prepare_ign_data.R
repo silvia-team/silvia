@@ -9,9 +9,10 @@ load_ign_aldo_data <- function(){
 
   if(!file.exists(here("data", "ign", "cities_files","COMMUNE.shp"))){
     dir.create(here("data", "ign", "cities_files"))
-    stop("The folder silvia/data/ign/cities_files/COMMUNE.shp doesn't exist !
-    You need to download the french 'decoupage administraif' here : https://geoservices.ign.fr/adminexpress
-    and paste all the 'COMMUNE' files in the 'silvia/data/ign/cities_files' folder")
+    stop("The folder silvia/data/ign/cities_files/COMMUNE.shp doesn't exist.
+    You need to download the french 'decoupage administraif' of 'France métropolitaine' here :
+    [geoservice](https://geoservices.ign.fr/adminexpress). It takes about 10 minutes.
+    Paste all the 'COMMUNE' files in the 'silvia/data/ign/cities_files' folder")
   }
 
   else{
@@ -30,6 +31,7 @@ load_ign_aldo_data <- function(){
     cities <- merge(cities, city_category, by = "INSEE_COM")
     dir.create(here("data", "arep"))
     st_write(cities, here("data", "arep", "cities_fr.gpkg"), delete_dsn = TRUE)
+
   }
 }
 
