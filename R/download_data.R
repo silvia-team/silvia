@@ -15,6 +15,7 @@
 #' @importFrom sf st_read st_write st_transform
 download_data <- function(){
 
+  # create a folder to deposit downloaded data from the Aldo excel tool
   dir.create(here("data", "aldo", "downloaded_data"))
 
   # load carbon storage data from Aldo

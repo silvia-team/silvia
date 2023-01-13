@@ -1,5 +1,10 @@
-
-#' download the files needed to run the tool
+#'Load ign aldo data
+#'
+#' Check if Write a `cities.gpkg` files with data on french  cities.
+#'
+#' @usage
+#'
+#'
 #' @return None
 #' @importFrom data.table merge as.data.table setnames
 #' @importFrom here here
@@ -22,8 +27,6 @@ load_ign_aldo_data <- function(){
     path_cities_category_fr <- here("data", "insee", "communes", "UU2020_au_01-01-2022.xlsx")
     city_category <- read_excel(path_cities_category_fr, sheet = "Composition_communale", skip = 5)
     city_category <- as.data.table(city_category)
-    print(class(city_category))
-    print(names(city_category))
 
     city_category <- city_category[, list(CODGEO, STATUT_2017)]
     setnames(city_category, c("INSEE_COM", "city_category"))

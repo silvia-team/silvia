@@ -1,5 +1,6 @@
-
+#'
 #' Retrieve the carbon flows between two years, of a chosen region
+#'
 #' @param year_from
 #' @param year_to
 #' @return a sf object with the carbon flows of the region
@@ -17,7 +18,6 @@ get_carbon_flows <- function(year_from, year_to) {
   delta_years = year_to - year_from
 
   #biomass
-
   biomass_flows_wo_forests <- fread(here("data", "aldo", "downloaded_data", "biomass_flows_wo_forests.csv"))
   biomass_flows_wo_forests <- biomass_flows_wo_forests[biomass_flows_wo_forests$EPCI_Siren %in% epcis,]
   biomass_flows_wo_forests <- biomass_flows_wo_forests[!is.na(from_clc)]
@@ -30,6 +30,7 @@ get_carbon_flows <- function(year_from, year_to) {
     to_clc= as.character(to_clc),
     from_id, to_id, flow, unit
   )]
+
   # Convert to CO2eq
   biomass_flows_wo_forests[, flow := flow*44/12]
 
@@ -75,14 +76,12 @@ get_carbon_flows <- function(year_from, year_to) {
   dt$EPCI_Siren <- as.character(dt$EPCI_Siren)
 
   #soils
-
   soil_flows <- fread(here("data", "aldo", "downloaded_data", "soil_flows.csv"))
   soil_flows <- soil_flows[soil_flows$EPCI_Siren  %in% epcis]
   soil_flows[, flow := ifelse(is.na(flow), 0, flow)]
   soil_flows[, flow := ifelse(unit == "tC/ha/an", flow*20, flow)]
   soil_flows[, unit := ifelse(unit == "tC/ha/an", "tC/ha", unit)]
 
-  # soil_flows <- soil_flows %>% select(-c(EPCI_Siren))
 
 
   # Add litters
@@ -90,7 +89,6 @@ get_carbon_flows <- function(year_from, year_to) {
   soil_flows <- soil_flows[, flow := ifelse(from_clc %in% c(311,312,313,324) & !(soil_flows$to_clc %in% c(311,312,313,324,141)), flow - 9, flow)]
   soil_flows <- soil_flows[, flow := ifelse(!(from_clc %in% c(311,312,313,324)) & soil_flows$to_clc %in% c(311,312,313,324,141), flow + 9, flow)]
 
-  # soil_flows$flow[!(soil_flows$from_clc %in% c(311,312,313,324)) & soil_flows$to_clc %in% c(311,312,313,324,141) ] %+=% 9
 
   soil_flows <- soil_flows[, list(
     EPCI_Siren= as.character(EPCI_Siren),
@@ -136,16 +134,11 @@ get_carbon_flows <- function(year_from, year_to) {
   dt_dupl <- as.data.table(dt_dupl)
   dt_dupl <- dt_dupl[, flow := ifelse(artif_rate < 0, min_flow, max_flow*artif_rate + min_flow* (1-artif_rate)) ]
   dt_dupl <- dt_dupl[, flow := ifelse(artif_rate == 0, 0, flow) ]
-  # dt_dupl$flow[dt_dupl$artif_rate > 0] <-
-  #   dt_dupl$max_flow* dt_dupl$artif_rate + dt_dupl$min_flow* (1-dt_dupl$artif_rate)
+
 
   dt_dupl <- dt_dupl[, flow_N2O := ifelse(artif_rate < 0, min_flow_N2O, max_flow_N2O*artif_rate + min_flow_N2O* (1-artif_rate)) ]
   dt_dupl <- dt_dupl[, flow_N2O := ifelse(artif_rate == 0, 0, flow) ]
 
-  # dt_dupl$flow_N2O <-0
-  # dt_dupl$flow_N2O[dt_dupl$artif_rate < 0] <- dt_dupl$min_flow_N2O[dt_dupl$artif_rate < 0]
-  # dt_dupl$flow_N2O[dt_dupl$artif_rate > 0] <-
-  #   dt_dupl$max_flow_N2O* dt_dupl$artif_rate + dt_dupl$min_flow_N2O* (1-dt_dupl$artif_rate)
 
   dt_dupl <- dt_dupl[, -c("artif_rate", "max_flow", "min_flow", "max_flow_N2O", "min_flow_N2O")]
   dt <- rbind(dt_unique, dt_dupl)
@@ -158,7 +151,6 @@ get_carbon_flows <- function(year_from, year_to) {
   dt$soil_category_initial[!is.na(dt$from_id)] <- dt$from_id[!is.na(dt$from_id)]
   dt$soil_category_final[!is.na(dt$to_id)] <- dt$to_id[!is.na(dt$to_id)]
 
-  # dt <- dt  %>% select(-c(from_id, to_id))
 
 
   # # forests

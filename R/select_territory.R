@@ -52,12 +52,16 @@ select_territory  <- function(
     communes_fr = NULL) {
 
 
+  # load the french administrative division file
   cities_fr_geom <- st_read(here("data", "arep", "cities_fr.gpkg"))
+
+  # create a unique ID for each zone
   cities_fr_geom <- tibble::rowid_to_column(cities_fr_geom, "ID_unique")
 
   cities_fr <- st_drop_geometry(cities_fr_geom)
   cities_fr <- as.data.table(cities_fr)
 
+  # select the chosen territories
   zone_fr <- cities_fr[INSEE_COM %in% communes_fr |
                          INSEE_DEP %in% departments_fr |
                          SIREN_EPCI %in% epcis_fr |
@@ -75,12 +79,15 @@ select_territory  <- function(
     summarise(geom= st_union(geom), area= as.numeric(sum(area))) %>%
     filter(area >100)
 
+
+  # remove any holes in the geometry
   zone <- nngeo::st_remove_holes(zone)
   zone <- st_transform(zone, 3035)
 
+  # save the geometry
   st_write(zone, here("data", "arep", "territory.gpkg"), delete_dsn = TRUE)
 
-
+  # plot the geometry
   p <- ggplot()
   p <- p + geom_sf(data = zone, fill = NA)
   p <- p + theme_void()
@@ -97,3 +104,5 @@ select_territory  <- function(
 
   return(p)
 }
+
+

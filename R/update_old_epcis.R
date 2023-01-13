@@ -1,10 +1,19 @@
-#' Update old epcis found in aldo to the new classification
+#' Update outdated epcis
+#'
+#' Write a file that matches old epcis found in aldo with the new classification
+#'
+#' @details
+#' The function write a `epcis_old_new.csv` file with the corresponding old/new epcis.
+#'
+#' @usage
+#' update_outdated_epcis()
+#'
 #' @return None
 #' @importFrom readxl read_excel
 #' @importFrom data.table as.data.table merge
 #' @importFrom here here
 #'
-write_update_epcis <- function(){
+update_outdated_epcis <- function(){
   path_2012 <- here("data", "insee", "epci", "epci-au-01-01-2012.xls")
   epci_2012 <- as.data.table(read_excel(path_2012, sheet = "Composition communale des EPCI",  skip =1))
   path_2021 <- here("data", "insee", "epci","Intercommunalite_Metropole_au_01-01-2022.xlsx")
@@ -25,7 +34,9 @@ write_update_epcis <- function(){
 }
 
 
+#'
 #' Update old epcis found in aldo to the new classification
+#'
 #' @param dt
 #' @param col_name
 #' @return dt
