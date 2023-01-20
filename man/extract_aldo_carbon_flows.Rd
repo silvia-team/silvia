@@ -10,7 +10,7 @@ extract_aldo_carbon_flows(path_to_aldo)
 \item{path_to_aldo}{}
 }
 \value{
-A data.table object.
+None
 }
 \description{
 Extracts the data for carbon flows from the Aldo Excel tool.

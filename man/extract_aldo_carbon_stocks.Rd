@@ -10,7 +10,7 @@ extract_aldo_carbon_stocks()
 \item{path_to_aldo}{the path to the excel tool Aldo}
 }
 \value{
-A data.table object with carbon stocks ratio in different tanks
+None
 }
 \description{
 Extracts the data for the amount of carbon stored in soils from the Aldo

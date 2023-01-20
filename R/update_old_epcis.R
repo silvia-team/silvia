@@ -10,7 +10,7 @@
 #'
 #' @return None
 #' @importFrom readxl read_excel
-#' @importFrom data.table as.data.table merge
+#' @importFrom data.table as.data.table
 #' @importFrom here here
 #'
 update_outdated_epcis <- function(){

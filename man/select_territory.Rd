@@ -50,4 +50,6 @@ select_territory(epcis_fr = "200066793")
 two epcis (in the Rhône department), and one city (Albi 81004)
 
 select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
+
+
 }

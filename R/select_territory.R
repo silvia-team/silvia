@@ -54,7 +54,7 @@
 #' @importFrom httr2 request req_url_path resp_body_string req_url_query
 #' @importFrom jsonlite fromJSON
 #' @importFrom happign get_apicarto_commune
-#' @importFrom ggplot2 ggplot geom_sf la
+#' @importFrom ggplot2 ggplot geom_sf
 #'
 #'
 select_territory  <- function(

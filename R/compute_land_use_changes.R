@@ -5,8 +5,8 @@
 #' @param remove_unchanged
 #' @return a sf object with the land use changes between year_to and year_from
 #' @export
+#'
 #' @importFrom sf st_intersection st_area st_buffer
-#' @importFrom tibble rownames
 get_land_use_changes <- function(year_from, year_to, remove_unchanged = TRUE, count = FALSE) {
 
   delta_years = year_to - year_from

@@ -202,7 +202,7 @@ get_carbon_flows <- function(year_from, year_to) {
 #' using the BD foret 2
 #' @return forest flows in tC.an-1
 #' @export
-#' @importFrom data.table as.data.table setnames rbind merge
+#' @importFrom data.table as.data.table setnames
 #' @importFrom here here
 #' @importFrom sf st_read st_transform st_intersection st_area st_drop_geometry
 #' @importFrom happign  get_wfs get_layers_metadata

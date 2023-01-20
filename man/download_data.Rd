@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_data.R
 \name{download_data}
 \alias{download_data}
-\title{Donwload data}
+\title{Download data}
 \usage{
 download_data()
 }
@@ -10,5 +10,5 @@ download_data()
 None
 }
 \description{
-Donwload data from IGN and ALDO needed to run the tool.
+Download data from IGN and ALDO needed to run the tool.
 }

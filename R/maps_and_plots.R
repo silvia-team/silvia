@@ -121,12 +121,13 @@ map_carbon_flows <- function(flows){
 #' Plot carbon flows in forest of a chosen region.
 #' @return map of carbon flows by the forest
 #' @export
-#' @importFrom data.table data.table
+#' @importFrom data.table as.data.table
 #' @importFrom tibble rowid_to_column
 #' @importFrom sf st_union st_crs
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
+#'
 map_forest_flows <- function(){
 
   forest_geom <- st_read(here("data", "arep", "zone_bd_foret.gpkg"))
@@ -215,12 +216,12 @@ map_forest_flows <- function(){
 #' @param year_to
 #' @return The sankey diagram
 #' @export
-#' @importFrom data.table setnames
+#' @importFrom data.table setnames as.data.table
 #' @importFrom here here
 #' @importFrom sf st_read st_write st_drop_geometry
 #' @importFrom ggsankey make_long theme_sankey geom_sankey_label geom_sankey
 #' @importFrom ggplot2 scale_colour_viridis_d  scale_fill_manual
-#' #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
+#' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 #' @importFrom dplyr rename_at select mutate filter summarise group_by
 plot_land_use_changes <- function(year_from, year_to, level= "soft"){

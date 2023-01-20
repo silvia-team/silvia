@@ -355,7 +355,7 @@ get_carbon_storage <-  function(year, count = F){
 #' @param carbon_stocks st object returned by 'get_carbon_storage' funciton
 #' @return a data.table with the flows in ktCO2/year
 #' @export
-#' @importFrom data.table data.table
+#' @importFrom data.table as.data.table
 #' @importFrom sf st_area
 get_total_carbon_stocks <- function(carbon_stocks){
 

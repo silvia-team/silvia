@@ -35,8 +35,8 @@
 #' select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
 #' @export
 #'
-#' @importFrom data.table fwrite
-#' @importFrom httr2 request req_url_path httr2 req_url_query req_perform resp_body_string
+#' @importFrom data.table fwrite as.data.table
+#' @importFrom httr2 request req_url_path req_url_query req_perform resp_body_string
 #' @importFrom jsonlite fromJSON
 get_apigouv_insee_codes <- function(communes_fr= list(),
                                     epcis_fr = list(),

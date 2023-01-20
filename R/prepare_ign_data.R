@@ -6,10 +6,12 @@
 #'
 #'
 #' @return None
-#' @importFrom data.table merge as.data.table setnames
+#' @importFrom data.table as.data.table setnames
 #' @importFrom here here
 #' @importFrom sf st_read st_write
 #' @importFrom readxl read_excel
+#'
+#'
 load_ign_aldo_data <- function(){
 
   if(!file.exists(here("data", "ign", "cities_files","COMMUNE.shp"))){
