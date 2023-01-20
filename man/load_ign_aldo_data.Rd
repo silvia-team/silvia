@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_ign_data.R
 \name{load_ign_aldo_data}
 \alias{load_ign_aldo_data}
-\title{download the files needed to run the tool}
+\title{Load ign aldo data}
 \usage{
 load_ign_aldo_data()
 }
@@ -10,5 +10,5 @@ load_ign_aldo_data()
 None
 }
 \description{
-download the files needed to run the tool
+Check if Write a \code{cities.gpkg} files with data on french  cities.
 }

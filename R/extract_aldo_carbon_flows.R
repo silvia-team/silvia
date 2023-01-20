@@ -1,7 +1,7 @@
 #' Extracts the data for carbon flows from the Aldo Excel tool.
 #' @param path_to_aldo
 #'
-#' @return A data.table object.
+#' @return None
 #' @importFrom data.table as.data.table melt setnames tstrsplit like
 #' @importFrom readxl read_excel
 #'
@@ -143,7 +143,5 @@ extract_aldo_carbon_flows <- function(path_to_aldo) {
   fwrite(forest_flows, here("data","aldo", "downloaded_data", "forest_flows.csv"))
 
 
-
-  return(dt)
 }
 

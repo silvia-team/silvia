@@ -7,7 +7,7 @@ of the chosen years, using 'happign' package
 The function returns nothing but store the gpkg file
 in the "data->arep" folder}
 \usage{
-download_gpkg_files(years, bd_foret = T, download_impermab = T)
+download_gpkg_files(years, bd_foret = T)
 }
 \value{
 None

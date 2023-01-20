@@ -342,6 +342,8 @@ get_carbon_storage <-  function(year, count = F){
   dt <- dt[, -c("ID_unique")]
   dt <- st_as_sf(dt)
 
+
+
   return(dt)
 }
 

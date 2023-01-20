@@ -2,16 +2,15 @@
 % Please edit documentation in R/extract_aldo_carbon_stocks.R
 \name{extract_aldo_carbon_stocks}
 \alias{extract_aldo_carbon_stocks}
-\title{Extracts the data for the amount of carbon stored in soils from the Aldo
-Excel tool.}
+\title{Extract Aldo carbon stocks}
 \usage{
 extract_aldo_carbon_stocks()
 }
 \arguments{
-\item{path_to_aldo}{}
+\item{path_to_aldo}{the path to the excel tool Aldo}
 }
 \value{
-A data.table object.
+A data.table object with carbon stocks ratio in different tanks
 }
 \description{
 Extracts the data for the amount of carbon stored in soils from the Aldo

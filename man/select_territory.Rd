@@ -5,11 +5,12 @@
 \title{Select territory}
 \usage{
 select_territory(
-    regions_fr = NULL,
-    departments_fr = NULL,
-    epcis_fr= NULL,
-    communes_fr = NULL,
-    communes_ch= NULL)
+    regions_fr = list(),
+    departments_fr = list(),
+    epcis_fr= list(),
+    communes_fr = list(),
+    communes_ch= list(),
+    local = F)
 }
 \arguments{
 \item{regions_fr}{A \code{character} or a list of \code{character} of french
@@ -23,13 +24,15 @@ EPCIs codes to be included in the perimeter}
 
 \item{communes_fr}{A \code{character} or a list of \code{character} of french
 municipalities codes to be included in the perimeter}
+
+\item{local}{If TRUE, the data is loaded from the "arep" folder. If false, a request is done on a api.}
 }
 \value{
 Map of the selected territory
 }
 \description{
-Spatial boundaries to be studied.
-The codes of the different french territories
+Crop spatial boundaries to be studied.
+Codes of the different french territories
 (communes, EPCI, départements, régions) are  referenced here
 \href{https://www.insee.fr/fr/information/6051727}{INSEE's codes}
 }

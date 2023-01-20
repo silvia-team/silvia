@@ -20,6 +20,8 @@ map_carbon_storage <- function(dt){
 
   shape <- st_read(here("data", "arep", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(dt))
+  shape <- shape %>% summarise(geom= st_union(geom))
+  shape <- nngeo::st_remove_holes(shape)
 
   p <- ggplot(dt)
   p <- p + geom_sf(aes(fill = total_carbon_content), color = NA)
@@ -65,18 +67,17 @@ map_carbon_storage <- function(dt){
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 map_carbon_flows <- function(flows){
 
-  # breaks_qt_pos <- classIntervals(flows$total_flows[flows$total_flows>0], n = 4, style = "quantile")
-  # breaks_qt_neg <- classIntervals(flows$total_flows[flows$total_flows<0], n = 5, style = "quantile")
-  # breaks_qt_neg$brks[1] <- min(breaks_qt_neg$brks*1.01)
-  # breaks_qt <- unique(c(breaks_qt_pos$brks, breaks_qt_neg$brks, 0))
-  # flows <- mutate(flows, total_flows_intervals = cut(trunc(total_flows), breaks_qt, right= T))
   shape <- st_read(here("data", "arep", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(flows))
+  shape <- shape %>% summarise(geom= st_union(geom))
+  shape <- nngeo::st_remove_holes(shape)
+
   flows <- st_as_sf(flows)
-  flows <- as.data.table(flows)
+  flows <- flows %>% filter(area>0)
+
 
   p <- ggplot(flows)
-  p <- p + geom_sf(aes(fill = total_flows, geometry = geometry), color = NA)
+  p <- p + geom_sf(aes(fill = total_flows), colour = NA)
 
   p <- p + labs(
     # title = paste("Flux de carbone entre", year_from, "et", year_to,  " - ", name_of_the_territory, "\n"),

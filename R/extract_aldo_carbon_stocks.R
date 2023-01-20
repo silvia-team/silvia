@@ -8,12 +8,14 @@
 #'
 #' @param path_to_aldo the path to the excel tool Aldo
 #'
-#' @return A data.table object with carbon stocks ratio in different tanks
+#' @return None
 #'
 #' @importFrom data.table as.data.table melt setnames
 #' @importFrom readxl read_excel
 #'
 extract_aldo_carbon_stocks <- function() {
+
+  options(warn=-1)
 
   # path to the the Aldo excel tool
   path_to_aldo <- here("data", "aldo", "base_data",  "Outil ALDO_2021_12.xlsx")
@@ -62,7 +64,7 @@ extract_aldo_carbon_stocks <- function() {
   biomass_forests <- biomass_forests[aldo_biomass_category != "total"]
 
   # retrieve carbon stocks in harvested wood
-  harvested_wood <- read_excel(path_to_aldo, sheet = "Ref_Prod_Bois")
+  suppressMessages(harvested_wood <- read_excel(path_to_aldo, sheet = "Ref_Prod_Bois"))
   harvested_wood <- as.data.table(harvested_wood)
   harvested_wood <- harvested_wood[, c(1,3, 7, 8, 9)]
   harvested_wood[is.na(harvested_wood), ] <- 0
@@ -85,8 +87,6 @@ extract_aldo_carbon_stocks <- function() {
   fwrite(biomass_forests, here("data", "aldo", "downloaded_data", "biomass_forests.csv"))
   fwrite(harvested_wood, here("data", "aldo", "downloaded_data", "harvested_wood.csv"))
 
-
-  return(dt)
 }
 
 
