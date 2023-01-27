@@ -4,7 +4,10 @@
 \alias{map_forest_flows}
 \title{Plot carbon flows in forest of a chosen region.}
 \usage{
-map_forest_flows()
+map_forest_flows(data_path)
+}
+\arguments{
+\item{data_path}{path to where the data is stored}
 }
 \value{
 map of carbon flows by the forest

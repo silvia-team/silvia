@@ -7,13 +7,12 @@ using 'happign' package
 The function returns nothing but store gpkg files
 in the "data->arep" folder}
 \usage{
-download_bd_foret(shape)
+download_bd_foret(shape, data_path)
 }
 \arguments{
 \item{shape}{shape of the territory}
-}
-\value{
-None
+
+\item{data_path}{path to where the data is stored}
 }
 \description{
 Download bd foret layer on the territory, for the selected years,

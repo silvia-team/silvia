@@ -4,7 +4,10 @@
 \alias{map_carbon_storage}
 \title{Map the carbon storage on the chosen region.}
 \usage{
-map_carbon_storage(dt)
+map_carbon_storage(dt, data_path)
+}
+\arguments{
+\item{data_path}{path to where the data is stored}
 }
 \value{
 a ggplot with the map

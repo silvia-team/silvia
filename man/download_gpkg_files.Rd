@@ -7,10 +7,14 @@ of the chosen years, using 'happign' package
 The function returns nothing but store the gpkg file
 in the "data->arep" folder}
 \usage{
-download_gpkg_files(years, bd_foret = F)
+download_gpkg_files(years, data_path, bd_foret = F)
 }
-\value{
-None
+\arguments{
+\item{years}{years to download}
+
+\item{data_path}{path to where the data is stored}
+
+\item{bd_foret}{boolean to download bd_foret}
 }
 \description{
 Download the territory chosen with the data from Corine Land Cover

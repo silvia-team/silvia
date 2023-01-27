@@ -4,6 +4,6 @@
 
   packageStartupMessage("Please make sure you are connected to the internet.")
 
-  download_data()
+  # download_data()
 
 }

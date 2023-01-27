@@ -1,11 +1,12 @@
 #' Select territory
 #'
-#' Crop spatial boundaries to be studied.
+#' @description
+#' `select_territory` crops spatial boundaries to be studied.
 #' Codes of the different french territories
 #' (communes, EPCI, départements, régions) are  referenced here
 #' [INSEE's codes](https://www.insee.fr/fr/information/6051727)
 #'
-#'
+#' @description
 #' The function returns the map of the created perimeter
 #' and store the gpkg file in 'data->arep' folder as "territory.gpkg".
 #'
@@ -19,7 +20,7 @@
 #'     local = F)
 #'
 #'
-#'
+#' @param data_path path to where the data is stored
 #' @param regions_fr A `character` or a list of `character` of french
 #' region codes to be included in the perimeter
 #' @param departments_fr A `character` or a list of `character` of french
@@ -58,6 +59,7 @@
 #'
 #'
 select_territory  <- function(
+    data_path,
     regions_fr = list(),
     departments_fr = list(),
     epcis_fr= list(),
@@ -124,7 +126,7 @@ select_territory  <- function(
   borders <- st_transform(borders, 3035)
 
   # save the geometry of the territory
-  st_write(borders, here("data", "arep", "territory.gpkg"), delete_dsn = TRUE)
+  st_write(borders, here(data_path, "territory", "territory.gpkg"), delete_dsn = TRUE)
 
   # plot the geometry
   p <- ggplot()

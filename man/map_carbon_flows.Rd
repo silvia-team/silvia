@@ -4,10 +4,12 @@
 \alias{map_carbon_flows}
 \title{Plot carbon flows of a chosen region.}
 \usage{
-map_carbon_flows(flows)
+map_carbon_flows(flows, data_path)
 }
 \arguments{
 \item{flows}{st object returned by 'get_carbon_flows' funciton}
+
+\item{data_path}{path to where the data is stored}
 }
 \value{
 map of carbon flows

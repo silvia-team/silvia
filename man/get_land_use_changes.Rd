@@ -2,18 +2,21 @@
 % Please edit documentation in R/compute_land_use_changes.R
 \name{get_land_use_changes}
 \alias{get_land_use_changes}
-\title{Collect land use changes between two years}
+\title{Get land use changes}
 \usage{
-get_land_use_changes(
-  year_from,
-  year_to,
-  remove_unchanged = TRUE,
-  count = FALSE
-)
+get_land_use_changes(year_from = 2000, year_to = 2018)
+}
+\arguments{
+\item{year_from}{the CLC reference year (1990, 2000, 2006, 2012, 2018)}
+
+\item{year_to}{the year to be compared to the reference year,
+must be superior to reference year}
+
+\item{data_path}{path to where the data is stored}
 }
 \value{
 a sf object with the land use changes between year_to and year_from
 }
 \description{
-Collect land use changes between two years
+\code{get_land_use_changes} collects land use changes between two years
 }

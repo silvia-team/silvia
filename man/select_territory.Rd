@@ -13,6 +13,8 @@ select_territory(
     local = F)
 }
 \arguments{
+\item{data_path}{path to where the data is stored}
+
 \item{regions_fr}{A \code{character} or a list of \code{character} of french
 region codes to be included in the perimeter}
 
@@ -31,12 +33,11 @@ municipalities codes to be included in the perimeter}
 Map of the selected territory
 }
 \description{
-Crop spatial boundaries to be studied.
+\code{select_territory} crops spatial boundaries to be studied.
 Codes of the different french territories
 (communes, EPCI, départements, régions) are  referenced here
 \href{https://www.insee.fr/fr/information/6051727}{INSEE's codes}
-}
-\details{
+
 The function returns the map of the created perimeter
 and store the gpkg file in 'data->arep' folder as "territory.gpkg".
 }

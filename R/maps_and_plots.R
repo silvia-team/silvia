@@ -4,6 +4,8 @@
 
 #' Map the carbon storage on the chosen region.
 #' @param dt
+#' @param data_path path to where the data is stored
+#'
 #' @return a ggplot with the map
 #' @export
 #' @importFrom sf st_read st_write st_area st_geometry
@@ -11,14 +13,9 @@
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn scale_color_brewer
 #'
-map_carbon_storage <- function(dt){
+map_carbon_storage <- function(dt, data_path){
 
-  total_area_stocks <- sum(st_area(dt) * 1e-04 * 1e-03 * dt$total_carbon_content)
-  total_area_stocks <- as.numeric(total_area_stocks)
-  epci_wood_stocks <- retrieve_harvested_wood(dt)
-  total_area_stocks <-  round(total_area_stocks + epci_wood_stocks)
-
-  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(dt))
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)
@@ -58,6 +55,8 @@ map_carbon_storage <- function(dt){
 
 #' Plot carbon flows of a chosen region.
 #' @param flows st object returned by 'get_carbon_flows' funciton
+#' @param data_path path to where the data is stored
+#'
 #' @return map of carbon flows
 #' @export
 #' @importFrom data.table data.table
@@ -65,27 +64,18 @@ map_carbon_storage <- function(dt){
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
-map_carbon_flows <- function(flows){
+map_carbon_flows <- function(flows, data_path){
 
-  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(flows))
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)
-
-  flows <- st_as_sf(flows)
-  flows <- flows %>% filter(area>0)
 
 
   p <- ggplot(flows)
   p <- p + geom_sf(aes(fill = total_flows), colour = NA)
 
   p <- p + labs(
-    # title = paste("Flux de carbone entre", year_from, "et", year_to,  " - ", name_of_the_territory, "\n"),
-    # subtitle = bquote(atop('Flux total : '~  .(f1(round(total_area_flows))) ~ ktCO['2, eq']/an ~ '\n',
-    #                        atop("Flux biomasse + forêts : "~  .(f1(round((total_biomass_flows + total_forest_flows)))) ~ ktCO['2']/an ~ '\n' ,
-    #                             "Flux sol et litière : "~  .(f1(round(total_soil_flows))) ~ ktCO['2']/an ~ '\n'
-    #                        ))),
-    #
     caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n
     Données : Corine Land Cover et ALDO (GIS-Sol)"
     ,
@@ -106,9 +96,7 @@ map_carbon_flows <- function(flows){
     legend.margin = margin(0, 0, 0.5, 0, "cm"),
     legend.spacing.y = unit(0.5, 'cm')
   )
-  # p <- p + scale_fill_brewer(palette =  "RdYlGn", direction = -1)
-  p <- p +scale_fill_gradient2(midpoint = 0, mid="#f2efe6", high="#bd0502", low="#016623")
-  # p <- p + scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(9, "RdYlGn")))
+  p <- p +scale_fill_gradient2(midpoint = 0, mid="#FFFFFF", high="#bd0502", low="#016623")
 
   p <- p + geom_sf(data = st_union(shape), fill = NA)
 
@@ -119,6 +107,9 @@ map_carbon_flows <- function(flows){
 
 
 #' Plot carbon flows in forest of a chosen region.
+#'
+#' @param data_path path to where the data is stored
+#'
 #' @return map of carbon flows by the forest
 #' @export
 #' @importFrom data.table as.data.table
@@ -128,47 +119,30 @@ map_carbon_flows <- function(flows){
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 #'
-map_forest_flows <- function(){
+map_forest_flows <- function(data_path){
 
-  forest_geom <- st_read(here("data", "arep", "zone_bd_foret.gpkg"))
+  forest_geom <- st_read(here(data_path, "bd_foret", "zone_bd_foret.gpkg"))
   forest_geom <- tibble::rowid_to_column(forest_geom, "ID_unique")
   forest_geom <- st_transform(forest_geom, 3035)
   forest <- st_drop_geometry(forest_geom)
   forest <- as.data.table(forest)
 
-  shape <- st_read(here("data", "arep", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(forest_geom))
   epcis <- unique(shape$SIREN_EPCI)
 
   forest[, essence := ifelse(like(tfv_g11, "conifères"), "conifere", NA)]
   forest[, essence := ifelse(like(tfv_g11, "feuillus"), "feuillu", essence)]
   forest[, essence := ifelse(like(tfv_g11, "mixte"), "mixte", essence)]
-  forest[, essence := ifelse(like(tfv_g11, "Peupleraie"), "peupleraie", essence)]
+  forest[, essence := ifelse(like(tfv_g11, "Peupleraie"), "peupleraies", essence)]
   # forest <- forest[!is.na(essence), ]
 
-  #Retrieve forest flows
-  path_to_aldo <- here("data", "aldo", "base_data",  "Outil ALDO_2021_12.xlsx")
-  dt1 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_foret"))
-  dt1 <- update_epcis(dt1, "SIREN_EPCI")
-  dt1 <- dt1[SIREN_EPCI %in% epcis, ]
-  dt1 <- dt1[, c(1, 3, 12)]
-  dt1[is.na(dt1), ] <- 0
+  # #Retrieve forest flows
+  dt <- invisible(aldo_Ref_Biom_foret_flows)
+  dt <- dt[EPCI_Siren %in% epcis, list(EPCI_Siren= as.character(EPCI_Siren), composition, flow)]
 
-  dt2 <- as.data.table(read_excel(path_to_aldo, sheet = "Ref_Biom_Peup"))
-  dt2 <- update_epcis(dt2, "SIREN_EPCI")
-  dt2 <- dt2[SIREN_EPCI %in% epcis, ]
-  dt2 <- dt2[, c(1, 12)]
-  dt2[is.na(dt2), ] <- 0
-  dt2$COMPOSITION <- "Peupleraie"
-
-  dt <- rbind(dt1, dt2)
-  # dt <- update_epcis(dt, "SIREN_EPCI")
-  dt$SIREN_EPCI <- as.character(dt$SIREN_EPCI)
-  setnames(dt, "BILAN_CARB (tC∙ha-1∙an-1)", "flow")
-  dt <- dt %>% dplyr::mutate(COMPOSITION = tolower(COMPOSITION))
-  dt <- dt[dt$COMPOSITION != 'total']
-  dt <- dt[, list(flow= mean(flow)), by= c("SIREN_EPCI", "COMPOSITION")]
-  forest_flows <- merge(forest, dt, by.x = c("SIREN_EPCI", "essence"), by.y = c("SIREN_EPCI", "COMPOSITION"),
+  dt <- dt[, list(flow= mean(flow)), by= c("EPCI_Siren", "composition")]
+  forest_flows <- merge(forest, dt, by.x = c("SIREN_EPCI", "essence"), by.y = c("EPCI_Siren", "composition"),
                         all.x= T, allow.cartesian = T)
   forest_flows[, total_flows := ifelse(is.na(essence), 0, -flow*44/12)]
   forest_flows[, total_flows:= ifelse(total_flows > 0, -total_flows, total_flows)]
@@ -212,8 +186,11 @@ map_forest_flows <- function(){
 
 #' Plot land use changes between two year.
 #' Results are presented in a sankey diagram
-#' @param year_from
-#' @param year_to
+#' @param year_from the CLC reference year (1990, 2000, 2006, 2012, 2018)
+#' @param year_to the year to be compared to the reference year,
+#' must be superior to reference year
+#' @param data_path path to where the data is stored
+#'
 #' @return The sankey diagram
 #' @export
 #' @importFrom data.table setnames as.data.table
@@ -224,14 +201,16 @@ map_forest_flows <- function(){
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 #' @importFrom dplyr rename_at select mutate filter summarise group_by
-plot_land_use_changes <- function(year_from, year_to, level= "soft"){
+plot_land_use_changes <- function(year_from, year_to, data_path, level= "soft"){
 
-  land_use_changes <- silvia::get_land_use_changes(year_from, year_to)
+  land_use_changes <- get_land_use_changes(year_from, year_to, data_path= data_path)
   land_use_changes <- st_drop_geometry(land_use_changes)
+  land_use_changes <- as.data.table(land_use_changes)
+  land_use_changes <- land_use_changes[code_initial != code_final, ]
 
   year_from <- as.character(year_from)
   year_to <- as.character(year_to)
-  land_use_changes <- as.data.table(land_use_changes)
+
 
   if (level =="soil"){
     land_use_changes <- land_use_changes %>%
@@ -339,3 +318,5 @@ plot_land_use_changes <- function(year_from, year_to, level= "soft"){
   return(p)
 
 }
+
+

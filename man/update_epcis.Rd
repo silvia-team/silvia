@@ -6,8 +6,13 @@
 \usage{
 update_epcis(dt, col_name)
 }
+\arguments{
+\item{dt}{a data table with old epci codes}
+
+\item{col_name}{name of the column with epci code}
+}
 \value{
-dt
+dt a data table with updated epci codes
 }
 \description{
 Update old epcis found in aldo to the new classification

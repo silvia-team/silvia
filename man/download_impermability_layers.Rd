@@ -7,10 +7,10 @@ using 'happign' package
 The function returns nothing but store raster files
 in the "data->copernicus" folder}
 \usage{
-download_impermability_layers(shape, years = c("12", "15"))
+download_impermability_layers(shape, data_path, years = c("12", "15"))
 }
-\value{
-None
+\arguments{
+\item{data_path}{path to where the data is stored}
 }
 \description{
 Download impermability layers on the territory, for the selected years,

@@ -6,21 +6,23 @@
 #'
 #' @param shape
 #' @param years
-#' @return None
+#' @param data_path path to where the data is stored
 #'
 #' @importFrom happign  get_wms_raster
 #' @importFrom here here
 #' @imporrtFrom raster brick aggregate mean writeRaster
-download_impermability_layers <- function(shape, years = c("12", "15")){
+download_impermability_layers <- function(shape, data_path, years = c("12", "15")){
 
-  do.call(file.remove, list(list.files(here("data", "copernicus"), full.names = TRUE)))
+  options(warn=-1)
+
+  do.call(file.remove, list(list.files(here(data_path, "copernicus"), full.names = TRUE)))
   for (year in years){
     apikey_impermab <- "clc"
     name_impermab_layer <- paste0("LANDCOVER.HR.IMD.CLC", year)
     impermab <- happign::get_wms_raster(shape= shape, apikey= apikey_impermab,
                                         layer_name = name_impermab_layer, resolution= 40,
-                                        filename = here("data", "copernicus", paste0("impermab_", year, ".tif")))
-    file_path <- here("data", "copernicus", paste0("impermab_", year, ".tif"))
+                                        filename = here(data_path, "copernicus", paste0("impermab_", year, ".tif")))
+    file_path <- here(data_path, "copernicus", paste0("impermab_", year, ".tif"))
     impermab <- raster::brick(file_path, package= "raster")
     impermab <- raster::aggregate(impermab, fact=6)
     impermab <- raster::calc(impermab, fun = mean, na.rm = T)
