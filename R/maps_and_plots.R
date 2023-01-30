@@ -3,7 +3,7 @@
 
 
 #' Map the carbon storage on the chosen region.
-#' @param dt
+#' @param dt data table returned by `get_carbon_stocks`
 #' @param data_path path to where the data is stored
 #'
 #' @return a ggplot with the map
@@ -60,7 +60,7 @@ map_carbon_storage <- function(dt, data_path){
 #' @param data_path path to where the data is stored
 #'
 #' @return map of carbon flows
-#' @export
+#'
 #' @importFrom data.table data.table
 #' @importFrom sf st_union st_crs
 #' @importFrom classInt classIntervals
@@ -116,7 +116,7 @@ map_carbon_flows <- function(flows, data_path){
 #' @param data_path path to where the data is stored
 #'
 #' @return map of carbon flows by the forest
-#' @export
+#'
 #' @importFrom data.table as.data.table
 #' @importFrom tibble rowid_to_column
 #' @importFrom sf st_union st_crs

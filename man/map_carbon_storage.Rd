@@ -7,6 +7,8 @@
 map_carbon_storage(dt, data_path)
 }
 \arguments{
+\item{dt}{data table returned by \code{get_carbon_stocks}}
+
 \item{data_path}{path to where the data is stored}
 }
 \value{

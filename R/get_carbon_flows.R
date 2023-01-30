@@ -2,8 +2,9 @@
 #'
 #' Retrieve the carbon flows between two years, of a chosen region
 #'
-#' @param year_from
-#' @param year_to
+#' @param year_from the CLC reference year (1990, 2000, 2006, 2012, 2018)
+#' @param year_to the year to be compared to the reference year,
+#' must be superior to reference year
 #' @param data_path path to where the data is stored
 #'
 #' @return a sf object with the carbon flows of the region

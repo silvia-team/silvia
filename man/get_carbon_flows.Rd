@@ -7,6 +7,11 @@
 get_carbon_flows(year_from, year_to, data_path)
 }
 \arguments{
+\item{year_from}{the CLC reference year (1990, 2000, 2006, 2012, 2018)}
+
+\item{year_to}{the year to be compared to the reference year,
+must be superior to reference year}
+
 \item{data_path}{path to where the data is stored}
 }
 \value{

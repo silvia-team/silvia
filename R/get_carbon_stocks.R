@@ -21,11 +21,12 @@
 #'
 #' @return a sf object with the carbon stored in every polygon
 #'
-#' @export
-#'
+#' @examples
 #'# Retrieve carbon stocks in 2018
 #'
 #' dt <- get_carbon_stocks("2018")
+#'
+#' @export
 #'
 get_carbon_stocks <-  function(year, data_path){
 
