@@ -17,17 +17,18 @@
 #'
 #' @export
 #'
-download_gpkg_files <- function(years, data_path, bd_foret = F){
+download_gpkg_files <- function(years, data_path, bd_foret = T){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, 4326)
 
-  # download impermability layers
+  # download impermeability layers
   download_impermability_layers(shape= shape, data_path = data_path)
 
   apikey <- "clc"
   clc_layers <- as.data.table(happign::get_layers_metadata(apikey = apikey, data_type = "wfs"))
 
+  message("\n Download Corine Land Cover layers...")
   for (year in years){
     print(year)
     year_abr <- str_sub(year,-2,-1)

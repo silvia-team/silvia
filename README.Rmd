@@ -1,0 +1,47 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# silvia
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Le but de silvia est d'estimer et de visualiser les stocks et les flux de carbone sur un territoire. 
+
+## Installation
+
+Il est possible de télécharcher la version en développement de Silvia depuis [GitHub](https://github.com/) avec : 
+
+``` r
+# install.packages("devtools")
+devtools::install_github("silvia-team/silvia")
+```
+
+Avant d'utiliser les fonctions du package, il faut définir un dossier (de préférence vide) dans lequel les fichiers téléchargés seront stockés. 
+La fonction `setup_path()` permet de vérifier que le dossier choisi existe bien à l'emplacement renseigné, et d'inititialiser les sous-fichers dans lesquels les données téléchargées seront stockées. 
+
+## Example d'initialisation
+
+Voici un exemple d'initialisation de l'outil. 
+
+```{r example}
+library(silvia)
+
+data_path <- "C:/Users/bohnenkl/Documents/data_silvia"
+data_path <- setup_path(data_path = data_path)
+
+```
+
+

@@ -14,6 +14,7 @@
 download_impermability_layers <- function(shape, data_path, years = c("12", "15")){
 
   options(warn=-1)
+  message("\n Download impermeability layers...")
 
   do.call(file.remove, list(list.files(here(data_path, "copernicus"), full.names = TRUE)))
   for (year in years){

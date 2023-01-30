@@ -1,5 +1,3 @@
-
-
 #' Download bd foret layer on the territory, for the selected years,
 #' using 'happign' package
 #' The function returns nothing but store gpkg files
@@ -10,12 +8,14 @@
 #'
 #' @importFrom happign  get_layers_metadata get_wfs
 #' @importFrom sf st_intersection st_area st_write
+#'
 download_bd_foret <- function(shape, data_path){
+
+  message("\n Download BD foret layer...")
 
   shape <- st_transform(shape, 4326)
 
   apikey_forest <- "environnement"
-  # layers_forest <- get_layers_metadata(apikey = apikey_forest, data_type = "wfs")
   name_forest_layer <- "LANDCOVER.FORESTINVENTORY.V2:formation_vegetale"
   forest_wfs <- get_wfs(shape = shape, apikey = apikey_forest, layer_name = name_forest_layer)
   sf::sf_use_s2(FALSE)

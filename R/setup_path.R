@@ -17,6 +17,8 @@
 #'
 setup_path <- function(data_path){
 
+  data_path <- file.path(data_path)
+
   checkmate::assert_directory_exists(data_path)
 
   data_path <- path.expand(data_path)
