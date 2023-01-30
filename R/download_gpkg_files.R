@@ -14,6 +14,9 @@
 #' @importFrom happign  get_wfs get_layers_metadata
 #' @importFrom exactextractr exact_extract
 #' @importFrom raster crop raster mask
+#'
+#' @export
+#'
 download_gpkg_files <- function(years, data_path, bd_foret = F){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))

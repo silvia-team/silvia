@@ -14,6 +14,9 @@
 #' @return a sf object with the land use changes between year_to and year_from
 #'
 #' @importFrom sf st_intersection st_area st_buffer
+#'
+#' @export
+#'
 get_land_use_changes <- function(year_from, year_to, data_path) {
 
   # Check if year_from < year_to

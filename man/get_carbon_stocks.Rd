@@ -18,10 +18,3 @@ a sf object with the carbon stored in every polygon
 \code{get_carbon_stocks} calculates the carbon stocks of the selected
 territory for the selected year.
 }
-\examples{
-
-# Retrieve carbon stocks in 2018
-
-dt <- get_carbon_stocks("2018")
-
-}

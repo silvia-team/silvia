@@ -13,6 +13,8 @@
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn scale_color_brewer
 #'
+#' @export
+#'
 map_carbon_storage <- function(dt, data_path){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
@@ -64,6 +66,9 @@ map_carbon_storage <- function(dt, data_path){
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
+#'
+#' @export
+#'
 map_carbon_flows <- function(flows, data_path){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
@@ -118,6 +123,8 @@ map_carbon_flows <- function(flows, data_path){
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
+#'
+#' @export
 #'
 map_forest_flows <- function(data_path){
 
@@ -201,6 +208,9 @@ map_forest_flows <- function(data_path){
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 #' @importFrom dplyr rename_at select mutate filter summarise group_by
+#'
+#' @export
+#'
 plot_land_use_changes <- function(year_from, year_to, data_path, level= "soft"){
 
   land_use_changes <- get_land_use_changes(year_from, year_to, data_path= data_path)

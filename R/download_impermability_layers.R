@@ -4,13 +4,13 @@
 #' The function returns nothing but store raster files
 #' in the "data->copernicus" folder
 #'
-#' @param shape
-#' @param years
+#' @param shape shape of the territory
+#' @param years years to download
 #' @param data_path path to where the data is stored
 #'
 #' @importFrom happign  get_wms_raster
 #' @importFrom here here
-#' @imporrtFrom raster brick aggregate mean writeRaster
+#' @importFrom raster brick aggregate mean writeRaster
 download_impermability_layers <- function(shape, data_path, years = c("12", "15")){
 
   options(warn=-1)

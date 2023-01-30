@@ -7,10 +7,12 @@
 #' @param data_path path to where the data is stored
 #'
 #' @return a sf object with the carbon flows of the region
-#' @export
 #'
 #' @importFrom data.table as.data.table setnames fread
 #' @importFrom here here
+#'
+#' @export
+#'
 get_carbon_flows <- function(year_from, year_to, data_path) {
 
   delta_years = year_to - year_from

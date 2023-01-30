@@ -9,11 +9,11 @@
 #'
 #' @return data_path
 #'
-#' @examples
 #'
 #'
 #' @importFrom checkmate assert_directory_exists
 #'
+#' @export
 #'
 setup_path <- function(data_path){
 

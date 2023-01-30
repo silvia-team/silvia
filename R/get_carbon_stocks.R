@@ -21,7 +21,7 @@
 #'
 #' @return a sf object with the carbon stored in every polygon
 #'
-#' @examples
+#' @export
 #'
 #'# Retrieve carbon stocks in 2018
 #'

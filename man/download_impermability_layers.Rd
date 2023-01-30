@@ -10,7 +10,11 @@ in the "data->copernicus" folder}
 download_impermability_layers(shape, data_path, years = c("12", "15"))
 }
 \arguments{
+\item{shape}{shape of the territory}
+
 \item{data_path}{path to where the data is stored}
+
+\item{years}{years to download}
 }
 \description{
 Download impermability layers on the territory, for the selected years,
