@@ -9,6 +9,24 @@
 Le but de silvia est d’estimer et de visualiser les stocks et les flux
 de carbone sur un territoire.
 
+## Contexte
+
+À l’échelle globale, les sols et les forêts (y compris les produits
+issus du bois) stockent, sous forme de biomasse vivante ou morte, 3 à 4
+fois plus de carbone que l’atmosphère. Toute variation négative ou
+positive de ces stocks, même relativement faible, peut influer sur les
+émissions de gaz à effet de serre. La séquestration nette de dioxyde de
+carbone (CO2) est un flux net positif de l’atmosphère vers ces
+réservoirs qui se traduit finalement par une augmentation des stocks.
+Les enjeux actuels et futurs de la séquestration de carbone combinés
+avec la fragilité de ces puits de carbone naturels motivent le besoin de
+mieux suivre les flux de carbone entre sols, biomasse et atmosphère.
+
+L’idée de ce projet Silvia est d estimer les flux de carbone entre sols,
+biomasse et atmosphère, à partir d’un outil Excel développé par l’ADEME,
+appelé
+[Aldo](https://www.territoires-climat.ademe.fr/actualite/loutil-aldo-pour-une-premiere-estimation-de-la-sequestration-carbone-dans-les-sols-et-la-biomasse)
+
 ## Installation
 
 Il est possible de télécharcher la version en développement de Silvia
@@ -28,7 +46,7 @@ stockés.
 La fonction `setup_path()` permet de vérifier que le dossier choisi
 existe bien à l’emplacement renseigné, et d’inititialiser les
 sous-fichers dans lesquels les données téléchargées seront stockées. Ces
-fichiers sont :
+sous-fichiers sont :
 
 -   `territory` -\> périmètre du territoire choisi
 -   `corine_land_cover` -\> couches d’occupation des sols du territoire
@@ -42,23 +60,7 @@ Voici un exemple d’initialisation de l’outil.
 
 ``` r
 library(silvia)
-#> Warning in CPL_gdal_init(): GDAL Message 1: Unable to find driver DODS to unload
-#> from GDAL_SKIP environment variable.
-
-#> Warning in CPL_gdal_init(): GDAL Message 1: Unable to find driver DODS to unload
-#> from GDAL_SKIP environment variable.
-#> Please make sure you are connected to the internet.
 
 data_path <- "C:/Users/bohnenkl/Documents/data_silvia"
 data_path <- setup_path(data_path = data_path)
-#> Warning in dir.create(here(data_path, "territory")):
-#> 'C:\Users\bohnenkl\Documents\data_silvia\territory' existe déjà
-#> Warning in dir.create(here(data_path, "copernicus")):
-#> 'C:\Users\bohnenkl\Documents\data_silvia\copernicus' existe déjà
-#> Warning in dir.create(here(data_path, "corine_land_cover")):
-#> 'C:\Users\bohnenkl\Documents\data_silvia\corine_land_cover' existe déjà
-#> Warning in dir.create(here(data_path, "bd_foret")):
-#> 'C:\Users\bohnenkl\Documents\data_silvia\bd_foret' existe déjà
-#> 
-#> Downloaded data will be stored at C:/Users/bohnenkl/Documents/data_silvia
 ```
