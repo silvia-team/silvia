@@ -19,13 +19,24 @@ depuis [GitHub](https://github.com/) avec :
 devtools::install_github("silvia-team/silvia")
 ```
 
+## Example d’initialisation
+
 Avant d’utiliser les fonctions du package, il faut définir un dossier
 (de préférence vide) dans lequel les fichiers téléchargés seront
-stockés. La fonction `setup_path()` permet de vérifier que le dossier
-choisi existe bien à l’emplacement renseigné, et d’inititialiser les
-sous-fichers dans lesquels les données téléchargées seront stockées.
+stockés.
 
-## Example d’initialisation
+La fonction `setup_path()` permet de vérifier que le dossier choisi
+existe bien à l’emplacement renseigné, et d’inititialiser les
+sous-fichers dans lesquels les données téléchargées seront stockées. Ces
+fichiers sont :
+
+-   `territory` -\> périmètre du territoire choisi
+-   `corine_land_cover` -\> couches d’occupation des sols du territoire
+    pour les années sélectionnées
+-   `copernicus` -\> couches d’imperméabilisation des sols du territoire
+    pour les années 2012 et 2015
+-   `bd_foret` -\> couche d’occupation des sols détaillée pour les
+    espaces forestiers (BD Forêt Version 2)
 
 Voici un exemple d’initialisation de l’outil.
 
