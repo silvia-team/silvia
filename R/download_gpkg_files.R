@@ -28,7 +28,7 @@ download_gpkg_files <- function(years, data_path, bd_foret = T){
   apikey <- "clc"
   clc_layers <- as.data.table(happign::get_layers_metadata(apikey = apikey, data_type = "wfs"))
 
-  message("\n Download Corine Land Cover layers...")
+  message("\nDownload Corine Land Cover layers...")
   for (year in years){
     print(year)
     year_abr <- str_sub(year,-2,-1)
