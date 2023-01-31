@@ -1,0 +1,58 @@
+---
+title: "Guide d'utilisation du package silvia"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with Silvia}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Avant de commencer
+
+Une fois le package téléchargé depuis Github, il est possible de charger le package dans l'environnement : 
+
+```r
+library(silvia)
+```
+
+## Example d'initialisation
+
+Avant de pouvoir utiliser les fonctions du package, il faut définir un dossier (de préférence vide) dans lequel les fichiers téléchargés seront stockés. La fonction `setup_path()` permet de vérifier que le dossier choisi existe bien à l'emplacement renseigné, et d'inititialiser les sous-fichers dans lesquels les données téléchargées seront stockées. 
+Voici un exemple d'initialisation de l'outil :
+
+``` r 
+
+data_path <- "C:/Users/bohnenkl/Documents/data_silvia"
+data_path <- setup_path(data_path = data_path)
+
+```
+
+Ces sous-fichiers sont : 
+
+-   `territory` -> périmètre du territoire choisi
+-   `corine_land_cover` -> couches d'occupation des sols du territoire pour les années sélectionnées 
+-   `copernicus` -> couches d'imperméabilisation des sols du territoire pour les années 2012 et 2015
+-   `bd_foret` -> couche d'occupation des sols détaillée pour les espaces forestiers (BD Forêt Version 2)
+
+
+## Choix du territoire à étudier 
+
+L'outil permet de choisir un territoire - ou une combinaison de territoires - en France métropolitaine parmi les collectivités territoriales suivantes : commune, EPCI, département ou région. Chacune de ces zones est associée à un code renseigné dans la base de donnée de l'[INSEE](https://www.insee.fr/fr/information/6051727). 
+
+``` r 
+# Shape of the "Grand Annecy" EPCI
+
+select_territory(epcis_fr = "200066793")
+
+```
+
+# 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
