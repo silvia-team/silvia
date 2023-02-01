@@ -1,3 +1,6 @@
+#' Download territory files
+#'
+#' @description
 #' Download the territory chosen with the data from Corine Land Cover
 #' of the chosen years, using 'happign' package
 #' The function returns nothing but store the gpkg file
@@ -14,21 +17,57 @@
 #' @importFrom happign  get_wfs get_layers_metadata
 #' @importFrom exactextractr exact_extract
 #' @importFrom raster crop raster mask
+#' @importFrom ggplot2 ggplot geom_sf
 #'
 #' @export
 #'
-download_gpkg_files <- function(years, data_path, bd_foret = T){
+download_territory_files <- function(communes_fr = list(),
+                                     epcis_fr = list(),
+                                     departments_fr = list(),
+                                     regions_fr = list(),
+                                     years,
+                                     data_path){
 
-  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
+
+  options(warn=-1)
+
+  # check if selected years are correct
+  clc_years <- c("1990", 1990, "2000", 2000, "2006", 2006, "2012", 2012, "2018", 2018)
+  for (year in years){
+    stopifnot("The selected years must be one of the following : 1990, 2000, 2006, 2012, 2018" = year %in% clc_years)
+  }
+
+  # Download and plot the selected territory
+
+  message("\nDownload of the territory's borders...")
+  shape <- select_territory(regions_fr, departments_fr, epcis_fr, communes_fr, data_path)
   shape <- st_transform(shape, 4326)
 
+  # plot the geometry
+  p <- ggplot()
+  p <- p + geom_sf(data = shape, fill = NA)
+  p <- p + theme_void()
+  p <- p + theme(
+    legend.position = "right",
+    legend.justification = "left",
+    panel.border = element_blank(),
+    plot.title = element_text(face = "bold", size = 14),
+    plot.title.position = "plot",
+    plot.subtitle = element_text(face = "italic", size = 12),
+    strip.text = element_text(size = 14),
+    legend.margin = margin(0, 0, 0.5, 0, "cm")
+  )
+  print(p)
+
+
   # download impermeability layers
-  download_impermability_layers(shape= shape, data_path = data_path)
+  download_impermability_layer(shape= shape, data_path = data_path)
+
+  # Download CLC layers
+  message("\nDownload of Corine Land Cover layers...")
 
   apikey <- "clc"
   clc_layers <- as.data.table(happign::get_layers_metadata(apikey = apikey, data_type = "wfs"))
-
-  message("\nDownload Corine Land Cover layers...")
   for (year in years){
     print(year)
     year_abr <- str_sub(year,-2,-1)
@@ -40,15 +79,9 @@ download_gpkg_files <- function(years, data_path, bd_foret = T){
     clc <- st_intersection(clc, shape)
 
 
-    if (year %in% c(1990, 2000, 2006, 2012)){
-          path_imper <- here(data_path, "copernicus", "impermab_12.tif")
-        }
-    else if (year == 2018){
-          path_imper <- here(data_path,  "copernicus", "impermab_15.tif")
-    }
+    # Intersection and computation of impermeability with clc...
 
-
-    # Intersection and computation of impermability with clc...
+    path_imper <- here(data_path,  "copernicus", "impermab_15.tif")
     impermab <- raster(path_imper)
     clc <- st_transform(clc, sf::st_crs(impermab))
     site_imper <- raster::crop(impermab, raster::extent(clc))
@@ -68,8 +101,7 @@ download_gpkg_files <- function(years, data_path, bd_foret = T){
     st_write(clc, here(data_path, "corine_land_cover", paste0("zone_", as.character(year), ".gpkg")), delete_dsn = TRUE)
   }
 
-  if (bd_foret == T){
-    download_bd_foret(shape= shape, data_path = data_path)
-  }
+  # download bd_foret
+   download_bd_foret(shape= shape, data_path = data_path)
 }
 

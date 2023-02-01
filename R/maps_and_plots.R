@@ -117,9 +117,10 @@ map_carbon_flows <- function(flows, data_path){
 #'
 #' @return map of carbon flows by the forest
 #'
-#' @importFrom data.table as.data.table
+#' @importFrom data.table as.data.table like
 #' @importFrom tibble rowid_to_column
 #' @importFrom sf st_union st_crs
+#' @importFrom here here
 #' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer

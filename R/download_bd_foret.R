@@ -11,7 +11,7 @@
 #'
 download_bd_foret <- function(shape, data_path){
 
-  message("\n Download BD foret layer...")
+  message("\nDownload of the BD foret layer...")
 
   shape <- st_transform(shape, 4326)
 

@@ -13,8 +13,6 @@ select_territory(
     local = F)
 }
 \arguments{
-\item{data_path}{path to where the data is stored}
-
 \item{regions_fr}{A \code{character} or a list of \code{character} of french
 region codes to be included in the perimeter}
 
@@ -27,7 +25,7 @@ EPCIs codes to be included in the perimeter}
 \item{communes_fr}{A \code{character} or a list of \code{character} of french
 municipalities codes to be included in the perimeter}
 
-\item{local}{If TRUE, the data is loaded from the "arep" folder. If false, a request is done on a api.}
+\item{data_path}{path to where the data is stored}
 }
 \value{
 Map of the selected territory
