@@ -1,12 +1,13 @@
 #' Download territory files
 #'
 #' @description
-#' Download the territory chosen with the data from Corine Land Cover
-#' of the chosen years, using 'happign' package
-#' The function returns nothing but store the gpkg file
-#' in the "data->arep" folder
+#' `download_territory_files` downloads all the necessary files related to the territory.
 #'
-#' @param years years to download
+#' communes, EPCI, départements, and régions INSEE codes are  referenced here
+#' [INSEE's codes](https://www.insee.fr/fr/information/6051727)
+#'
+#'
+#' @param years years to download (1990, 2000, 2006, 2012, 2018)
 #' @param data_path path to where the data is stored
 #' @param bd_foret boolean to download bd_foret
 #'
@@ -18,6 +19,12 @@
 #' @importFrom exactextractr exact_extract
 #' @importFrom raster crop raster mask
 #' @importFrom ggplot2 ggplot geom_sf
+#'
+#' @examples
+#' # Download files for the "Grand Annecy" (EPCI) territory, for all available years
+#'
+#' download_territory_files(epcis_fr = "200066793", years= c(1990, 2000, 2006, 2012, 2018data_path = data_path)
+#'
 #'
 #' @export
 #'

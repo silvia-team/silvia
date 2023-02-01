@@ -14,15 +14,22 @@ download_territory_files(
 )
 }
 \arguments{
-\item{years}{years to download}
+\item{years}{years to download (1990, 2000, 2006, 2012, 2018)}
 
 \item{data_path}{path to where the data is stored}
 
 \item{bd_foret}{boolean to download bd_foret}
 }
 \description{
-Download the territory chosen with the data from Corine Land Cover
-of the chosen years, using 'happign' package
-The function returns nothing but store the gpkg file
-in the "data->arep" folder
+\code{download_territory_files} downloads all the necessary files related to the territory.
+
+communes, EPCI, départements, and régions INSEE codes are  referenced here
+\href{https://www.insee.fr/fr/information/6051727}{INSEE's codes}
+}
+\examples{
+# Download files for the "Grand Annecy" (EPCI) territory, for all available years
+
+download_territory_files(epcis_fr = "200066793", years= c(1990, 2000, 2006, 2012, 2018data_path = data_path)
+
+
 }

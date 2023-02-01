@@ -28,7 +28,7 @@ municipalities codes to be included in the perimeter}
 \item{data_path}{path to where the data is stored}
 }
 \value{
-Map of the selected territory
+shape of the selected territory
 }
 \description{
 \code{select_territory} crops spatial boundaries to be studied.
@@ -38,17 +38,4 @@ Codes of the different french territories
 
 The function returns the map of the created perimeter
 and store the gpkg file in 'data->arep' folder as "territory.gpkg".
-}
-\examples{
-# Shape of the "Grand Annecy" EPCI
-
-select_territory(epcis_fr = "200066793")
-
-
-# Shape of the union of a region (PACA 93), a departement (Occitanie 31),
-two epcis (in the Rhône department), and one city (Albi 81004)
-
-select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
-
-
 }
