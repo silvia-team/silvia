@@ -15,36 +15,78 @@ Une fois le package téléchargé depuis Github, il est possible de charger le p
 library(silvia)
 ```
 
-## Example d'initialisation
+# Example d'utilisation
 
-Avant de pouvoir utiliser les fonctions du package, il faut définir un dossier (de préférence vide) dans lequel les fichiers téléchargés seront stockés. La fonction `setup_path()` permet de vérifier que le dossier choisi existe bien à l'emplacement renseigné, et d'inititialiser les sous-fichers dans lesquels les données téléchargées seront stockées. 
-Voici un exemple d'initialisation de l'outil :
+## Emplacement des données téléchargées
+
+Le package utilise des données open source pour fonctionner (IGN, Corine Land Cover, gouvernement) qui sont téléchargées automatiquement depuis l'API ("Application Programming Interface") des bases de données en question.
+
+Les fichiers téléchargés seront stockés à l'emplacement indiqué par l'utilisateur dans la fonction `setup_path()`: 
 
 ``` r 
-
-data_path <- "C:/Users/bohnenkl/Documents/data_silvia"
+data_path <- "D:/data_silvia"
 data_path <- setup_path(data_path = data_path)
-
 ```
+4 dossiers vides sont créés à l'emplacement indiqué :  
 
-Ces sous-fichiers sont : 
+<img src="guide_utilisation_silvia_dossiers.png" alt="screenshot of folders" style="display: block; margin: auto;" />
 
--   `territory` -> périmètre du territoire choisi
--   `corine_land_cover` -> couches d'occupation des sols du territoire pour les années sélectionnées 
--   `copernicus` -> couches d'imperméabilisation des sols du territoire pour les années 2012 et 2015
--   `bd_foret` -> couche d'occupation des sols détaillée pour les espaces forestiers (BD Forêt Version 2)
+## Choix du territoire d'étude et téléchargement des données
+
+Seules les données relatives au territoire sélectionné par l'utilisateur seront téléchargées, la première étape consiste donc à séléctionner le territoire d'étude. 
 
 
-## Choix du territoire à étudier 
+L'outil laisse la possibilité de choisir des types de territoires différents, parmi les suivants : commune, EPCI, département, région. Chaque territoire est associé à son code INSEE, renseigné sur le [site de l'INSEE](https://www.insee.fr/fr/information/6051727). 
+En l'état, il est conseillé de ne pas choisir de territoire plus étendu que l'EPCI, pour des questions de temps de téléchargement des données. 
 
-L'outil permet de choisir un territoire - ou une combinaison de territoires - en France métropolitaine parmi les collectivités territoriales suivantes : commune, EPCI, département ou région. Chacune de ces zones est associée à un code renseigné dans la base de donnée de l'[INSEE](https://www.insee.fr/fr/information/6051727). 
+
+Voici un exemple de téléchargement des données relatives à l'EPCI du Grand Annecy, avec la fonction `download_territory_files()`: 
 
 ``` r 
-# Shape of the "Grand Annecy" EPCI
-
-select_territory(epcis_fr = "200066793")
-
+download_territory_files(epcis_fr = "200066793", years = c(1990, 2000, 2012, 2018), data_path = data_path)
 ```
+
+Les frontières du territoire sélectionné sont représentées à la fin du téléchargement des fichiers : 
+
+<img src="guide_utilisation_silvia_borders.png" alt="borders" style="display: block; margin: auto;" />
+
+## Changement d'affectation des sols
+
+La fonction `plot_land_use_changes()` permet de représenter les changements d'occupation des sols du territoire entre 2 années (parmi celles sélectionnées précédemment). Le résultat est présenté sous la forme d'un [diagramme de Sankey](https://fr.wikipedia.org/wiki/Diagramme_de_Sankey). 
+
+``` r 
+plot_land_use_changes(year_from = 1990, year_to = 2018, data_path = data_path)
+```
+
+<img src="guide_utilisation_silvia_land_use_changes.png" alt="land use changes" style="display: block; margin: auto;" />
+
+## Stocks de carbone
+
+La fonction `plot_carbon_stocks()` réalise une cartographie des stocks de carbone sur le territoire à la date choisie.
+
+Par exemple, les stocks de carbone du Grand Annecy en 2018 : 
+``` r 
+plot_carbon_stocks(year = 2018, data_path = data_path)
+```
+<img src="guide_utilisation_silvia_carbon_stocks.png" alt="carbon stocks" style="display: block; margin: auto;" />
+
+## Flux de carbone 
+
+La fonction `plot_carbon_stocks()` réalise une cartographie des flux de carbone sur le territoire à la date choisie.
+
+Par exemple, les flux de carbone du Grand Annecy en 2018 : 
+``` r 
+plot_carbon_flows(year_from = 1990, year_to = 2018, data_path = data_path)
+```
+<img src="guide_utilisation_silvia_flows.png" alt="carbon flows" style="display: block; margin: auto;" />
+
+
+## Flux de carbone forestiers
+
+Il est possible de représenter plus précisément les flux de carbone des zones forestières avec la fonction `plot_forest_flows()`. 
+
+<img src="guide_utilisation_silvia_forest.png" alt="carbon flows forest" style="display: block; margin: auto;" />
+
 
 # 
 

@@ -64,7 +64,7 @@ download_territory_files <- function(communes_fr = list(),
     strip.text = element_text(size = 14),
     legend.margin = margin(0, 0, 0.5, 0, "cm")
   )
-  print(p)
+
 
 
   # download impermeability layers
@@ -110,5 +110,7 @@ download_territory_files <- function(communes_fr = list(),
 
   # download bd_foret
    download_bd_foret(shape= shape, data_path = data_path)
+
+   print(p)
 }
 

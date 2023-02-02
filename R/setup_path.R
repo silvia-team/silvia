@@ -23,10 +23,10 @@ setup_path <- function(data_path){
 
   data_path <- path.expand(data_path)
 
-  dir.create(here(data_path, "territory"))
   dir.create(here(data_path, "copernicus"))
-  dir.create(here(data_path, "corine_land_cover"))
   dir.create(here(data_path, "bd_foret"))
+  dir.create(here(data_path, "corine_land_cover"))
+  dir.create(here(data_path, "territory"))
 
   message("\nDownloaded data will be stored at ", data_path)
 

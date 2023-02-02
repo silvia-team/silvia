@@ -40,6 +40,7 @@ get_carbon_stocks <-  function(year, data_path){
   clc_geom <- tibble::rowid_to_column(clc_geom, "ID_unique")
   clc <- sf::st_drop_geometry(clc_geom)
 
+
   epcis <- unique(clc$SIREN_EPCI)
 
   # retrieve carbon stocks in soil -------------------------------------------
