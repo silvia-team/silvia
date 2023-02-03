@@ -23,7 +23,7 @@
 #' @examples
 #' # Download files for the "Grand Annecy" (EPCI) territory, for all available years
 #'
-#' download_territory_files(epcis_fr = "200066793", years= c(1990, 2000, 2006, 2012, 2018data_path = data_path)
+#' download_territory_files(epcis_fr = "200066793", years= c(1990, 2000, 2006, 2012, 2018, data_path = data_path)
 #'
 #'
 #' @export

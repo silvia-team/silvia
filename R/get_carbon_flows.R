@@ -197,8 +197,9 @@ get_carbon_flows <- function(year_from, year_to, data_path) {
 
 
   dt <- dt[, total_flows := round(flow_soil + flow_biomass + flow_forest + flow_N2O, digits =1)]
-
+  dt <- dt[, list(ID_unique, EPCI_Siren, area, code_initial, code_final, flow_biomass, flow_soil, flow_N2O, flow_forest, total_flows, unit)]
   dt[is.na(dt)] <- 0
+
   dt_geom <- dt_geom %>% select(ID_unique)
   dt <- merge(dt_geom, dt, by= "ID_unique")
 
@@ -206,48 +207,6 @@ get_carbon_flows <- function(year_from, year_to, data_path) {
 
   return(dt)
 
-}
-
-#' Retrieve the carbon flows in the forest,
-#' using the BD foret 2
-#' @return forest flows in tC.an-1
-#' @export
-#' @importFrom data.table as.data.table setnames
-#' @importFrom here here
-#' @importFrom sf st_read st_transform st_intersection st_area st_drop_geometry
-#' @importFrom happign  get_wfs get_layers_metadata
-#' @importFrom dplyr mutate
-get_forest_flows <- function(){
-
-  forest_geom <- st_read(here(data_path, "bd_foret", "zone_bd_foret.gpkg"))
-  forest_geom <- tibble::rowid_to_column(forest_geom, "ID_unique")
-  forest_geom <- st_transform(forest_geom, 3035)
-  forest <- st_drop_geometry(forest_geom)
-  forest <- as.data.table(forest)
-
-  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
-  shape <- st_transform(shape, st_crs(forest_geom))
-  epcis <- unique(shape$SIREN_EPCI)
-
-  forest[, essence := ifelse(like(tfv_g11, "conifères"), "conifere", NA)]
-  forest[, essence := ifelse(like(tfv_g11, "feuillus"), "feuillu", essence)]
-  forest[, essence := ifelse(like(tfv_g11, "mixte"), "mixte", essence)]
-  forest[, essence := ifelse(like(tfv_g11, "Peupleraie"), "peupleraies", essence)]
-
-  dt <- invisible(aldo_Ref_Biom_foret_flows)
-  dt <- dt[EPCI_Siren %in% epcis, list(EPCI_Siren= as.character(EPCI_Siren), composition, flow)]
-
-  dt <- dt[, list(flow= mean(flow)), by= c("EPCI_Siren", "composition")]
-  forest_flows <- merge(forest, dt, by.x = c("SIREN_EPCI", "essence"), by.y = c("EPCI_Siren", "composition"),
-                        all.x= T, allow.cartesian = T)
-
-  forest_flows[, total_flows := ifelse(is.na(essence), 0, -flow*44/12)]
-  forest_flows[, total_flows:= ifelse(total_flows > 0, -total_flows, total_flows)]
-  forest_flows[, total_flows := total_flows*area]
-
-  sum_forest_flows <- sum(forest_flows$total_flows, na.rm= T)
-
-  return(sum_forest_flows)
 }
 
 
@@ -294,54 +253,4 @@ retrieve_flows_from_harvested_wood <- function(){
 }
 
 
-
-#' Compute total carbon flows between two years, of a chosen region.
-#' Four flows categories : biomass from land use changes, soil from land
-#' use changes, total forest flows (photosynthesis), total area flows
-#' @param flows st object returned by 'compute_carbon_flows' funciton
-#' @param bd boolean to use bd foret or not
-#' @return a data.table with the flows in ktCO2/year
-#' @export
-#' @importFrom data.table data.table
-#' @importFrom sf st_area
-get_total_carbon_flows <- function(flows, bd= T) {
-
-  epcis <- unique(flows$EPCI_Siren)
-
-  ### Compute total flows on the territory
-  flows$area <- st_area(flows)
-
-  total_biomass_flows <- round(sum(flows$area * 1e-04 * 1e-03 * flows$flow_biomass, na.rm=T),digits = 2)
-  total_biomass_flows <- -as.numeric(total_biomass_flows)
-
-  total_soil_flows <- round(sum(flows$area * 1e-04 *1e-03 *  (flows$flow_soil - flows$flow_N2O), na.rm= T), digits = 2)
-  total_soil_flows <- - as.numeric(total_soil_flows)
-
-  total_harvested_wood_flows <- invisible(aldo_Ref_Prod_Bois_flows)
-  total_harvested_wood_flows <- - sum(total_harvested_wood_flows[EPCI_Siren %in% epcis, wood_carbon_flows])
-
-  if (bd == T){
-    total_forest_flows <- get_forest_flows()
-    total_forest_flows <- round(total_forest_flows*1e-03* 1e-04, digits = 2)
-  }
-  else {
-    total_forest_flows <- round(sum(flows$area * 1e-04 *1e-03 *  flows$flow_forest), digits = 2)
-    total_forest_flows <- as.numeric(total_forest_flows)
-  }
-
-
-  total_area_flows <- sum(total_biomass_flows, total_soil_flows, total_forest_flows, total_harvested_wood_flows)
-  total_area_flows <- round(as.numeric(total_area_flows), digits = 2)
-
-  flows_category <- c("carbon flows from land use changes (ktCO2e/an)", "carbon flows from forest (ktCO2e/an)",
-                      "carbon flows from harvested wood (ktCO2e/an)", "total carbon flows (ktCO2e/an)")
-
-  flows_value <- c(total_biomass_flows + total_soil_flows, total_forest_flows,
-                   total_harvested_wood_flows, total_area_flows)
-
-  dt_total_flows <- data.table(flows_category, flows_value)
-
-  return(dt_total_flows)
-
-}
 

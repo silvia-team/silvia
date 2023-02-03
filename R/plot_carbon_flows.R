@@ -3,9 +3,7 @@
 #' @description
 #' Plot carbon flows of a chosen region.
 #'
-#' @param year_from the CLC reference year (1990, 2000, 2006, 2012, 2018)
-#' @param year_to the year to be compared to the reference year,
-#' must be superior to reference year
+#' @param flows sf object returned by `get_carbon_flows()` function
 #' @param data_path path to where the data is stored
 #'
 #' @return map of carbon flows
@@ -19,9 +17,7 @@
 #'
 #' @export
 #'
-plot_carbon_flows <- function(year_from, year_to, data_path){
-
-  flows <- get_carbon_flows(year_from, year_to, data_path)
+plot_carbon_flows <- function(flows, data_path){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(flows))

@@ -4,15 +4,15 @@
 \alias{get_carbon_flows}
 \title{Get carbon flows}
 \usage{
-get_carbon_flows(year_from, year_to, data_path)
+get_carbon_flows(flows, data_path)
 }
 \arguments{
+\item{data_path}{path to where the data is stored}
+
 \item{year_from}{the CLC reference year (1990, 2000, 2006, 2012, 2018)}
 
 \item{year_to}{the year to be compared to the reference year,
 must be superior to reference year}
-
-\item{data_path}{path to where the data is stored}
 }
 \value{
 a sf object with the carbon flows of the region

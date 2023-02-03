@@ -21,7 +21,7 @@ library(silvia)
 
 Le package utilise des données open source pour fonctionner (IGN, Corine Land Cover, gouvernement) qui sont téléchargées automatiquement depuis l'API ("Application Programming Interface") des bases de données en question.
 
-Les fichiers téléchargés seront stockés à l'emplacement indiqué par l'utilisateur dans la fonction `setup_path()`: 
+Les fichiers téléchargés sont stockés à l'emplacement indiqué par l'utilisateur dans la fonction `setup_path()`: 
 
 ``` r 
 data_path <- "D:/data_silvia"
@@ -33,11 +33,12 @@ data_path <- setup_path(data_path = data_path)
 
 ## Choix du territoire d'étude et téléchargement des données
 
-Seules les données relatives au territoire sélectionné par l'utilisateur seront téléchargées, la première étape consiste donc à séléctionner le territoire d'étude. 
+Seules les données relatives au territoire sélectionné par l'utilisateur seront téléchargées, la première étape consiste donc à délimiter le territoire d'étude. 
 
 
 L'outil laisse la possibilité de choisir des types de territoires différents, parmi les suivants : commune, EPCI, département, région. Chaque territoire est associé à son code INSEE, renseigné sur le [site de l'INSEE](https://www.insee.fr/fr/information/6051727). 
-En l'état, il est conseillé de ne pas choisir de territoire plus étendu que l'EPCI, pour des questions de temps de téléchargement des données. 
+
+
 
 
 Voici un exemple de téléchargement des données relatives à l'EPCI du Grand Annecy, avec la fonction `download_territory_files()`: 
@@ -50,6 +51,10 @@ Les frontières du territoire sélectionné sont représentées à la fin du té
 
 <img src="guide_utilisation_silvia_borders.png" alt="borders" style="display: block; margin: auto;" />
 
+*En l'état, il est conseillé de ne pas choisir de territoire plus étendu qu'un l'EPCI, pour des questions de temps de téléchargement des données.*
+
+
+
 ## Changement d'affectation des sols
 
 La fonction `plot_land_use_changes()` permet de représenter les changements d'occupation des sols du territoire entre 2 années (parmi celles sélectionnées précédemment). Le résultat est présenté sous la forme d'un [diagramme de Sankey](https://fr.wikipedia.org/wiki/Diagramme_de_Sankey). 
@@ -60,25 +65,47 @@ plot_land_use_changes(year_from = 1990, year_to = 2018, data_path = data_path)
 
 <img src="guide_utilisation_silvia_land_use_changes.png" alt="land use changes" style="display: block; margin: auto;" />
 
+
+
 ## Stocks de carbone
 
-La fonction `plot_carbon_stocks()` réalise une cartographie des stocks de carbone sur le territoire à la date choisie.
-
+Une estimation des stocks de carbone sur chaque parcelle du territoire est obtenue à partir de la fonction `get_carbon_stocks()`. On obtient une table géoréférencée avec les différents stocks calculés (dans les sols, dans la biomasse en forêt et hors forêt). 
 Par exemple, les stocks de carbone du Grand Annecy en 2018 : 
+``` r 
+stocks <- get_carbon_stocks(year = 2018, data_path =data_path)
+```
+
+La fonction `plot_carbon_stocks()` réalise une cartographie des ces stocks de carbone sur le territoire à la date choisie : 
+
 ``` r 
 plot_carbon_stocks(year = 2018, data_path = data_path)
 ```
 <img src="guide_utilisation_silvia_carbon_stocks.png" alt="carbon stocks" style="display: block; margin: auto;" />
 
+Le bilan chiffré des stocks de carbone sur le territoire est réalisé par la fonction `get_carbon_stocks_balance()`. 
+
+<img src="guide_utilisation_silvia_total_carbon_stocks.png" alt="total carbon stocks" style="display: block; margin: auto;" />
+
+
+
+
 ## Flux de carbone 
 
-La fonction `plot_carbon_stocks()` réalise une cartographie des flux de carbone sur le territoire à la date choisie.
+De la même manière, l'estimation des flux de carbone (CO2eq) sur le territoire est obtenue avec la fonction `get_carbon_flows()`. 
+
+A son tour, fonction `plot_carbon_stocks()` réalise une cartographie des flux de carbone sur le territoire à la date choisie.
 
 Par exemple, les flux de carbone du Grand Annecy en 2018 : 
 ``` r 
 plot_carbon_flows(year_from = 1990, year_to = 2018, data_path = data_path)
 ```
 <img src="guide_utilisation_silvia_flows.png" alt="carbon flows" style="display: block; margin: auto;" />
+
+Le bilan chiffré des flux annnuels moyen de carbone sur le territoire est réalisé par la fonction `get_carbon_flows_balance()`. 
+
+<img src="guide_utilisation_silvia_total_flows.png" alt="carbon flows balance" style="display: block; margin: auto;" />
+
+
 
 
 ## Flux de carbone forestiers

@@ -1,9 +1,9 @@
-#' Plot carbon storage
+#' Plot carbon stocks
 #'
 #' @description
-#' Plot the carbon storage on the chosen territory
+#' Plot the carbon stocks on the chosen territory
 #'
-#' @param year the reference year to be studied (1990, 2000, 2006, 2012, 2018)
+#' @param stocks sf object returned by `get_carbon_stocks()` function
 #' @param data_path path to where the data is stored
 #'
 #' @return a ggplot with the map
@@ -15,16 +15,14 @@
 #'
 #' @export
 #'
-plot_carbon_storage <- function(year, data_path){
-
-  dt <- get_carbon_stocks(year, data_path)
+plot_carbon_stocks <- function(stocks, data_path){
 
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
-  shape <- st_transform(shape, st_crs(dt))
+  shape <- st_transform(shape, st_crs(stocks))
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)
 
-  p <- ggplot(dt)
+  p <- ggplot(stocks)
   p <- p + geom_sf(aes(fill = total_carbon_content), color = NA)
   p <- p + labs(
     # caption = "Données Corine Land Cover et ALDO (GIS)\n",
