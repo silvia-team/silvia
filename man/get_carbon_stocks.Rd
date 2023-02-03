@@ -17,6 +17,7 @@ a sf object with the carbon stored in every polygon
 \description{
 \code{get_carbon_stocks} calculates the carbon stocks of the selected
 territory for the selected year.
+All stocks are in tCO2e/ha.
 }
 \examples{
 # Retrieve carbon stocks in 2018
