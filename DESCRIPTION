@@ -26,3 +26,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://silvia-team.github.io/silvia/
