@@ -25,7 +25,13 @@
     <loc>/reference/download_bd_foret.html</loc>
   </url>
   <url>
+    <loc>/reference/download_gpkg_files.html</loc>
+  </url>
+  <url>
     <loc>/reference/download_impermability_layer.html</loc>
+  </url>
+  <url>
+    <loc>/reference/download_impermability_layers.html</loc>
   </url>
   <url>
     <loc>/reference/download_territory_files.html</loc>
@@ -52,7 +58,22 @@
     <loc>/reference/get_land_use_changes.html</loc>
   </url>
   <url>
+    <loc>/reference/get_total_carbon_flows.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_total_carbon_stocks.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_carbon_flows.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_carbon_storage.html</loc>
+  </url>
+  <url>
+    <loc>/reference/map_forest_flows.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
@@ -62,6 +83,9 @@
   </url>
   <url>
     <loc>/reference/plot_carbon_stocks.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_carbon_storage.html</loc>
   </url>
   <url>
     <loc>/reference/plot_forest_flows.html</loc>
