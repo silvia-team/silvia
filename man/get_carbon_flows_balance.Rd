@@ -4,10 +4,12 @@
 \alias{get_carbon_flows_balance}
 \title{Get carbon flows balance}
 \usage{
-get_carbon_flows_balance(flows)
+get_carbon_flows_balance(flows, data_path)
 }
 \arguments{
 \item{flows}{sf object returned by \code{get_carbon_flows()} function}
+
+\item{data_path}{path to where the data is stored}
 }
 \value{
 a data.table with the flows in ktCO2/year

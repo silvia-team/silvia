@@ -1,7 +1,8 @@
+#' Download BD foret
+#'
+#' @description
 #' Download bd foret layer on the territory, for the selected years,
 #' using 'happign' package
-#' The function returns nothing but store gpkg files
-#' in the "data->arep" folder
 #'
 #' @param shape shape of the territory
 #' @param data_path path to where the data is stored

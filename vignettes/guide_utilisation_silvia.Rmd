@@ -15,9 +15,7 @@ Une fois le package téléchargé depuis Github, il est possible de charger le p
 library(silvia)
 ```
 
-# Example d'utilisation
-
-## Emplacement des données téléchargées
+# Emplacement des données téléchargées
 
 Le package utilise des données open source pour fonctionner (IGN, Corine Land Cover, gouvernement) qui sont téléchargées automatiquement depuis l'API ("Application Programming Interface") des bases de données en question.
 
@@ -31,7 +29,7 @@ data_path <- setup_path(data_path = data_path)
 
 <img src="guide_utilisation_silvia_dossiers.png" alt="screenshot of folders" style="display: block; margin: auto;" />
 
-## Choix du territoire d'étude et téléchargement des données
+# Choix du territoire d'étude et téléchargement des données
 
 Seules les données relatives au territoire sélectionné par l'utilisateur seront téléchargées, la première étape consiste donc à délimiter le territoire d'étude. 
 
@@ -55,7 +53,7 @@ Les frontières du territoire sélectionné sont représentées à la fin du té
 
 
 
-## Changement d'affectation des sols
+# Changement d'affectation des sols
 
 La fonction `plot_land_use_changes()` permet de représenter les changements d'occupation des sols du territoire entre 2 années (parmi celles sélectionnées précédemment). Le résultat est présenté sous la forme d'un [diagramme de Sankey](https://fr.wikipedia.org/wiki/Diagramme_de_Sankey). 
 
@@ -67,7 +65,7 @@ plot_land_use_changes(year_from = 1990, year_to = 2018, data_path = data_path)
 
 
 
-## Stocks de carbone
+# Stocks de carbone
 
 Une estimation des stocks de carbone sur chaque parcelle du territoire est obtenue à partir de la fonction `get_carbon_stocks()`. On obtient une table géoréférencée avec les différents stocks calculés (dans les sols, dans la biomasse en forêt et hors forêt). 
 Par exemple, les stocks de carbone du Grand Annecy en 2018 : 
@@ -89,7 +87,7 @@ Le bilan chiffré des stocks de carbone sur le territoire est réalisé par la f
 
 
 
-## Flux de carbone 
+# Flux de carbone 
 
 De la même manière, l'estimation des flux de carbone (CO2eq) sur le territoire est obtenue avec la fonction `get_carbon_flows()`. 
 
@@ -108,7 +106,7 @@ Le bilan chiffré des flux annnuels moyen de carbone sur le territoire est réal
 
 
 
-## Flux de carbone forestiers
+# Flux de carbone forestiers
 
 Il est possible de représenter plus précisément les flux de carbone des zones forestières avec la fonction `plot_forest_flows()`. 
 
