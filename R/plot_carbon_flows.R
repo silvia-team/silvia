@@ -24,7 +24,6 @@ plot_carbon_flows <- function(flows, data_path){
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)
 
-
   p <- ggplot(flows)
   p <- p + geom_sf(aes(fill = total_flows), colour = NA)
 

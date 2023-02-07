@@ -89,7 +89,7 @@ get_carbon_stocks <-  function(year, data_path){
 
   dt_stocks <- merge(x=dt_stocks, y=aldo_Ref_Biom_foret_stocks,
               by.x =c("EPCI_Siren", "code"), by.y = c("EPCI_Siren", "clc_category"),
-              all.x= TRUE)
+              all.x= TRUE, allow.cartesian = T)
 
   dt_stocks <- as.data.table(dt_stocks)
   dt_stocks <- dt_stocks[, biomass_carbon_content:= ifelse(is.na(dt_stocks$biomass_carbon_content),
@@ -112,7 +112,8 @@ get_carbon_stocks <-  function(year, data_path){
   aldo_Ref_Biom_HorsF_stocks[, clc_category := as.character(clc_category)]
   aldo_Ref_Biom_HorsF_stocks <- aldo_Ref_Biom_HorsF_stocks[EPCI_Siren %in% epcis, ]
 
-  dt_stocks <- merge(x=dt_stocks, y=aldo_Ref_Biom_HorsF_stocks, by.x =c("EPCI_Siren", "code"), by.y = c("EPCI_Siren", "clc_category"), all.x = T)
+  dt_stocks <- merge(x=dt_stocks, y=aldo_Ref_Biom_HorsF_stocks, by.x =c("EPCI_Siren", "code"),
+                     by.y = c("EPCI_Siren", "clc_category"), all.x = T, allow.cartesian = T)
 
   dt_stocks <- dt_stocks[, biomass_carbon_content_out_fo := X_mean*(biomass_carbon_content_art -biomass_carbon_content_arb) + biomass_carbon_content_arb]
   dt_stocks <- dt_stocks[, biomass_carbon_content_out_fo:= ifelse(is.na(biomass_carbon_content_out_fo), 0, biomass_carbon_content_out_fo)]

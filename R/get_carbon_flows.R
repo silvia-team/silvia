@@ -51,7 +51,7 @@ get_carbon_flows <- function(year_from, year_to, data_path) {
               biomass_flows_wo_forests,
               by.x = c("EPCI_Siren", "code_initial", "code_final"),
               by.y = c("EPCI_Siren", "from_clc", "to_clc"),
-              all.x = T)
+              all.x = T, allow.cartesian = T)
 
 
   dupli_ids <- dt$ID[duplicated(dt$ID_unique)]
@@ -120,7 +120,7 @@ get_carbon_flows <- function(year_from, year_to, data_path) {
               soil_flows,
               by.x = c("EPCI_Siren", "code_initial", "code_final", "unit"),
               by.y = c("EPCI_Siren", "from_clc", "to_clc", "unit"),
-              all.x = T)
+              all.x = T, allow.cartesian = T)
 
 
   dupli_ids <- dt$ID[duplicated(dt$ID_unique)]

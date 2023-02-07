@@ -1,10 +1,10 @@
 Package: silvia
-Title: What the Package Does (One Line, Title Case)
+Title: R package to visualize the carbon flows on a territory.
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+    person("Lucas", "Bohnenkamp", , "lucas.bohnenkamp31@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: Silvia is a tool for estimating and visualizing carbon stocks and flows on a territory.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

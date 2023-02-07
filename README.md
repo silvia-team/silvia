@@ -33,15 +33,14 @@ développé par l’ADEME, appelé
 ## Installation
 
 Il est possible de télécharcher la version en développement de Silvia
-depuis [GitHub](https://github.com/) avec :
+depuis GitHub avec :
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("silvia-team/silvia")
 ```
 
-## Vignettes
+## Guide d’utilisation
 
-Vignettes associées au package :
-
--   Guide d’utilisation du package silvia
+Un guide de prise en main de l’outil silvia est disponible
+[ici](https://silvia-team.github.io/silvia/articles/guide_utilisation_silvia.html).

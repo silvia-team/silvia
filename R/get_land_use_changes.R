@@ -41,7 +41,7 @@ get_land_use_changes <- function(year_from, year_to, data_path) {
   dt_land_use_changes_geom$area <- as.numeric(st_area(dt_land_use_changes_geom))*1e-4
   dt_land_use_changes <- st_drop_geometry(dt_land_use_changes_geom)
   dt_land_use_changes <- as.data.table(dt_land_use_changes)
-  dt_land_use_changes <- dt_land_use_changes[area >0.1, ]
+  dt_land_use_changes <- dt_land_use_changes[area >1, ]
 
 
   dt_land_use_changes <- dt_land_use_changes[, list(
