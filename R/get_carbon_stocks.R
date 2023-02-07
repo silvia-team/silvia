@@ -1,4 +1,3 @@
-#'
 #' Get carbon stocks
 #'
 #' @description
@@ -25,7 +24,7 @@
 #' @examples
 #'# Retrieve carbon stocks in 2018
 #'
-#' dt <- get_carbon_stocks("2018")
+#' dt <- get_carbon_stocks("2018", data_path)
 #'
 #' @export
 #'

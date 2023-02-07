@@ -2,10 +2,7 @@
 % Please edit documentation in R/download_bd_foret.R
 \name{download_bd_foret}
 \alias{download_bd_foret}
-\title{Download bd foret layer on the territory, for the selected years,
-using 'happign' package
-The function returns nothing but store gpkg files
-in the "data->arep" folder}
+\title{Download BD foret}
 \usage{
 download_bd_foret(shape, data_path)
 }
@@ -17,6 +14,4 @@ download_bd_foret(shape, data_path)
 \description{
 Download bd foret layer on the territory, for the selected years,
 using 'happign' package
-The function returns nothing but store gpkg files
-in the "data->arep" folder
 }

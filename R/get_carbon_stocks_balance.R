@@ -1,9 +1,15 @@
+#' Get carbon stocks balance
+#'
 #' Compute total carbon stocks at a certain date, of a chosen region.
 #' Four flows categories : stocks in biomass in forest, stocks in biomass out forest,
 #' stocks in soils, and total cabon stocks
-#' @param stocks st object returned by 'get_carbon_storage' funciton
+#'
+#' @param stocks st object returned by 'get_carbon_storage' function
+#'
 #' @return a data.table with the flows in ktCO2/year
+#'
 #' @export
+#'
 #' @importFrom data.table as.data.table
 #' @importFrom sf st_area
 get_carbon_stocks_balance <- function(stocks){

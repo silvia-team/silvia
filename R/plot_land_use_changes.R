@@ -43,7 +43,7 @@ plot_land_use_changes <- function(year_from, year_to, data_path){
   land_use_changes <- land_use_changes %>%
     group_by(code_initial_first, code_final_first) %>%
     summarise(area= round(sum(area)))%>%
-    filter(area>=10,
+    filter(area>=1,
            code_initial_first != code_final_first)
 
   land_use_changes <- as.data.table(land_use_changes)
