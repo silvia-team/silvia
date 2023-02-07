@@ -2,14 +2,12 @@
 % Please edit documentation in R/get_carbon_stocks_balance.R
 \name{get_carbon_stocks_balance}
 \alias{get_carbon_stocks_balance}
-\title{Compute total carbon stocks at a certain date, of a chosen region.
-Four flows categories : stocks in biomass in forest, stocks in biomass out forest,
-stocks in soils, and total cabon stocks}
+\title{Get carbon stocks balance}
 \usage{
 get_carbon_stocks_balance(stocks)
 }
 \arguments{
-\item{stocks}{st object returned by 'get_carbon_storage' funciton}
+\item{stocks}{st object returned by 'get_carbon_storage' function}
 }
 \value{
 a data.table with the flows in ktCO2/year
