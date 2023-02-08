@@ -25,3 +25,4 @@ download_bd_foret <- function(shape, data_path){
 
   st_write(forest, here(data_path, "bd_foret", "zone_bd_foret.gpkg"), delete_dsn = TRUE)
 }
+
