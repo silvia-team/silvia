@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://silvia-team.github.io/silvia/404.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/articles/guide_utilisation_silvia.html</loc>
+    <loc>/articles/guide_utilisation_silvia.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/articles/index.html</loc>
+    <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/authors.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/index.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/LICENSE-text.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/LICENSE.html</loc>
+    <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/download_bd_foret.html</loc>
+    <loc>/reference/download_bd_foret.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/download_impermability_layer.html</loc>
+    <loc>/reference/download_impermability_layer.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/download_territory_files.html</loc>
+    <loc>/reference/download_territory_files.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_apigouv_insee_codes.html</loc>
+    <loc>/reference/get_apigouv_insee_codes.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_carbon_flows.html</loc>
+    <loc>/reference/get_carbon_flows.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_carbon_flows_balance.html</loc>
+    <loc>/reference/get_carbon_flows_balance.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_carbon_stocks.html</loc>
+    <loc>/reference/get_carbon_stocks.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_carbon_stocks_balance.html</loc>
+    <loc>/reference/get_carbon_stocks_balance.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_forest_flows.html</loc>
+    <loc>/reference/get_forest_flows.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/get_land_use_changes.html</loc>
+    <loc>/reference/get_land_use_changes.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/index.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/pipe.html</loc>
+    <loc>/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/plot_carbon_flows.html</loc>
+    <loc>/reference/plot_carbon_flows.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/plot_carbon_stocks.html</loc>
+    <loc>/reference/plot_carbon_stocks.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/plot_forest_flows.html</loc>
+    <loc>/reference/plot_forest_flows.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/plot_land_use_changes.html</loc>
+    <loc>/reference/plot_land_use_changes.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/select_territory.html</loc>
+    <loc>/reference/select_territory.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/setup_path.html</loc>
+    <loc>/reference/setup_path.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/test_apicarto_commune.html</loc>
+    <loc>/reference/test_apicarto_commune.html</loc>
   </url>
   <url>
-    <loc>https://silvia-team.github.io/silvia/reference/update_epcis.html</loc>
+    <loc>/reference/update_epcis.html</loc>
   </url>
 </urlset>

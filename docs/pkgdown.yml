@@ -3,8 +3,5 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   guide_utilisation_silvia: guide_utilisation_silvia.html
-last_built: 2023-02-10T13:10Z
-urls:
-  reference: https://silvia-team.github.io/silvia/reference
-  article: https://silvia-team.github.io/silvia/articles
+last_built: 2023-02-10T13:44Z
 
