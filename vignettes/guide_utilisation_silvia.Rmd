@@ -29,6 +29,8 @@ data_path <- setup_path(data_path = data_path)
 
 <img src="guide_utilisation_silvia_dossiers.png" alt="screenshot of folders" style="display: block; margin: auto;" />
 
+<img src="guide_utilisation_silvia_borders.png" alt="borders" style="display: block; margin: auto;" />
+
 # Choix du territoire d'étude et téléchargement des données
 
 Seules les données relatives au territoire sélectionné par l'utilisateur seront téléchargées, la première étape consiste donc à délimiter le territoire d'étude. 
