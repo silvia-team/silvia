@@ -24,16 +24,16 @@ séquestration de carbone combinés avec la fragilité de ces puits de
 carbone naturels motivent le besoin de mieux suivre les flux de carbone
 entre sols, biomasse et atmosphère.
 
-Le package `silvia` permet d’estimer et de visaliser les flux de carbone
-entre sols, biomasse et atmosphère sur un territoire français. La
-méthode de calcul des stocks et de flux est celle de l’outil Excel
-développé par l’ADEME, appelé
+Le package `silvia` permet d’estimer et de visaliser les stocks et les
+flux de carbone entre sols, biomasse et atmosphère sur un territoire
+français. La méthode de calcul des stocks et de flux est celle de
+l’outil Excel développé par l’ADEME, appelé
 [Aldo](https://www.territoires-climat.ademe.fr/actualite/loutil-aldo-pour-une-premiere-estimation-de-la-sequestration-carbone-dans-les-sols-et-la-biomasse).
 
 ## Installation
 
-Il est possible de télécharcher la version en développement de Silvia
-depuis GitHub avec :
+La version en développement de Silvia peut être téléchargée depuis
+GitHub :
 
 ``` r
 # install.packages("devtools")
