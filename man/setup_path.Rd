@@ -2,17 +2,24 @@
 % Please edit documentation in R/setup_path.R
 \name{setup_path}
 \alias{setup_path}
-\title{Setup Path}
+\title{Setups the path pointing to the directory where data will be saved}
 \usage{
 setup_path(data_path)
 }
 \arguments{
-\item{data_path}{A \code{character} or a list of \code{character} of french
-region codes to be included in the perimeter}
+\item{data_path}{A string pointing to the directory where the downloaded data will be saved}
 }
 \value{
 data_path
+
+A valid path pointing to the directory where the downloaded data will be saved
 }
 \description{
-\code{setup_path} ...
+Checks if the path points to an existing folder, and builds four new folders
+that will hold the downloaded data : bd_foret, copernicus, corine_land_cover, territory.
+}
+\examples{
+
+data_path <- setup_path(data_path = "D:/data_silvia")
+
 }

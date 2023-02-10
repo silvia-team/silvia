@@ -26,7 +26,7 @@ plot_carbon_stocks <- function(stocks, data_path){
   p <- p + geom_sf(aes(fill = total_carbon_content), color = NA)
   p <- p + labs(
     # caption = "Données Corine Land Cover et ALDO (GIS)\n",
-    fill = "Intensité du stockage\n de carbone (tCO2/ha)"
+    fill = "Intensité du stockage \nde carbone (tCO2/ha)"
   )
   p <- p + theme_void()
   p <- p + theme(

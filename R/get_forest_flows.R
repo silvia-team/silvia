@@ -12,7 +12,7 @@
 #' @export
 #' @importFrom data.table as.data.table setnames
 #' @importFrom here here
-#' @importFrom sf st_read st_transform st_intersection st_area st_drop_geometry
+#' @importFrom sf st_read st_transform st_intersection st_area st_drop_geometry st_as_sf
 #' @importFrom happign  get_wfs get_layers_metadata
 #' @importFrom dplyr mutate
 get_forest_flows <- function(data_path){
@@ -41,9 +41,11 @@ get_forest_flows <- function(data_path){
 
   forest_flows[, total_flows := ifelse(is.na(essence), 0, -flow*44/12)]
   forest_flows[, total_flows:= ifelse(total_flows > 0, -total_flows, total_flows)]
-  forest_flows[, total_flows := total_flows*area]
+  forest_flows[, total_flows_area := total_flows*area]
+  forest_flows <- forest_flows[, list(ID_unique, total_flows, total_flows_area)]
 
-  sum_forest_flows <- sum(forest_flows$total_flows, na.rm= T)
+  forest_flows <- merge(forest_geom, forest_flows, by = "ID_unique")
+  forest_flows <- st_as_sf(forest_flows)
 
-  return(sum_forest_flows)
+  return(forest_flows)
 }

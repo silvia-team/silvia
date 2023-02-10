@@ -30,7 +30,7 @@ plot_carbon_flows <- function(flows, data_path){
   p <- p + labs(
     caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n",
     # Données : Corine Land Cover et ALDO (GIS-Sol)"
-    fill = "Flux de carbone (tCO2eq/ha.an)"
+    fill = "Flux de carbone \n(tCO2eq/ha.an)"
   )
 
   p <- p + theme_void()

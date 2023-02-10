@@ -36,6 +36,7 @@ get_carbon_flows_balance <- function(flows, data_path) {
   total_harvested_wood_flows <- - sum(total_harvested_wood_flows[EPCI_Siren %in% epcis, wood_carbon_flows])
 
   total_forest_flows <- get_forest_flows(data_path)
+  total_forest_flows <- sum(total_forest_flows$total_flows_area, na.rm= T)
   total_forest_flows <- round(total_forest_flows*1e-03* 1e-04, digits = 2)
 
   total_area_flows <- sum(total_biomass_flows, total_soil_flows, total_forest_flows, total_harvested_wood_flows)

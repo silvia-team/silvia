@@ -32,7 +32,8 @@ plot_forest_flows <- function(data_path){
   shape <- st_read(here(data_path, "territory", "territory.gpkg"))
   shape <- st_transform(shape, st_crs(forest_geom))
   epcis <- unique(shape$SIREN_EPCI)
-
+  shape <- shape %>% summarise(geom =st_union(geom))
+  shape <- nngeo::st_remove_holes(shape)
 
   forest[, essence := ifelse(like(tfv_g11, "conifères"), "conifere", NA)]
   forest[, essence := ifelse(like(tfv_g11, "feuillus"), "feuillu", essence)]
@@ -58,9 +59,9 @@ plot_forest_flows <- function(data_path){
   p <- p + geom_sf(aes(fill = total_flows, geometry = geom), color = NA)
 
   p <- p + labs(
-    caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n",
-    # Données : Corine Land Cover et BD Forêt V2",
-    fill = "Flux de carbone (tCO2eq/ha.an)"
+    # caption = "Une valeur négative correspond à une séquestration, positive à une émission vers l'atmosphère \n",
+    # Les calculs sont effectués par l'outil silvia.",
+    fill = "Flux de carbone forestiers\n (tCO2eq/ha.an)"
   )
   p <- p + theme_void()
   p <- p + theme(
