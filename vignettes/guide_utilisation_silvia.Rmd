@@ -7,6 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ## Installation
 
 La version en développement de Silvia peut être installée depuis GitHub, puis chargée dans l'environnement : 
