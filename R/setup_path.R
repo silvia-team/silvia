@@ -8,7 +8,6 @@
 #'
 #' @return data_path
 #'
-#' @importFrom checkmate assert_directory_exists
 #'
 #' @examples
 #'
