@@ -22,7 +22,6 @@
 #'
 get_carbon_flows_balance <- function(flows, data_path) {
 
-
   epcis <- unique(flows$EPCI_Siren)
 
   ### Compute total flows on the territory

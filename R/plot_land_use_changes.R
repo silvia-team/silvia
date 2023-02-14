@@ -39,6 +39,8 @@ plot_land_use_changes <- function(year_from, year_to, data_path){
   year_from <- as.character(year_from)
   year_to <- as.character(year_to)
 
+  land_use_changes <- land_use_changes[, code_initial_first:= as.numeric(substr(code_initial,1,1))]
+  land_use_changes <- land_use_changes[, code_final_first:= as.numeric(substr(code_final,1,1))]
 
   land_use_changes <- land_use_changes %>%
     group_by(code_initial_first, code_final_first) %>%
