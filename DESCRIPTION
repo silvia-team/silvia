@@ -15,7 +15,8 @@ Imports:
     magrittr,
     readxl,
     exactextractr, 
-    remotes
+    remotes,
+    ggsankey
 Remotes:
     github::davidsjoberg/ggsankey
 Depends: 
