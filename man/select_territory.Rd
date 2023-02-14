@@ -13,17 +13,17 @@ select_territory(
     local = F)
 }
 \arguments{
-\item{regions_fr}{A \code{character} or a list of \code{character} of french
-region codes to be included in the perimeter}
-
-\item{departments_fr}{A \code{character} or a list of \code{character} of french
-departements codes to be included in the perimeter}
+\item{communes_fr}{A \code{character} or a list of \code{character} of french
+municipalities codes to be included in the perimeter}
 
 \item{epcis_fr}{A \code{character} or a list of \code{character} of french
 EPCIs codes to be included in the perimeter}
 
-\item{communes_fr}{A \code{character} or a list of \code{character} of french
-municipalities codes to be included in the perimeter}
+\item{departments_fr}{A \code{character} or a list of \code{character} of french
+departements codes to be included in the perimeter}
+
+\item{regions_fr}{A \code{character} or a list of \code{character} of french
+region codes to be included in the perimeter}
 
 \item{data_path}{path to where the data is stored}
 }

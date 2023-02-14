@@ -6,19 +6,29 @@
 #' communes, EPCI, départements, and régions INSEE codes are  referenced here
 #' [INSEE's codes](https://www.insee.fr/fr/information/6051727)
 #'
-#'
+#' @param communes_fr A `character` or a list of `character` of french
+#' municipalities codes to be included in the perimeter
+#' @param epcis_fr A `character` or a list of `character` of french
+#' EPCIs codes to be included in the perimeter
+#' @param departments_fr A `character` or a list of `character` of french
+#' departements codes to be included in the perimeter
+#' @param regions_fr A `character` or a list of `character` of french
+#' region codes to be included in the perimeter
 #' @param years years to download (1990, 2000, 2006, 2012, 2018)
 #' @param data_path path to where the data is stored
-#' @param bd_foret boolean to download bd_foret
 #'
 #'
-#' @importFrom data.table as.data.table
+#' @importFrom data.table as.data.table fwrite
+#' @importFrom here here
 #' @importFrom sf st_intersection sf_use_s2 st_read st_transform st_write st_crs
+#' @importFrom sf st_combine st_union st_geometry
 #' @importFrom stringr str_sub
-#' @importFrom happign  get_wfs get_layers_metadata
-#' @importFrom exactextractr exact_extract
+#' @importFrom happign  get_wfs get_layers_metadata get_apicarto_commune
 #' @importFrom raster crop raster mask
 #' @importFrom ggplot2 ggplot geom_sf
+#' @importFrom nngeo st_remove_holes
+#' @importFrom httr2 request req_url_path resp_body_string req_url_query
+#' @importFrom jsonlite fromJSON
 #'
 #' @examples
 #' # Download files for the "Grand Annecy" (EPCI) territory, for all available years
@@ -47,7 +57,11 @@ download_territory_files <- function(communes_fr = list(),
   # Download and plot the selected territory
 
   message("\nDownload of the territory's borders...")
-  shape <- select_territory(regions_fr, departments_fr, epcis_fr, communes_fr, data_path)
+  shape <- select_territory(communes_fr = communes_fr,
+                            epcis_fr = epcis_fr,
+                            departments_fr = departments_fr,
+                            regions_fr = regions_fr,
+                            data_path = data_path)
   shape <- st_transform(shape, 4326)
 
   # plot the geometry

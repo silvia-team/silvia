@@ -35,7 +35,7 @@
 #' @importFrom data.table fwrite
 #' @importFrom here here
 #' @importFrom sf st_read st_write st_transform st_combine
-#' @importFrom sf st_geometry st_union st_bbox st_geometry
+#' @importFrom sf st_geometry st_union st_geometry
 #' @importFrom nngeo st_remove_holes
 #' @importFrom httr2 request req_url_path resp_body_string req_url_query
 #' @importFrom jsonlite fromJSON
@@ -43,10 +43,10 @@
 #'
 #'
 select_territory  <- function(
-    regions_fr = list(),
-    departments_fr = list(),
-    epcis_fr= list(),
     communes_fr = list(),
+    epcis_fr= list(),
+    departments_fr = list(),
+    regions_fr = list(),
     data_path) {
 
   # retrieve cities' epci

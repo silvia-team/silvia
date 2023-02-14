@@ -54,7 +54,8 @@ get_apigouv_insee_codes <- function(communes_fr= list(),
       req_url_query(
         code = city
       ) %>%
-      req_perform()
+      req_perform()%>%
+      resp_body_string()
 
     df <- jsonlite::fromJSON(res)
     df <- as.data.table(df)

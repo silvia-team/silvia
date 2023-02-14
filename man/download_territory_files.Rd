@@ -14,11 +14,21 @@ download_territory_files(
 )
 }
 \arguments{
+\item{communes_fr}{A \code{character} or a list of \code{character} of french
+municipalities codes to be included in the perimeter}
+
+\item{epcis_fr}{A \code{character} or a list of \code{character} of french
+EPCIs codes to be included in the perimeter}
+
+\item{departments_fr}{A \code{character} or a list of \code{character} of french
+departements codes to be included in the perimeter}
+
+\item{regions_fr}{A \code{character} or a list of \code{character} of french
+region codes to be included in the perimeter}
+
 \item{years}{years to download (1990, 2000, 2006, 2012, 2018)}
 
 \item{data_path}{path to where the data is stored}
-
-\item{bd_foret}{boolean to download bd_foret}
 }
 \description{
 \code{download_territory_files} downloads all the necessary files related to the territory.

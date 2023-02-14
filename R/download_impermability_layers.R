@@ -10,6 +10,7 @@
 #' @importFrom happign  get_wms_raster
 #' @importFrom here here
 #' @importFrom raster brick aggregate mean writeRaster
+#' @importFrom exactextractr exact_extract
 download_impermability_layer <- function(shape, data_path){
 
   options(warn=-1)
