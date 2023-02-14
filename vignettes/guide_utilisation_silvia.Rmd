@@ -10,14 +10,25 @@ vignette: >
 
 ## Installation
 
-La version en développement de Silvia peut être installée depuis GitHub, puis chargée dans l'environnement : 
-
+La version en développement de Silvia peut être installée depuis GitHub : 
 ``` r
 # install.packages("devtools")
 devtools::install_github("silvia-team/silvia")
+```
+Il est souvent nécessaire de mettre à jour, voire d'installer d'autres packages utilisés par l'outil Silvia. Il est donc vivement conseillé de répondre "All" si le message suivant apparaît: 
 
+``` r
+These packages have more recent versions available.
+It is recommended to update all of them.
+Which would you like to update?
+```
+
+Une fois les mises à jour effectuées, le package peut être chargé dans l'environnement : 
+
+``` r
 library(silvia)
 ```
+
 
 
 ## Emplacement des données téléchargées

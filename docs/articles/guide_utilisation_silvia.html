@@ -74,12 +74,20 @@
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <p>La version en développement de Silvia peut être installée depuis
-GitHub, puis chargée dans l’environnement :</p>
+GitHub :</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"silvia-team/silvia"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://silvia-team.github.io/silvia/" class="external-link">silvia</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"silvia-team/silvia"</span><span class="op">)</span></span></code></pre></div>
+<p>Il est souvent nécessaire de mettre à jour, voire d’installer
+d’autres packages utilisés par l’outil Silvia. Il est donc vivement
+conseillé de répondre “All” si le message suivant apparaît:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>These packages have more recent versions available.</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>It is recommended to update all of them.</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Which would you like to update?</span></code></pre></div>
+<p>Une fois les mises à jour effectuées, le package peut être chargé
+dans l’environnement :</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://silvia-team.github.io/silvia/" class="external-link">silvia</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="emplacement-des-données-téléchargées">Emplacement des données téléchargées<a class="anchor" aria-label="anchor" href="#emplacement-des-donn%C3%A9es-t%C3%A9l%C3%A9charg%C3%A9es"></a>
@@ -90,7 +98,7 @@ depuis l’API (“Application Programming Interface”) des bases de données
 en question.</p>
 <p>Les fichiers téléchargés sont stockés à l’emplacement indiqué par
 l’utilisateur dans la fonction <code><a href="../reference/setup_path.html">setup_path()</a></code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_path</span> <span class="op">&lt;-</span> <span class="st">"D:/data_silvia"</span></span>
 <span><span class="va">data_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/setup_path.html">setup_path</a></span><span class="op">(</span>data_path <span class="op">=</span> <span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p>4 dossiers vides sont créés à l’emplacement indiqué :</p>
@@ -109,7 +117,7 @@ l’INSEE</a>.</p>
 <p>Voici un exemple de téléchargement des données relatives à l’EPCI du
 Grand Annecy, avec la fonction
 <code><a href="../reference/download_territory_files.html">download_territory_files()</a></code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/download_territory_files.html">download_territory_files</a></span><span class="op">(</span>epcis_fr <span class="op">=</span> <span class="st">"200066793"</span>, years <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2000</span>, <span class="fl">2012</span>, <span class="fl">2018</span><span class="op">)</span>, data_path <span class="op">=</span> <span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p>Les frontières du territoire sélectionné sont représentées à la fin
 du téléchargement des fichiers :</p>
@@ -126,7 +134,7 @@ représenter les changements d’occupation des sols du territoire entre 2
 années (parmi celles sélectionnées précédemment). Le résultat est
 présenté sous la forme d’un <a href="https://fr.wikipedia.org/wiki/Diagramme_de_Sankey" class="external-link">diagramme de
 Sankey</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_land_use_changes.html">plot_land_use_changes</a></span><span class="op">(</span>year_from <span class="op">=</span> <span class="fl">1990</span>, year_to <span class="op">=</span> <span class="fl">2018</span>, data_path <span class="op">=</span> <span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p><img src="guide_utilisation_silvia_land_use_changes.png" alt="land use changes" style="display: block; margin: auto;"></p>
 </div>
@@ -139,12 +147,12 @@ territoire est obtenue à partir de la fonction
 avec les différents stocks calculés (dans les sols, dans la biomasse en
 forêt et hors forêt). Par exemple, les stocks de carbone du Grand Annecy
 en 2018 :</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stocks</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_carbon_stocks.html">get_carbon_stocks</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2018</span>, data_path <span class="op">=</span><span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p>La fonction <code><a href="../reference/plot_carbon_stocks.html">plot_carbon_stocks()</a></code> réalise une
 cartographie des ces stocks de carbone sur le territoire à la date
 choisie :</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_carbon_stocks.html">plot_carbon_stocks</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2018</span>, data_path <span class="op">=</span> <span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p><img src="guide_utilisation_silvia_carbon_stocks.png" alt="carbon stocks" style="display: block; margin: auto;"></p>
 <p>Le bilan chiffré des stocks de carbone sur le territoire est réalisé
@@ -184,7 +192,7 @@ territoire est obtenue avec la fonction
 cartographie des flux de carbone sur le territoire à la date
 choisie.</p>
 <p>Par exemple, les flux de carbone du Grand Annecy en 2018 :</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_carbon_flows.html">plot_carbon_flows</a></span><span class="op">(</span>year_from <span class="op">=</span> <span class="fl">1990</span>, year_to <span class="op">=</span> <span class="fl">2018</span>, data_path <span class="op">=</span> <span class="va">data_path</span><span class="op">)</span></span></code></pre></div>
 <p><img src="guide_utilisation_silvia_flows.png" alt="carbon flows" style="display: block; margin: auto;"></p>
 <p>Le bilan chiffré des flux annnuels moyen de carbone sur le territoire
