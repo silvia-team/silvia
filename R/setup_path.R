@@ -21,7 +21,7 @@ setup_path <- function(data_path){
 
   data_path <- file.path(data_path)
 
-  file.exists(data_path)
+  stop(file.exists(data_path))
 
   data_path <- path.expand(data_path)
 
