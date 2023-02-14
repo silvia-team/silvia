@@ -21,7 +21,9 @@ setup_path <- function(data_path){
 
   data_path <- file.path(data_path)
 
-  stop(file.exists(data_path))
+  if(!file.exists(data_path)){
+    stop("\nA valid path is required to build the repositories.")
+  }
 
   data_path <- path.expand(data_path)
 
