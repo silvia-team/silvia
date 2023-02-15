@@ -14,9 +14,11 @@ Imports:
     dplyr,
     magrittr,
     readxl,
-    exactextractr, 
+    exactextractr,
     remotes,
-    ggsankey
+    ggsankey,
+    cli,
+    happign (>= 0.1.7)
 Remotes:
     github::davidsjoberg/ggsankey
 Depends: 

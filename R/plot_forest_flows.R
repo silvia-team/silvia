@@ -21,7 +21,7 @@
 plot_forest_flows <- function(data_path){
 
   # retrieve the forest geopackage previously downloaded
-  forest_geom <- st_read(here(data_path, "bd_foret", "zone_bd_foret.gpkg"))
+  forest_geom <- st_read(here(data_path, "bd_foret", "zone_bd_foret.gpkg"), quiet = T)
 
   # remove the geometry to speed up the function
   forest_geom <- tibble::rowid_to_column(forest_geom, "ID_unique")
@@ -29,7 +29,7 @@ plot_forest_flows <- function(data_path){
   forest <- st_drop_geometry(forest_geom)
   forest <- as.data.table(forest)
 
-  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"), quiet = T)
   shape <- st_transform(shape, st_crs(forest_geom))
   epcis <- unique(shape$SIREN_EPCI)
   shape <- shape %>% summarise(geom =st_union(geom))

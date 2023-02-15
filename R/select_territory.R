@@ -76,7 +76,7 @@ select_territory  <- function(
   borders <- st_transform(borders, 3035)
 
   # save the geometry of the territory
-  st_write(borders, here(data_path, "territory", "territory.gpkg"), delete_dsn = TRUE)
+  st_write(borders, here(data_path, "territory", "territory.gpkg"), delete_dsn = TRUE, quiet = TRUE)
 
   return(borders)
 }

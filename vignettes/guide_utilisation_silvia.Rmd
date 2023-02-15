@@ -134,7 +134,7 @@ get_carbon_flows_balance(flows = flows, data_path = data_path)
 ```
 
 
-| Flows category                         | Flows_value |
+| Flows category                         | Flows value |
 |:------------|:-------------------:| 
 | carbon flows from land use changes (ktCO2e/an)       | 3.33      | 
 | carbon flows from forest (ktCO2e/an)         | -97.09      |

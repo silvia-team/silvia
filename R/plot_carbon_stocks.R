@@ -17,7 +17,7 @@
 #'
 plot_carbon_stocks <- function(stocks, data_path){
 
-  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"), quiet = T)
   shape <- st_transform(shape, st_crs(stocks))
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)

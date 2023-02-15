@@ -19,7 +19,7 @@
 #'
 plot_carbon_flows <- function(flows, data_path){
 
-  shape <- st_read(here(data_path, "territory", "territory.gpkg"))
+  shape <- st_read(here(data_path, "territory", "territory.gpkg"), quiet = T)
   shape <- st_transform(shape, st_crs(flows))
   shape <- shape %>% summarise(geom= st_union(geom))
   shape <- nngeo::st_remove_holes(shape)

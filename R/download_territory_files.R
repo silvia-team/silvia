@@ -29,6 +29,7 @@
 #' @importFrom nngeo st_remove_holes
 #' @importFrom httr2 request req_url_path resp_body_string req_url_query
 #' @importFrom jsonlite fromJSON
+#' @importFrom cli cli_alert cli_alert_success
 #'
 #' @examples
 #' # Download files for the "Grand Annecy" (EPCI) territory, for all available years
@@ -56,12 +57,14 @@ download_territory_files <- function(communes_fr = list(),
 
   # Download and plot the selected territory
 
-  message("\nDownload of the territory's borders...")
-  shape <- select_territory(communes_fr = communes_fr,
+  cli_alert("Downloading territory's borders...")
+  shape <- suppressMessages(
+    select_territory(communes_fr = communes_fr,
                             epcis_fr = epcis_fr,
                             departments_fr = departments_fr,
                             regions_fr = regions_fr,
                             data_path = data_path)
+    )
   shape <- st_transform(shape, 4326)
 
   # plot the geometry
@@ -78,26 +81,27 @@ download_territory_files <- function(communes_fr = list(),
     strip.text = element_text(size = 14),
     legend.margin = margin(0, 0, 0.5, 0, "cm")
   )
-
+  cli_alert_success("Downloaded territory's borders.")
 
 
   # download impermeability layers
-  download_impermability_layer(shape= shape, data_path = data_path)
+  cli_alert("Downloading impermeability layer...")
+  suppressMessages(download_impermability_layer(shape= shape, data_path = data_path))
+  cli_alert_success("Downloaded impermeability layer.")
 
   # Download CLC layers
-  message("\nDownload of Corine Land Cover layers...")
 
   apikey <- "clc"
-  clc_layers <- as.data.table(happign::get_layers_metadata(apikey = apikey, data_type = "wfs"))
+  clc_layers <- as.data.table(get_layers_metadata(apikey = apikey, data_type = "wfs"))
   for (year in years){
-    print(year)
+    cli_alert(paste0("Downloading Corine Land Cover ", year, "..."))
     year_abr <- str_sub(year,-2,-1)
     title <- paste0("LANDCOVER.CLC", year_abr, "_FR:clc", year_abr, "_fr.title")
     name_clc_layer <- clc_layers[Title == title, Name]
     clc <- get_wfs(shape = shape, apikey = apikey,
                    layer_name = name_clc_layer)
-    sf::sf_use_s2(FALSE)
-    clc <- st_intersection(clc, shape)
+    suppressMessages(sf::sf_use_s2(FALSE))
+    clc <- suppressMessages(st_intersection(clc, shape))
 
 
     # Intersection and computation of impermeability with clc...
@@ -110,7 +114,7 @@ download_territory_files <- function(communes_fr = list(),
     clc$mean <- - (clc$mean- max(clc$mean))
     clc$X_mean <- clc$mean/max(clc$mean)
     clc <- st_transform(clc, sf::st_crs(shape))
-    clc <- st_intersection(clc, st_geometry(shape))
+    clc <- suppressMessages(st_intersection(clc, st_geometry(shape)))
     clc <- st_transform(clc, 3035)
 
     clc$year <- year
@@ -119,11 +123,15 @@ download_territory_files <- function(communes_fr = list(),
       select(contains(c("ID", "code", "area", "year", "X_mean", "SIREN_EPCI"))) %>%
       dplyr::rename_at(dplyr::vars(contains("code")), ~c("code"))
 
-    st_write(clc, here(data_path, "corine_land_cover", paste0("zone_", as.character(year), ".gpkg")), delete_dsn = TRUE)
+    st_write(clc, here(data_path, "corine_land_cover", paste0("zone_", as.character(year), ".gpkg")),
+             delete_dsn = TRUE, quiet = T)
+    cli_alert_success(paste0("Downloaded Corine Land Cover ", year, "."))
   }
 
-  # download bd_foret
+   #download bd_foret
+   cli_alert("Downloading BD foret layer...")
    download_bd_foret(shape= shape, data_path = data_path)
+   cli_alert_success("Downloaded BD foret layer.")
 
    print(p)
 }

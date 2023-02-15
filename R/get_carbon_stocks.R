@@ -33,7 +33,7 @@ get_carbon_stocks <-  function(year, data_path){
   # retrieve CLC ------------------------------------------------------------
 
   file_name <- paste0('zone_', year, ".gpkg", sep = '')
-  clc_geom <- st_read(here(data_path, "corine_land_cover", file_name))
+  clc_geom <- st_read(here(data_path, "corine_land_cover", file_name), quiet = T)
 
   clc_geom <- clc_geom %>% select(c("code", "X_mean", "SIREN_EPCI"))
   clc_geom$year <- year
