@@ -22,6 +22,6 @@ All stocks are in tCO2e/ha.
 \examples{
 # Retrieve carbon stocks in 2018
 
-dt <- get_carbon_stocks("2018", data_path)
+dt <- get_carbon_stocks("2018", data_path = "D:/data_silvia")
 
 }

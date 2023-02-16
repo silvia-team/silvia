@@ -1,8 +1,9 @@
 
-#' Download impermability layers on the territory, for the selected years,
+#' Download the impermability layer
+#'
+#' @description
+#' Download the impermability layer on the territory, for the selected years,
 #' using 'happign' package
-#' The function returns nothing but store raster files
-#' in the "data->copernicus" folder
 #'
 #' @param shape shape of the territory
 #' @param data_path path to where the data is stored

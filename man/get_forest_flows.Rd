@@ -16,3 +16,8 @@ forest flows in tC.an-1
 Retrieve the carbon flows in the forests,
 using the BD foret 2
 }
+\examples{
+
+# flows <- get_carbon_flows(year_from = 1990, year_to = 2018, data_path = data_path)
+
+}

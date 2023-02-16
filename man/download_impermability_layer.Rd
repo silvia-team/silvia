@@ -2,10 +2,7 @@
 % Please edit documentation in R/download_impermability_layers.R
 \name{download_impermability_layer}
 \alias{download_impermability_layer}
-\title{Download impermability layers on the territory, for the selected years,
-using 'happign' package
-The function returns nothing but store raster files
-in the "data->copernicus" folder}
+\title{Download the impermability layer}
 \usage{
 download_impermability_layer(shape, data_path)
 }
@@ -15,8 +12,6 @@ download_impermability_layer(shape, data_path)
 \item{data_path}{path to where the data is stored}
 }
 \description{
-Download impermability layers on the territory, for the selected years,
+Download the impermability layer on the territory, for the selected years,
 using 'happign' package
-The function returns nothing but store raster files
-in the "data->copernicus" folder
 }

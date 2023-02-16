@@ -6,6 +6,7 @@
 #'
 #' @param data_path A string pointing to the directory where the downloaded data will be saved
 #'
+#' @importFrom cli cli_alert_info
 #' @return data_path
 #'
 #'
@@ -32,7 +33,7 @@ setup_path <- function(data_path){
   dir.create(here(data_path, "corine_land_cover"))
   dir.create(here(data_path, "territory"))
 
-  message("\nDownloaded data will be stored at ", data_path)
+  cli_alert_info("Downloaded data will be stored at ", data_path)
 
   return(data_path)
 

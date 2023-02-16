@@ -1,13 +1,14 @@
 #' Apigouv insee codes
 #'
+#' @description
 #' Retrieve insee codes from either epcis codes of departement codes
 #' Codes of the different french territories
 #' (communes, EPCI, départements, régions) are  referenced here
 #' [INSEE's codes](https://www.insee.fr/fr/information/6051727)
 #'
 #'
-#' The function returns the map of the created perimeter
-#' and store the gpkg file in 'data->arep' folder as "territory.gpkg".
+#' The function returns a list of the INSEE codes of the cities
+#' located in the selected territory".
 #'
 #' @usage
 #'
