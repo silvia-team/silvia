@@ -10,10 +10,6 @@
 #' @return data_path
 #'
 #'
-#' @examples
-#'
-#' data_path <- setup_path(data_path = "D:/data_silvia")
-#'
 #' @return A valid path pointing to the directory where the downloaded data will be saved
 #'
 #' @export

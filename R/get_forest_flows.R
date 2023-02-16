@@ -16,10 +16,6 @@
 #' @importFrom happign  get_wfs get_layers_metadata
 #' @importFrom dplyr mutate
 #'
-#' @examples
-#'
-#' # flows <- get_carbon_flows(year_from = 1990, year_to = 2018, data_path = data_path)
-#'
 get_forest_flows <- function(data_path){
 
   forest_geom <- st_read(here(data_path, "bd_foret", "zone_bd_foret.gpkg"))

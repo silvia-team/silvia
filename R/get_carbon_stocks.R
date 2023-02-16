@@ -6,7 +6,7 @@
 #' All stocks are in tCO2e/ha.
 #'
 #' @usage
-#' get_carbon_stocks(year)
+#' get_carbon_stocks(year, data_path)
 #'
 #' @param year the reference year to be studied (1990, 2000, 2006, 2012, 2018)
 #' @param data_path path to where the data is stored
@@ -20,11 +20,6 @@
 #'
 #'
 #' @return a sf object with the carbon stored in every polygon
-#'
-#' @examples
-#'# Retrieve carbon stocks in 2018
-#'
-#' dt <- get_carbon_stocks("2018", data_path = "D:/data_silvia")
 #'
 #' @export
 #'

@@ -4,7 +4,7 @@
 #' `get_land_use_changes` collects land use changes between two years
 #'
 #' @usage
-#' get_land_use_changes(year_from = 2000, year_to = 2018)
+#' get_land_use_changes(year_from, year_to, data_path)
 #'
 #' @param year_from the CLC reference year (1990, 2000, 2006, 2012, 2018)
 #' @param year_to the year to be compared to the reference year,

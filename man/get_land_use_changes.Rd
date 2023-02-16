@@ -4,7 +4,7 @@
 \alias{get_land_use_changes}
 \title{Get land use changes}
 \usage{
-get_land_use_changes(year_from = 2000, year_to = 2018)
+get_land_use_changes(year_from, year_to, data_path)
 }
 \arguments{
 \item{year_from}{the CLC reference year (1990, 2000, 2006, 2012, 2018)}

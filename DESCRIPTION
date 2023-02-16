@@ -1,5 +1,5 @@
 Package: silvia
-Title: R package to visualize the carbon flows on a territory.
+Title: Visualize and compute carbon stocks and flows on a territory
 Version: 0.0.0.9000
 Authors@R: 
     person("Lucas", "Bohnenkamp", , "lucas.bohnenkamp31@gmail.com", role = c("aut", "cre"),
@@ -9,16 +9,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
-Imports:
-    data.table,
-    dplyr,
-    magrittr,
-    readxl,
-    exactextractr,
-    remotes,
-    ggsankey,
-    cli,
-    happign (>= 0.1.7)
+Imports: data.table, dplyr, magrittr, readxl, exactextractr, ggsankey, cli, happign, here,
+	ggplot2, httr2, jsonlite, nngeo, raster, sf, stringr, tibble, RColorBrewer
 Remotes:
     github::davidsjoberg/ggsankey
 Depends: 

@@ -4,13 +4,7 @@
 \alias{select_territory}
 \title{Select territory}
 \usage{
-select_territory(
-    regions_fr = list(),
-    departments_fr = list(),
-    epcis_fr= list(),
-    communes_fr = list(),
-    communes_ch= list(),
-    local = F)
+select_territory(communes_fr, epcis_fr, departments_fr, regions_fr,data_path)
 }
 \arguments{
 \item{communes_fr}{A \code{character} or a list of \code{character} of french

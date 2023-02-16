@@ -23,9 +23,3 @@ Results are presented in a sankey diagram, with the reference year on the left,
 and the year to be compared to on the right.
 Note that only soils that have changed occupation between the two years are considered.
 }
-\examples{
-# Plot land use changes between 1990 and 2018
-
-plot_land_use_changes(year_from = 1990, year_to = 2018, data_path= data_path)
-
-}

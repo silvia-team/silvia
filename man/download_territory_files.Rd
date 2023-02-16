@@ -36,10 +36,3 @@ region codes to be included in the perimeter}
 communes, EPCI, départements, and régions INSEE codes are  referenced here
 \href{https://www.insee.fr/fr/information/6051727}{INSEE's codes}
 }
-\examples{
-# Download files for the "Grand Annecy" (EPCI) territory, for all available years
-
-download_territory_files(epcis_fr = "200066793", years= c(1990, 2000, 2006, 2012, 2018), data_path = data_path)
-
-
-}

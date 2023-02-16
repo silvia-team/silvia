@@ -24,10 +24,6 @@
 #'
 #' @export
 #'
-#' @examples
-#' # Plot land use changes between 1990 and 2018
-#'
-#' plot_land_use_changes(year_from = 1990, year_to = 2018, data_path= data_path)
 #'
 plot_land_use_changes <- function(year_from, year_to, data_path){
 

@@ -11,23 +11,17 @@
 #' and store the gpkg file in 'data->arep' folder as "territory.gpkg".
 #'
 #' @usage
-#' select_territory(
-#'     regions_fr = list(),
-#'     departments_fr = list(),
-#'     epcis_fr= list(),
-#'     communes_fr = list(),
-#'     communes_ch= list(),
-#'     local = F)
+#' select_territory(communes_fr, epcis_fr, departments_fr, regions_fr,data_path)
 #'
 #'
-#' @param regions_fr A `character` or a list of `character` of french
-#' region codes to be included in the perimeter
-#' @param departments_fr A `character` or a list of `character` of french
-#' departements codes to be included in the perimeter
-#' @param epcis_fr A `character` or a list of `character` of french
-#' EPCIs codes to be included in the perimeter
 #' @param communes_fr A `character` or a list of `character` of french
 #' municipalities codes to be included in the perimeter
+#' @param epcis_fr A `character` or a list of `character` of french
+#' EPCIs codes to be included in the perimeter
+#' @param departments_fr A `character` or a list of `character` of french
+#' departements codes to be included in the perimeter
+#' @param regions_fr A `character` or a list of `character` of french
+#' region codes to be included in the perimeter
 #' @param data_path path to where the data is stored
 #'
 #' @return shape of the selected territory

@@ -10,7 +10,6 @@
 #'
 #' @importFrom data.table data.table
 #' @importFrom sf st_union st_crs
-#' @importFrom classInt classIntervals
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin scale_fill_gradient2
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn unit scale_fill_brewer
 #'

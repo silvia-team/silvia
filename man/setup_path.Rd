@@ -18,8 +18,3 @@ A valid path pointing to the directory where the downloaded data will be saved
 Checks if the path points to an existing folder, and builds four new folders
 that will hold the downloaded data : bd_foret, copernicus, corine_land_cover, territory.
 }
-\examples{
-
-data_path <- setup_path(data_path = "D:/data_silvia")
-
-}

@@ -5,7 +5,9 @@
 \title{Apigouv insee codes}
 \usage{
 get_apigouv_insee_codes(
+    communes_fr,
     epcis_fr,
+    departments_fr,
     regions_fr)
 }
 \arguments{
@@ -32,11 +34,4 @@ Codes of the different french territories
 
 The function returns a list of the INSEE codes of the cities
 located in the selected territory".
-}
-\examples{
-
-# Retrieve insee city codes in the epci of "Grand Annecy"
-get_apigouv_insee_codes(epcis_fr = "200066793")
-
-select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
 }

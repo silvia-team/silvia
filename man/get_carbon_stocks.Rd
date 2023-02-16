@@ -4,7 +4,7 @@
 \alias{get_carbon_stocks}
 \title{Get carbon stocks}
 \usage{
-get_carbon_stocks(year)
+get_carbon_stocks(year, data_path)
 }
 \arguments{
 \item{year}{the reference year to be studied (1990, 2000, 2006, 2012, 2018)}
@@ -18,10 +18,4 @@ a sf object with the carbon stored in every polygon
 \code{get_carbon_stocks} calculates the carbon stocks of the selected
 territory for the selected year.
 All stocks are in tCO2e/ha.
-}
-\examples{
-# Retrieve carbon stocks in 2018
-
-dt <- get_carbon_stocks("2018", data_path = "D:/data_silvia")
-
 }

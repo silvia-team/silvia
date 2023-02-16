@@ -13,7 +13,9 @@
 #' @usage
 #'
 #' get_apigouv_insee_codes(
+#'     communes_fr,
 #'     epcis_fr,
+#'     departments_fr,
 #'     regions_fr)
 #'
 #' @param communes_fr A `character` or a list of `character` of french
@@ -28,13 +30,6 @@
 #'
 #' @return `get_apigouv_insee_codes` returns a list of cities and departments insee codes
 #'
-#' @examples
-#'
-#' # Retrieve insee city codes in the epci of "Grand Annecy"
-#' get_apigouv_insee_codes(epcis_fr = "200066793")
-#'
-#' select_territory(regions_fr = "93", departments_fr = "31", epcis_fr = c("246900740", "200046977"), communes_fr = "81004")
-#' @export
 #'
 #' @importFrom data.table fwrite as.data.table
 #' @importFrom httr2 request req_url_path req_url_query req_perform resp_body_string

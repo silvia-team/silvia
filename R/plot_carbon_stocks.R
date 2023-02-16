@@ -10,6 +10,7 @@
 #' @export
 #' @importFrom sf st_read st_write st_area st_geometry
 #' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @importFrom ggplot2 ggplot geom_sf labs scale_colour_gradient theme aes theme_void margin
 #' @importFrom ggplot2 element_blank element_text scale_colour_gradient scale_fill_gradientn scale_color_brewer
 #'
