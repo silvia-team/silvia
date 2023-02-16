@@ -29,7 +29,7 @@ setup_path <- function(data_path){
   dir.create(here(data_path, "corine_land_cover"))
   dir.create(here(data_path, "territory"))
 
-  cli_alert_info("Downloaded data will be stored at ", data_path)
+  cli_alert_info(paste0("Downloaded data will be stored at ", data_path))
 
   return(data_path)
 

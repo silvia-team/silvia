@@ -21,9 +21,11 @@ download_impermability_layer <- function(shape, data_path){
   apikey_impermab <- "clc"
   year <- "15"
   name_impermab_layer <- paste0("LANDCOVER.HR.IMD.CLC", year)
-  impermab <- happign::get_wms_raster(shape= shape, apikey= apikey_impermab,
+  impermab <- suppressMessages(
+    happign::get_wms_raster(shape= shape, apikey= apikey_impermab,
                                       layer_name = name_impermab_layer, resolution= 40,
                                       filename = here(data_path, "copernicus", paste0("impermab_", year, ".tif")))
+  )
 
   file_path <- here(data_path, "copernicus", paste0("impermab_", year, ".tif"))
   impermab <- raster::brick(file_path, package= "raster")

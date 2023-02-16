@@ -9,10 +9,11 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
-Imports: data.table, dplyr, magrittr, readxl, exactextractr, ggsankey, cli, happign, here,
-	ggplot2, httr2, jsonlite, nngeo, raster, sf, stringr, tibble, RColorBrewer
+Imports: data.table, dplyr, magrittr, readxl, ggsankey, cli, happign, here, exactextractr,
+	ggplot2, httr2, jsonlite, nngeo, raster, sf, stringr, tibble, RColorBrewer, Rcpp
 Remotes:
-    github::davidsjoberg/ggsankey
+    github::davidsjoberg/ggsankey,
+    github::isciences/exactextractr 
 Depends: 
     R (>= 2.10)
 LazyData: true
