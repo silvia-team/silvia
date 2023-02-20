@@ -1,5 +1,7 @@
 
 #' Test apicarto_commune function
+#'
+#' @description
 #' Check if the insee code exists
 #'
 #' @param city_num the insee code of the city

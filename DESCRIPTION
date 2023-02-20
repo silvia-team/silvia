@@ -12,8 +12,7 @@ RoxygenNote: 7.2.1
 Imports: data.table, dplyr, magrittr, readxl, ggsankey, cli, happign, here, exactextractr,
 	ggplot2, httr2, jsonlite, nngeo, raster, sf, stringr, tibble, RColorBrewer, Rcpp
 Remotes:
-    github::davidsjoberg/ggsankey,
-    github::isciences/exactextractr 
+    github::davidsjoberg/ggsankey
 Depends: 
     R (>= 2.10)
 LazyData: true

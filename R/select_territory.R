@@ -1,7 +1,7 @@
-#' Select territory
+#' Crops territory from INSEE codes
 #'
 #' @description
-#' `select_territory` crops spatial boundaries to be studied.
+#' Crops spatial boundaries to be studied.
 #' Codes of the different french territories
 #' (communes, EPCI, départements, régions) are  referenced here
 #' [INSEE's codes](https://www.insee.fr/fr/information/6051727)

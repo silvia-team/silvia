@@ -1,5 +1,5 @@
 #' @title
-#' Download territory files
+#' Download all the territory's files
 #'
 #' @description
 #' `download_territory_files` downloads all the necessary files related to the territory.

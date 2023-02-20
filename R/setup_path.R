@@ -1,5 +1,6 @@
-#' Setups the path pointing to the directory where data will be saved
+#' Setups the path to where data will be saved
 #'
+#' @description
 #' Checks if the path points to an existing folder, and builds four new folders
 #' that will hold the downloaded data : bd_foret, copernicus, corine_land_cover, territory.
 #'
